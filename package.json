@@ -1,0 +1,174 @@
+{
+  "name": "cubic-monitor",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "neosarchizo",
+    "email": "neosarchizo@gmail.com",
+    "url": "https://neosarchizo.github.io"
+  },
+  "homepage": "./",
+  "main": "build/electron/main.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "pretty": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint src --quiet && eslint electron --quiet",
+    "lint:css": "stylelint \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "dev": "yarn build-electron && ELECTRON_DEBUG=true ELECTRON_START_URL=http://localhost:3000 concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps && yarn rebuild",
+    "build-electron": "tsc --project tsconfig.electron.json",
+    "electron": "electron .",
+    "watch-electron": "tsc --watch --project tsconfig.electron.json",
+    "start-react": "cross-env BROWSER=none react-scripts start",
+    "build-all": "yarn build && yarn build-electron",
+    "package-mw": "electron-builder build -c.extraMetadata.main=build/electron/main.js -mw",
+    "package-mac": "electron-builder build -c.extraMetadata.main=build/electron/main.js -m",
+    "package-windows": "electron-builder build -c.extraMetadata.main=build/electron/main.js -w",
+    "package-linux": "electron-builder build -c.extraMetadata.main=build/electron/main.js -l",
+    "rebuild": "electron-rebuild -f -w serialport"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "yarn pretty",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.5",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "5.0.0",
+    "rxjs": "^7.5.1",
+    "serialport": "^9.2.8",
+    "styled-components": "^5.3.3",
+    "typescript": "^4.5.4",
+    "web-vitals": "^2.1.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "appId": "io.neosarchizo.neopixel-tester",
+    "productName": "YLL NeoPixel Tester",
+    "copyright": "Copyright © 2021 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "!build/extraResources"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "dist"
+    },
+    "extraResources": [
+      {
+        "from": "./public/extraResources/",
+        "to": "extraResources",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.js",
+      "!<rootDir>/src/app.js",
+      "!<rootDir>/src/helpers/routes.js",
+      "!<rootDir>/src/lib/firebase.js",
+      "!<rootDir>/src/lib/firebase.prod.js",
+      "!<rootDir>/src/index.js",
+      "!<rootDir>/src/seed.js",
+      "!<rootDir>/src/utils/index.js",
+      "!<rootDir>/src/pages/index.js",
+      "!<rootDir>/src/global-styles.js",
+      "!<rootDir>/src/components/index.js",
+      "!<rootDir>/src/firebase.prod.js",
+      "!<rootDir>/src/hooks/*.js",
+      "!<rootDir>/src/context/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "coverageReporters": [
+      "html",
+      "text"
+    ]
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.3.1",
+    "@types/electron-store": "^3.2.0",
+    "@types/material-ui": "^0.21.12",
+    "@types/react-router-dom": "^5.3.2",
+    "@types/serialport": "^8.0.2",
+    "@types/sqlite3": "^3.1.8",
+    "@types/styled-components": "^5.1.19",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "concurrently": "^6.5.1",
+    "cross-env": "^7.0.3",
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5",
+    "electron-rebuild": "^3.2.5",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-flowtype-errors": "^4.5.0",
+    "eslint-plugin-graphql": "^4.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-tsc": "^2.0.0",
+    "foreman": "^3.0.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-recommended": "^6.0.0",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-order": "^5.0.0",
+    "stylelint-processor-styled-components": "^1.10.0",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1",
+    "wait-on": "^6.0.0"
+  }
+}
