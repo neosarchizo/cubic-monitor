@@ -12,14 +12,26 @@ const api: API = {
   list: () => {
     sendEvent({type: 'LIST'})
   },
-  add: (path) => {
-    sendEvent({type: 'ADD', data: path})
-  },
   subscribe: (func) => {
     ipcRenderer.on(API_NAME, func)
   },
   removeAllListeners: () => {
     ipcRenderer.removeAllListeners(API_NAME)
+  },
+  add: (path, model) => {
+    sendEvent({type: 'ADD', data: {path, model}})
+  },
+  remove: (path) => {
+    sendEvent({type: 'REMOVE', data: {path}})
+  },
+  play: (path) => {
+    sendEvent({type: 'PLAY', data: {path}})
+  },
+  stop: (path) => {
+    sendEvent({type: 'STOP', data: {path}})
+  },
+  getAppPath: () => {
+    sendEvent({type: 'APP_PATH'})
   },
 }
 
