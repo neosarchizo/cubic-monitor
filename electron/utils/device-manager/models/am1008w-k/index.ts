@@ -25,9 +25,9 @@ import {
   MeasureData,
   OpenCloseParticleType,
 } from './types'
-import * as DB from '../../../db'
+// import * as DB from '../../../db'
 import {FORMAT_TIME} from '../constants'
-import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO} from './queries'
+// import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO} from './queries'
 
 const timeTable: {[sn: string]: string} = {}
 
@@ -372,26 +372,26 @@ export const record: (device: Device) => void = (device) => {
 
   timeTable[serialNumber] = now
 
-  const db = DB.getDb()
+  // const db = DB.getDb()
 
-  db.serialize(() => {
-    db.run(QUERY_CREATE_TABLE)
-    db.run(QUERY_INSERT_INTO, [
-      serialNumber,
-      now,
-      co2,
-      voc,
-      relatedHumidity,
-      temperature,
-      pm1p0Grimm,
-      pm2p5Grimm,
-      pm10pGrimm,
-      vocNowRef,
-      vocRefRValue,
-      vocNowRValue,
-      pmSensorState,
-    ])
-  })
+  // db.serialize(() => {
+  //   db.run(QUERY_CREATE_TABLE)
+  //   db.run(QUERY_INSERT_INTO, [
+  //     serialNumber,
+  //     now,
+  //     co2,
+  //     voc,
+  //     relatedHumidity,
+  //     temperature,
+  //     pm1p0Grimm,
+  //     pm2p5Grimm,
+  //     pm10pGrimm,
+  //     vocNowRef,
+  //     vocRefRValue,
+  //     vocNowRValue,
+  //     pmSensorState,
+  //   ])
+  // })
 
-  db.close()
+  // db.close()
 }
