@@ -1,74 +1,163 @@
-import {FC, createContext, useContext, useMemo, useEffect, useCallback, useRef} from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  FC,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react'
 import {Subject, Subscription} from 'rxjs'
 
-import {DeviceManager, Props, API, SerialEventListener, SerialEvent, Port, Event} from './types'
+import * as sp from '../../utils/serialport'
+import {EventListener} from '../../utils/serialport/types'
+import {DeviceState, DeviceManager, Props, Port, SerialEventPacket, Device, Event} from './types'
+import {KEY_DB_PATH} from './constants'
 
-declare global {
-  interface Window {
-    deviceManager: API
-  }
+const defaultState: DeviceState = {
+  devices: [],
+  dbPath: '',
 }
 
-const {deviceManager} = window
-
-const DeviceContext = createContext<DeviceManager>({
-  list: () => {},
-  open: () => {},
-  subscribe: () => {
-    return {} as Subscription
+const DeviceContext = createContext<[DeviceState, DeviceManager]>([
+  defaultState,
+  {
+    list: () => {},
+    subscribe: () => {
+      return {} as Subscription
+    },
+    include: () => false,
+    add: () => {},
+    remove: () => {},
+    play: () => {},
+    stop: () => {},
+    getAppPath: () => {},
   },
-})
+])
 
 export const DeviceProvider: FC<Props> = (props) => {
   const {children} = props
 
-  const subject = useRef<Subject<Event>>(new Subject())
+  const [state, setState] = useState<DeviceState>(defaultState)
 
-  const manager = useMemo<DeviceManager>(() => {
-    return {
-      list: () => {
-        deviceManager.list()
-      },
-      open: (path) => {
-        deviceManager.add(path)
-      },
-      subscribe: (listener) => subject.current.subscribe(listener),
-    }
-  }, [])
+  const subject = useRef(new Subject<Event>())
 
-  const handleOnEvent = useCallback<SerialEventListener>((_, ...args) => {
-    if (args.length < 1) {
-      return
-    }
-
-    const event: SerialEvent = args[0]
-
-    const {type, data} = event
-
-    switch (type) {
-      case 'LIST': {
-        const ports: Port[] = data
-        subject.current.next({type: 'LIST', payload: ports})
-        break
-      }
-      case 'ADD': {
-        subject.current.next({type: 'OPEN', payload: data})
-        break
+  const handleOnSpEvent: EventListener = useCallback(
+    (_, ...args) => {
+      if (args.length < 1) {
+        return
       }
 
-      default:
-        break
-    }
-  }, [])
+      const packet: SerialEventPacket = args[0]
+
+      const {type, data} = packet
+
+      const {devices} = state
+
+      switch (type) {
+        case 'LIST': {
+          let ports: Array<Port> = data
+
+          ports = ports.filter((p) => {
+            const {path} = p
+
+            return !devices.some((d) => {
+              const {id} = d
+              return id === path
+            })
+          })
+
+          subject.current.next({type: 'LIST', payload: ports})
+          break
+        }
+        case 'DEVICES': {
+          setState((v) => {
+            return {
+              ...v,
+              devices: data as Device[],
+            }
+          })
+          break
+        }
+        case 'APP_PATH': {
+          localStorage.setItem(KEY_DB_PATH, data)
+          setState((v) => {
+            return {
+              ...v,
+              dbPath: data,
+            }
+          })
+          break
+        }
+        default:
+          break
+      }
+    },
+    [state],
+  )
 
   useEffect(() => {
-    deviceManager.subscribe(handleOnEvent)
-    return () => {
-      deviceManager.removeAllListeners()
-    }
-  }, [handleOnEvent])
+    sp.subscribe(handleOnSpEvent)
 
-  return <DeviceContext.Provider value={manager}>{children}</DeviceContext.Provider>
+    return () => {
+      sp.removeAllListeners()
+    }
+  }, [handleOnSpEvent])
+
+  useEffect(() => {
+    const dbPath = localStorage.getItem(KEY_DB_PATH)
+
+    if (dbPath === undefined || dbPath === null) {
+      sp.getAppPath()
+    } else {
+      setState((v) => {
+        return {
+          ...v,
+          dbPath,
+        }
+      })
+    }
+  }, [])
+
+  const manager = useMemo<DeviceManager>(() => {
+    const {devices} = state
+
+    return {
+      list: sp.list,
+      subscribe: (listener) => subject.current.subscribe(listener),
+      include: (path) =>
+        devices.some((d) => {
+          const {id} = d
+          return id === path
+        }),
+      add: (path, model) => {
+        console.log('ADD', path, model)
+        sp.add(path, model)
+      },
+      remove: (path) => {
+        console.log('REMOVE', path)
+        sp.remove(path)
+      },
+      play: (path) => {
+        console.log('PLAY', path)
+        sp.play(path)
+      },
+      stop: (path) => {
+        console.log('STOP', path)
+        sp.stop(path)
+      },
+      getAppPath: () => {
+        sp.getAppPath()
+      },
+    }
+  }, [state])
+
+  const value = useMemo<[DeviceState, DeviceManager]>(() => {
+    return [state, manager]
+  }, [state, manager])
+
+  return <DeviceContext.Provider value={value}>{children}</DeviceContext.Provider>
 }
 
-export const useDevice: () => DeviceManager = () => useContext(DeviceContext)
+export const useDevice: () => [DeviceState, DeviceManager] = () => useContext(DeviceContext)
