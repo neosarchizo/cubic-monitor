@@ -10,10 +10,26 @@ import {
 } from 'react'
 import {Subject, Subscription} from 'rxjs'
 
-import * as sp from '../../utils/serialport'
-import {EventListener} from '../../utils/serialport/types'
-import {DeviceState, DeviceManager, Props, Port, SerialEventPacket, Device, Event} from './types'
+import {
+  DeviceState,
+  DeviceManager,
+  Props,
+  Port,
+  SerialEvent,
+  Device,
+  Event,
+  API,
+  SerialEventListener,
+} from './types'
 import {KEY_DB_PATH} from './constants'
+
+declare global {
+  interface Window {
+    deviceManager: API
+  }
+}
+
+const {deviceManager} = window
 
 const defaultState: DeviceState = {
   devices: [],
@@ -43,13 +59,13 @@ export const DeviceProvider: FC<Props> = (props) => {
 
   const subject = useRef(new Subject<Event>())
 
-  const handleOnSpEvent: EventListener = useCallback(
+  const handleOnSpEvent: SerialEventListener = useCallback(
     (_, ...args) => {
       if (args.length < 1) {
         return
       }
 
-      const packet: SerialEventPacket = args[0]
+      const packet: SerialEvent = args[0]
 
       const {type, data} = packet
 
@@ -98,10 +114,10 @@ export const DeviceProvider: FC<Props> = (props) => {
   )
 
   useEffect(() => {
-    sp.subscribe(handleOnSpEvent)
+    deviceManager.subscribe(handleOnSpEvent)
 
     return () => {
-      sp.removeAllListeners()
+      deviceManager.removeAllListeners()
     }
   }, [handleOnSpEvent])
 
@@ -109,7 +125,7 @@ export const DeviceProvider: FC<Props> = (props) => {
     const dbPath = localStorage.getItem(KEY_DB_PATH)
 
     if (dbPath === undefined || dbPath === null) {
-      sp.getAppPath()
+      deviceManager.getAppPath()
     } else {
       setState((v) => {
         return {
@@ -124,7 +140,7 @@ export const DeviceProvider: FC<Props> = (props) => {
     const {devices} = state
 
     return {
-      list: sp.list,
+      list: deviceManager.list,
       subscribe: (listener) => subject.current.subscribe(listener),
       include: (path) =>
         devices.some((d) => {
@@ -133,22 +149,22 @@ export const DeviceProvider: FC<Props> = (props) => {
         }),
       add: (path, model) => {
         console.log('ADD', path, model)
-        sp.add(path, model)
+        deviceManager.add(path, model)
       },
       remove: (path) => {
         console.log('REMOVE', path)
-        sp.remove(path)
+        deviceManager.remove(path)
       },
       play: (path) => {
         console.log('PLAY', path)
-        sp.play(path)
+        deviceManager.play(path)
       },
       stop: (path) => {
         console.log('STOP', path)
-        sp.stop(path)
+        deviceManager.stop(path)
       },
       getAppPath: () => {
-        sp.getAppPath()
+        deviceManager.getAppPath()
       },
     }
   }, [state])

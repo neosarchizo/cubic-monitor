@@ -1,10 +1,25 @@
 import {ReactNode} from 'react'
 import {Subscription} from 'rxjs'
+import {IpcRendererEvent} from 'electron'
 
 import {PM2008} from '../models/pm2008/types'
 import {CM1106} from '../models/cm1106/types'
 import {CM1107} from '../models/cm1107/types'
 import {AM1008WK} from '../models/am1008w-k/types'
+
+export type SerialEventListener = (event: IpcRendererEvent, ...args: any[]) => void
+
+export interface API {
+  subscribe: (func: SerialEventListener) => void
+  unsubscribe: (func: SerialEventListener) => void
+  removeAllListeners: () => void
+  list: () => void
+  add: (path: string, model: DeviceModel) => void
+  remove: (path: string) => void
+  play: (path: string) => void
+  stop: (path: string) => void
+  getAppPath: () => void
+}
 
 export interface Port {
   path: string
@@ -18,7 +33,7 @@ export interface Port {
 
 export type SerialEventType = 'LIST' | 'DEVICES' | 'APP_PATH'
 
-export interface SerialEventPacket {
+export interface SerialEvent {
   type: SerialEventType
   data?
 }
