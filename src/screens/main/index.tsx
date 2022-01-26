@@ -172,149 +172,163 @@ const Main: VFC = () => {
   const handleOnSerialNumberFormat: (params: GridValueFormatterParams) => GridCellValue = (
     params,
   ) => {
-    // let result = ''
+    let result = ''
 
-    const result = ''
+    const {id} = params
 
-    console.log('handleOnSerialNumberFormat', params)
+    const device = devices.find((d) => {
+      const {id: dId} = d
+      return id === dId
+    })
 
-    // const {model, pm2008, cm1106, cm1107, am1008wk} = row as Device
+    if (device === undefined || device === null) {
+      return result
+    }
 
-    // switch (model) {
-    //   case 'PM2008': {
-    //     if (pm2008 === undefined) {
-    //       break
-    //     }
+    const {model, pm2008, cm1106, cm1107, am1008wk} = device
 
-    //     const {serialNumber} = pm2008
+    switch (model) {
+      case 'PM2008': {
+        if (pm2008 === undefined) {
+          break
+        }
 
-    //     if (serialNumber === null) {
-    //       break
-    //     }
+        const {serialNumber} = pm2008
 
-    //     result = serialNumber
-    //     break
-    //   }
-    //   case 'CM1106': {
-    //     if (cm1106 === undefined) {
-    //       break
-    //     }
+        if (serialNumber === null) {
+          break
+        }
 
-    //     const {serialNumber} = cm1106
+        result = serialNumber
+        break
+      }
+      case 'CM1106': {
+        if (cm1106 === undefined) {
+          break
+        }
 
-    //     if (serialNumber === null) {
-    //       break
-    //     }
+        const {serialNumber} = cm1106
 
-    //     result = serialNumber
-    //     break
-    //   }
-    //   case 'CM1107': {
-    //     if (cm1107 === undefined) {
-    //       break
-    //     }
+        if (serialNumber === null) {
+          break
+        }
 
-    //     const {serialNumber} = cm1107
+        result = serialNumber
+        break
+      }
+      case 'CM1107': {
+        if (cm1107 === undefined) {
+          break
+        }
 
-    //     if (serialNumber === null) {
-    //       break
-    //     }
+        const {serialNumber} = cm1107
 
-    //     result = serialNumber
-    //     break
-    //   }
-    //   case 'AM1008W-K': {
-    //     if (am1008wk === undefined) {
-    //       break
-    //     }
+        if (serialNumber === null) {
+          break
+        }
 
-    //     const {serialNumber} = am1008wk
+        result = serialNumber
+        break
+      }
+      case 'AM1008W-K': {
+        if (am1008wk === undefined) {
+          break
+        }
 
-    //     if (serialNumber === null) {
-    //       break
-    //     }
+        const {serialNumber} = am1008wk
 
-    //     result = serialNumber
-    //     break
-    //   }
+        if (serialNumber === null) {
+          break
+        }
 
-    //   default:
-    //     break
-    // }
+        result = serialNumber
+        break
+      }
+
+      default:
+        break
+    }
 
     return result
   }
 
   const handleOnSwVersionFormat: (params: GridValueFormatterParams) => GridCellValue = (params) => {
-    // let result = ''
-    const result = ''
-    console.log('handleOnSwVersionFormat', params)
+    let result = ''
 
-    // const {row} = params
+    const {id} = params
 
-    // const {model, pm2008, cm1106, cm1107, am1008wk} = row as Device
+    const device = devices.find((d) => {
+      const {id: dId} = d
+      return id === dId
+    })
 
-    // switch (model) {
-    //   case 'PM2008': {
-    //     if (pm2008 === undefined) {
-    //       break
-    //     }
+    if (device === undefined || device === null) {
+      return result
+    }
 
-    //     const {swVer} = pm2008
+    const {model, pm2008, cm1106, cm1107, am1008wk} = device
 
-    //     if (swVer === null) {
-    //       break
-    //     }
+    switch (model) {
+      case 'PM2008': {
+        if (pm2008 === undefined) {
+          break
+        }
 
-    //     result = swVer
-    //     break
-    //   }
-    //   case 'CM1106': {
-    //     if (cm1106 === undefined) {
-    //       break
-    //     }
+        const {swVer} = pm2008
 
-    //     const {swVer} = cm1106
+        if (swVer === null) {
+          break
+        }
 
-    //     if (swVer === null) {
-    //       break
-    //     }
+        result = swVer
+        break
+      }
+      case 'CM1106': {
+        if (cm1106 === undefined) {
+          break
+        }
 
-    //     result = swVer
-    //     break
-    //   }
-    //   case 'CM1107': {
-    //     if (cm1107 === undefined) {
-    //       break
-    //     }
+        const {swVer} = cm1106
 
-    //     const {swVer} = cm1107
+        if (swVer === null) {
+          break
+        }
 
-    //     if (swVer === null) {
-    //       break
-    //     }
+        result = swVer
+        break
+      }
+      case 'CM1107': {
+        if (cm1107 === undefined) {
+          break
+        }
 
-    //     result = swVer
-    //     break
-    //   }
-    //   case 'AM1008W-K': {
-    //     if (am1008wk === undefined) {
-    //       break
-    //     }
+        const {swVer} = cm1107
 
-    //     const {swVer} = am1008wk
+        if (swVer === null) {
+          break
+        }
 
-    //     if (swVer === null) {
-    //       break
-    //     }
+        result = swVer
+        break
+      }
+      case 'AM1008W-K': {
+        if (am1008wk === undefined) {
+          break
+        }
 
-    //     result = swVer
-    //     break
-    //   }
+        const {swVer} = am1008wk
 
-    //   default:
-    //     break
-    // }
+        if (swVer === null) {
+          break
+        }
+
+        result = swVer
+        break
+      }
+
+      default:
+        break
+    }
 
     return result
   }
