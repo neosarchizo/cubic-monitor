@@ -21,6 +21,7 @@ const strings: Strings = {
       serialNumber: '시리얼 번호',
       swVersion: 'S/W 버젼',
       cubic: 'CUBIC',
+      devices: '기기들',
     },
   },
 }

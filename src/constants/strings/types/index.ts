@@ -17,6 +17,7 @@ export type Language = {
   serialNumber: string
   swVersion: string
   cubic: string
+  devices: string
 }
 
 export type Translation = {

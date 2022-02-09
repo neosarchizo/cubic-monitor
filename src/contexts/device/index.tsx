@@ -88,7 +88,6 @@ export const DeviceProvider: FC<Props> = (props) => {
           break
         }
         case 'DEVICES': {
-          console.log('here!!! DEVICES!!')
           setState((v) => {
             return {
               ...v,

@@ -388,7 +388,7 @@ const Main: VFC = () => {
   }, [deviceManager])
 
   return (
-    <Layout title={t('cubic')} hideDrawer>
+    <Layout title={t('devices')}>
       <Container>
         <Body>
           <DataGridContainer>

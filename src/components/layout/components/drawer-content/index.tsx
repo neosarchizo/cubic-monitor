@@ -32,7 +32,7 @@ const Main: FC<Props> = (props) => {
           <ListItemIcon>
             <Usb />
           </ListItemIcon>
-          <ListItemText primary={t('usb')} />
+          <ListItemText primary={t('devices')} />
         </ListItem>
         <ListItem
           button
