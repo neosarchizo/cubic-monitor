@@ -1,28 +1,17 @@
 import styled from 'styled-components'
 import {DataGrid} from '@mui/x-data-grid'
-import {Grid, Select} from '@material-ui/core'
+import {Grid} from '@material-ui/core'
 
 export const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: blue;
 `
 
 export const GridContainer = styled(Grid).attrs({container: true, spacing: 3})`
   width: 100%;
-  background: yellow;
   padding: 10px;
-`
-
-export const MySelect = styled(Select)`
-  width: 100%;
-`
-
-export const TableContainer = styled.div`
-  height: 400px;
-  width: 100%;
 `
 
 export const Body = styled.div`
