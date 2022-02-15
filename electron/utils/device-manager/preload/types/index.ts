@@ -2,7 +2,7 @@ import {IpcRendererEvent} from 'electron'
 
 import {DeviceModel} from '../../types'
 
-export type EventListener = (event: IpcRendererEvent, ...args: any[]) => void
+export type EventListener = (event: IpcRendererEvent, ...args: []) => void
 
 export interface API {
   subscribe: (func: EventListener) => void
