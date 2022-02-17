@@ -25,7 +25,7 @@ import {
   MeasureData,
   OpenCloseParticleType,
 } from './types'
-import * as DB from '../../../db'
+import * as DB from '../../../db-manager'
 import {FORMAT_TIME} from '../constants'
 import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO} from './queries'
 

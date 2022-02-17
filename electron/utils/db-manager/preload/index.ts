@@ -18,6 +18,9 @@ const api: API = {
   isTableExisted: (name) => {
     sendEvent({type: 'IS_TABLE_EXISTED', data: {name}})
   },
+  getSerialNumbers: (name) => {
+    sendEvent({type: 'GET_SERIAL_NUMBERS', data: {name}})
+  },
 }
 
 const expose: () => void = () => {
