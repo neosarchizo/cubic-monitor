@@ -5,6 +5,7 @@ import path = require('path')
 
 import {API_NAME} from './constants'
 import {AppEventType, Event} from './types'
+import {QUERY_IS_TABLE_EXISTED} from './queries'
 
 let webContents: WebContents
 
@@ -45,7 +46,26 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
     switch (type) {
       case 'IS_TABLE_EXISTED': {
-        console.log('IS_TABLE_EXISTED', data)
+        const param = data as {name: string}
+
+        console.log('IS_TABLE_EXISTED', data, QUERY_IS_TABLE_EXISTED)
+
+        const {name} = param
+
+        const db = getDb()
+
+        db.each(
+          QUERY_IS_TABLE_EXISTED(name),
+          (err, row) => {
+            console.log('row', row, err)
+          },
+          (err, count) => {
+            console.log('complete', count, err)
+          },
+        )
+
+        db.close()
+
         break
       }
       case 'GET_SERIAL_NUMBERS': {
