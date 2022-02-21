@@ -7,6 +7,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import Root from './routes'
 import * as I18n from './utils/i18n'
 import {DeviceProvider} from './contexts/device'
+import {DbProvider} from './contexts/db'
 
 I18n.init()
 
@@ -17,11 +18,13 @@ const App: VoidFunctionComponent = () => {
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <DeviceProvider>
-          <Router>
-            <Root />
-          </Router>
-        </DeviceProvider>
+        <DbProvider>
+          <DeviceProvider>
+            <Router>
+              <Root />
+            </Router>
+          </DeviceProvider>
+        </DbProvider>
       </ThemeProvider>
     </>
   )

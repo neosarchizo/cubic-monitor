@@ -28,7 +28,6 @@ export interface Event {
 export type EventListener = (event: Event) => void
 
 export interface DbManager {
-  list: () => void
   subscribe: (listener: EventListener) => Subscription
   isTableExisted: (name: string) => void
   getSerialNumbers: (name: string) => void
