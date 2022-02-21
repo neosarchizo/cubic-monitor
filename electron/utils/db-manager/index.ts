@@ -21,9 +21,6 @@ const sendEvent: (type: AppEventType, data) => void = (type, data) => {
   webContents.send(API_NAME, {type, data})
 }
 
-// TODO remove follow
-console.log('sendEvent', sendEvent)
-
 export const main: (window: BrowserWindow) => void = (window) => {
   const {webContents: wc} = window
 
@@ -48,24 +45,31 @@ export const main: (window: BrowserWindow) => void = (window) => {
       case 'IS_TABLE_EXISTED': {
         const param = data as {name: string}
 
-        console.log('IS_TABLE_EXISTED', data, QUERY_IS_TABLE_EXISTED)
-
         const {name} = param
 
         const db = getDb()
 
         db.each(
           QUERY_IS_TABLE_EXISTED(name),
-          (err, row) => {
-            console.log('row', row, err)
-          },
+          () => {},
           (err, count) => {
-            console.log('complete', count, err)
+            if (err !== undefined && err !== null) {
+              console.log('QUERY_IS_TABLE_EXISTED failed', err)
+
+              sendEvent('IS_TABLE_EXISTED', {existed: false})
+              return
+            }
+
+            if (count === 0) {
+              sendEvent('IS_TABLE_EXISTED', {existed: false})
+              return
+            }
+
+            sendEvent('IS_TABLE_EXISTED', {existed: true})
           },
         )
 
         db.close()
-
         break
       }
       case 'GET_SERIAL_NUMBERS': {

@@ -59,7 +59,7 @@ export type EventType = 'LIST' | 'APP_PATH'
 
 export interface Event {
   type: EventType
-  payload?: any
+  payload?
 }
 
 export type EventListener = (event: Event) => void
