@@ -18,6 +18,7 @@ export type Language = {
   swVersion: string
   cubic: string
   devices: string
+  none: string
 }
 
 export type Translation = {

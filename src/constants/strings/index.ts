@@ -22,6 +22,7 @@ const strings: Strings = {
       swVersion: 'S/W 버젼',
       cubic: 'CUBIC',
       devices: '기기들',
+      none: '없음',
     },
   },
 }
