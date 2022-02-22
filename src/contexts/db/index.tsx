@@ -37,7 +37,7 @@ export const DbProvider: FC<Props> = (props) => {
 
     switch (type) {
       case 'IS_TABLE_EXISTED': {
-        console.log('IS_TABLE_EXISTED', data)
+        subject.current.next({type: 'IS_TABLE_EXISTED', payload: data})
         break
       }
       case 'GET_SERIAL_NUMBERS': {

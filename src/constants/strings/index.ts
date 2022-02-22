@@ -15,7 +15,7 @@ const strings: Strings = {
       pm2008: 'PM2008',
       cm1106: 'CM1106',
       am1008wk: 'AM1008W-K',
-      cm1107: 'CM11067',
+      cm1107: 'CM1107',
       connected: '연결됨',
       recording: '기록 중',
       serialNumber: '시리얼 번호',

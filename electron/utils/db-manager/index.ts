@@ -56,16 +56,16 @@ export const main: (window: BrowserWindow) => void = (window) => {
             if (err !== undefined && err !== null) {
               console.log('QUERY_IS_TABLE_EXISTED failed', err)
 
-              sendEvent('IS_TABLE_EXISTED', {existed: false})
+              sendEvent('IS_TABLE_EXISTED', {name, existed: false})
               return
             }
 
             if (count === 0) {
-              sendEvent('IS_TABLE_EXISTED', {existed: false})
+              sendEvent('IS_TABLE_EXISTED', {name, existed: false})
               return
             }
 
-            sendEvent('IS_TABLE_EXISTED', {existed: true})
+            sendEvent('IS_TABLE_EXISTED', {name, existed: true})
           },
         )
 

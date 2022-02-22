@@ -8,7 +8,7 @@ import {Container, GridContainer} from './styles'
 const Main: VFC = () => {
   const {t} = useI18n()
 
-  const [modelOption, setModelOption] = useState<string>('0')
+  const [modelOption, setModelOption] = useState<string>('PM2008')
 
   return (
     <Layout title={t('table')}>

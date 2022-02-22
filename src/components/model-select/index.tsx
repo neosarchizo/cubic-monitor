@@ -13,10 +13,10 @@ const Main: FC<Props> = (props) => {
 
   const options = useMemo<ModelOption[]>(() => {
     return [
-      {id: '0', name: t('pm2008')},
-      {id: '1', name: t('cm1106')},
-      {id: '2', name: t('cm1107')},
-      {id: '3', name: t('am1008wk')},
+      {id: 'PM2008', name: t('pm2008')},
+      {id: 'CM1106', name: t('cm1106')},
+      {id: 'CM1107', name: t('cm1107')},
+      {id: 'AM1008WK', name: t('am1008wk')},
     ]
   }, [t])
 
