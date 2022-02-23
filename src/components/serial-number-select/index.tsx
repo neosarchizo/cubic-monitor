@@ -54,7 +54,11 @@ const Main: FC<Props> = (props) => {
             return
           }
 
-          console.log('existed!!')
+          dbManager.getSerialNumbers(model)
+          break
+        }
+        case 'GET_SERIAL_NUMBERS': {
+          console.log('GET_SERIAL_NUMBERS', payload)
           break
         }
 
@@ -62,7 +66,7 @@ const Main: FC<Props> = (props) => {
           break
       }
     },
-    [model],
+    [model, dbManager],
   )
 
   useEffect(() => {
