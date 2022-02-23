@@ -36,19 +36,34 @@ const Main: FC<Props> = (props) => {
     [onChange],
   )
 
-  const handleOnDbEvent = useCallback<EventListener>((event) => {
-    const {type, payload} = event
+  const handleOnDbEvent = useCallback<EventListener>(
+    (event) => {
+      const {type, payload} = event
 
-    switch (type) {
-      case 'IS_TABLE_EXISTED': {
-        console.log('IS_TABLE_EXISTED', payload)
-        break
+      switch (type) {
+        case 'IS_TABLE_EXISTED': {
+          const param = payload as {name: string; existed: boolean}
+
+          const {name, existed} = param
+
+          if (name !== model) {
+            return
+          }
+
+          if (!existed) {
+            return
+          }
+
+          console.log('existed!!')
+          break
+        }
+
+        default:
+          break
       }
-
-      default:
-        break
-    }
-  }, [])
+    },
+    [model],
+  )
 
   useEffect(() => {
     const subscription = dbManager.subscribe(handleOnDbEvent)
