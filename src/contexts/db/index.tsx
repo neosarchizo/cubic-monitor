@@ -41,7 +41,7 @@ export const DbProvider: FC<Props> = (props) => {
         break
       }
       case 'GET_SERIAL_NUMBERS': {
-        console.log('GET_SERIAL_NUMBERS', data)
+        subject.current.next({type: 'GET_SERIAL_NUMBERS', payload: data})
         break
       }
 
