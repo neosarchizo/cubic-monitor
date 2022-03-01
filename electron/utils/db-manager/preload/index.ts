@@ -21,6 +21,9 @@ const api: API = {
   getSerialNumbers: (name) => {
     sendEvent({type: 'GET_SERIAL_NUMBERS', data: {name}})
   },
+  getData: (name, serialNumber) => {
+    sendEvent({type: 'GET_DATA', data: {name, serialNumber}})
+  },
 }
 
 const expose: () => void = () => {

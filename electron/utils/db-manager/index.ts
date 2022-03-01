@@ -5,7 +5,7 @@ import path = require('path')
 
 import {API_NAME} from './constants'
 import {AppEventType, Event} from './types'
-import {QUERY_IS_TABLE_EXISTED, QUERY_GET_SERIAL_NUMBERS} from './queries'
+import {QUERY_IS_TABLE_EXISTED, QUERY_GET_SERIAL_NUMBERS, QUERY_GET_DATA} from './queries'
 
 let webContents: WebContents
 
@@ -112,8 +112,46 @@ export const main: (window: BrowserWindow) => void = (window) => {
         )
 
         db.close()
+        break
+      }
+      case 'GET_DATA': {
+        const param = data as {name: string; serialNumber: string}
 
-        console.log('GET_SERIAL_NUMBERS', data)
+        const {name, serialNumber} = param
+
+        const db = getDb()
+
+        const records: any[] = []
+
+        db.each(
+          QUERY_GET_DATA(name, serialNumber),
+          (err, row) => {
+            if (err !== undefined && err !== null) {
+              return
+            }
+
+            records.push(row)
+          },
+          (err, count) => {
+            if (err !== undefined && err !== null) {
+              console.log('QUERY_GET_DATA failed', err)
+
+              sendEvent('GET_DATA', {name, serialNumber, data: records})
+              return
+            }
+
+            if (count === 0) {
+              sendEvent('GET_DATA', {name, serialNumber, data: records})
+              return
+            }
+
+            sendEvent('GET_DATA', {name, serialNumber, data: records})
+
+            console.log('GET_DATA success!!')
+          },
+        )
+
+        db.close()
         break
       }
       default:

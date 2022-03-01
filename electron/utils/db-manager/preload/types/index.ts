@@ -7,4 +7,5 @@ export interface API {
   removeAllListeners: () => void
   isTableExisted: (name: string) => void
   getSerialNumbers: (name: string) => void
+  getData: (name: string, serialNumber: string) => void
 }

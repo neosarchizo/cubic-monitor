@@ -18,6 +18,7 @@ const DbContext = createContext<[DbManager]>([
     },
     isTableExisted: () => {},
     getSerialNumbers: () => {},
+    getData: () => {},
   },
 ])
 
@@ -44,6 +45,10 @@ export const DbProvider: FC<Props> = (props) => {
         subject.current.next({type: 'GET_SERIAL_NUMBERS', payload: data})
         break
       }
+      case 'GET_DATA': {
+        subject.current.next({type: 'GET_DATA', payload: data})
+        break
+      }
 
       default:
         break
@@ -63,6 +68,7 @@ export const DbProvider: FC<Props> = (props) => {
       subscribe: (listener) => subject.current.subscribe(listener),
       isTableExisted: dbManager.isTableExisted,
       getSerialNumbers: dbManager.getSerialNumbers,
+      getData: dbManager.getData,
     }
   }, [])
 
