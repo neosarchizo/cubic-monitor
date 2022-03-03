@@ -42,13 +42,20 @@ export interface AppDevice {
   recording: boolean
 }
 
-export type EventType = 'LIST' | 'ADD' | 'REMOVE' | 'PLAY' | 'STOP' | 'APP_PATH'
+export type EventType =
+  | 'LIST'
+  | 'ADD'
+  | 'REMOVE'
+  | 'PLAY'
+  | 'STOP'
+  | 'APP_PATH'
+  | 'GET_SERIAL_NUMBERS'
 export interface Event {
   type: EventType
   data?
 }
 
-export type AppEventType = 'LIST' | 'DEVICES' | 'APP_PATH'
+export type AppEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS'
 
 export interface AppEvent {
   type: AppEventType

@@ -19,6 +19,7 @@ export interface API {
   play: (path: string) => void
   stop: (path: string) => void
   getAppPath: () => void
+  getSerialNumbers: (model: DeviceModel) => void
 }
 
 export interface Port {

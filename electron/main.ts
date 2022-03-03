@@ -2,7 +2,7 @@ import {app, BrowserWindow} from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 
-import {DeviceManager, DbManager} from './utils'
+import DeviceManager from './utils/device-manager'
 
 let mainWindow: BrowserWindow | null
 
@@ -41,7 +41,6 @@ function createWindow() {
   })
 
   DeviceManager(mainWindow)
-  DbManager(mainWindow)
 }
 
 // app.allowRendererProcessReuse = false

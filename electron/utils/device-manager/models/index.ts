@@ -1,4 +1,4 @@
-import {Device} from '../types'
+import {Device, DeviceModel} from '../types'
 import * as PM2008 from './pm2008'
 import * as CM1106 from './cm1106'
 import * as CM1107 from './cm1107'
@@ -111,4 +111,26 @@ export const record: (device: Device) => void = (device) => {
     default:
       break
   }
+}
+
+export const getSerialNumbers: (model: DeviceModel) => string[] = (model) => {
+  switch (model) {
+    case 'PM2008': {
+      return PM2008.getSerialNumbers()
+    }
+    case 'CM1106': {
+      return CM1106.getSerialNumbers()
+    }
+    case 'CM1107': {
+      return CM1107.getSerialNumbers()
+    }
+    case 'AM1008W-K': {
+      return AM1008WK.getSerialNumbers()
+    }
+
+    default:
+      break
+  }
+
+  return []
 }

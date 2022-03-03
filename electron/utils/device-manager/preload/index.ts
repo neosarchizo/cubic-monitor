@@ -33,6 +33,9 @@ const api: API = {
   getAppPath: () => {
     sendEvent({type: 'APP_PATH'})
   },
+  getSerialNumbers: (model) => {
+    sendEvent({type: 'GET_SERIAL_NUMBERS', data: {model}})
+  },
 }
 
 const expose: () => void = () => {

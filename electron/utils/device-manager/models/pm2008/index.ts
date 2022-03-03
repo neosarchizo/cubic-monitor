@@ -18,8 +18,8 @@ import {
 } from './constants'
 import {OpenCloseParticleType, PM2008, PM2008Event, PM2008PropType, MeasureData} from './types'
 import {FRAME_SEND_STX, FRAME_RESP_STX} from '../../../packet/constants'
-// import * as DB from '../../../db'
-// import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO} from './queries'
+import * as DB from '../../../db-manager'
+import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO, QUERY_GET_SERIAL_NUMBERS} from './queries'
 import {FORMAT_TIME} from '../constants'
 
 const timeTable: {[sn: string]: string} = {}
@@ -357,27 +357,39 @@ export const record: (device: Device) => void = (device) => {
 
   timeTable[serialNumber] = now
 
-  // const db = DB.getDb()
+  const db = DB.getDb()
 
-  // db.serialize(() => {
-  //   db.run(QUERY_CREATE_TABLE)
-  //   db.run(QUERY_INSERT_INTO, [
-  //     serialNumber,
-  //     now,
-  //     pm1p0Grimm,
-  //     pm2p5Grimm,
-  //     pm10pGrimm,
-  //     pm1p0Tsi,
-  //     pm2p5Tsi,
-  //     pm10pTsi,
-  //     particleNumber0p3UmAbove,
-  //     particleNumber0p5UmAbove,
-  //     particleNumber1p0UmAbove,
-  //     particleNumber2p5UmAbove,
-  //     particleNumber5p0UmAbove,
-  //     particleNumber10pUmAbove,
-  //   ])
-  // })
+  db.serialize(() => {
+    db.run(QUERY_CREATE_TABLE)
+    db.run(QUERY_INSERT_INTO, [
+      serialNumber,
+      now,
+      pm1p0Grimm,
+      pm2p5Grimm,
+      pm10pGrimm,
+      pm1p0Tsi,
+      pm2p5Tsi,
+      pm10pTsi,
+      particleNumber0p3UmAbove,
+      particleNumber0p5UmAbove,
+      particleNumber1p0UmAbove,
+      particleNumber2p5UmAbove,
+      particleNumber5p0UmAbove,
+      particleNumber10pUmAbove,
+    ])
+  })
 
-  // db.close()
+  db.close()
+}
+
+export const getSerialNumbers: () => string[] = () => {
+  const db = DB.getDb()
+
+  db.each(QUERY_GET_SERIAL_NUMBERS, (err, row) => {
+    console.log('getSerialNumbers', err, row)
+  })
+
+  db.close()
+
+  return []
 }

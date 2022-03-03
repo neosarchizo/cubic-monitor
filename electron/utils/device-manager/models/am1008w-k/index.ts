@@ -27,7 +27,7 @@ import {
 } from './types'
 import * as DB from '../../../db-manager'
 import {FORMAT_TIME} from '../constants'
-import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO} from './queries'
+import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO, QUERY_GET_SERIAL_NUMBERS} from './queries'
 
 const timeTable: {[sn: string]: string} = {}
 
@@ -394,4 +394,16 @@ export const record: (device: Device) => void = (device) => {
   })
 
   db.close()
+}
+
+export const getSerialNumbers: () => string[] = () => {
+  const db = DB.getDb()
+
+  db.each(QUERY_GET_SERIAL_NUMBERS, (err, row) => {
+    console.log('getSerialNumbers', err, row)
+  })
+
+  db.close()
+
+  return []
 }

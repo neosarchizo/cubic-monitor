@@ -2,7 +2,7 @@ import {BrowserWindow, ipcMain, WebContents, app} from 'electron'
 
 import SerialPort = require('serialport')
 
-import {Device, Event, AppEventType, AppDevice} from './types'
+import {Device, Event, AppEventType, AppDevice, DeviceModel} from './types'
 import {API_NAME, BAUD_RATE} from './constants'
 import * as ModelManager from './models'
 import {PM2008Event} from './models/pm2008/types'
@@ -652,6 +652,18 @@ export const main: (window: BrowserWindow) => void = (window) => {
       }
       case 'APP_PATH': {
         sendEvent('APP_PATH', app.getPath('downloads'))
+        break
+      }
+      case 'GET_SERIAL_NUMBERS': {
+        if (data === undefined || data === null) {
+          break
+        }
+
+        const param = data as {model: DeviceModel}
+
+        const {model} = param
+
+        ModelManager.getSerialNumbers(model)
         break
       }
       default:

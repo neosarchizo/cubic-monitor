@@ -12,9 +12,9 @@ import {
 } from './constants'
 import {FRAME_SEND_STX, FRAME_RESP_STX} from '../../../packet/constants'
 import {CM1106Event, CM1106PropType, CM1106, MeasureData} from './types'
-// import * as DB from '../../../db'
+import * as DB from '../../../db-manager'
 import {FORMAT_TIME} from '../constants'
-// import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO} from './queries'
+import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO, QUERY_GET_SERIAL_NUMBERS} from './queries'
 
 const timeTable: {[sn: string]: string} = {}
 
@@ -226,12 +226,24 @@ export const record: (device: Device) => void = (device) => {
 
   timeTable[serialNumber] = now
 
-  // const db = DB.getDb()
+  const db = DB.getDb()
 
-  // db.serialize(() => {
-  //   db.run(QUERY_CREATE_TABLE)
-  //   db.run(QUERY_INSERT_INTO, [serialNumber, now, co2])
-  // })
+  db.serialize(() => {
+    db.run(QUERY_CREATE_TABLE)
+    db.run(QUERY_INSERT_INTO, [serialNumber, now, co2])
+  })
 
-  // db.close()
+  db.close()
+}
+
+export const getSerialNumbers: () => string[] = () => {
+  const db = DB.getDb()
+
+  db.each(QUERY_GET_SERIAL_NUMBERS, (err, row) => {
+    console.log('getSerialNumbers', err, row)
+  })
+
+  db.close()
+
+  return []
 }
