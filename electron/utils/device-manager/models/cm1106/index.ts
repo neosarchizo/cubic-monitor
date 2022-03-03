@@ -239,9 +239,15 @@ export const record: (device: Device) => void = (device) => {
 export const getSerialNumbers: () => string[] = () => {
   const db = DB.getDb()
 
-  db.each(QUERY_GET_SERIAL_NUMBERS, (err, row) => {
-    console.log('getSerialNumbers', err, row)
-  })
+  db.each(
+    QUERY_GET_SERIAL_NUMBERS,
+    (err, row) => {
+      console.log('getSerialNumbers', err, row)
+    },
+    (err, count) => {
+      console.log('getSerialNumbers complete', err, count)
+    },
+  )
 
   db.close()
 
