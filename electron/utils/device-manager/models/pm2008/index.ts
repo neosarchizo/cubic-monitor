@@ -382,12 +382,30 @@ export const record: (device: Device) => void = (device) => {
   db.close()
 }
 
-export const getSerialNumbers: () => string[] = () => {
+export const getSerialNumbers: (callback: (result: string[]) => void) => string[] = (callback) => {
   const db = DB.getDb()
 
-  db.each(QUERY_GET_SERIAL_NUMBERS, (err, row) => {
-    console.log('getSerialNumbers', err, row)
-  })
+  const result: string[] = []
+
+  db.each(
+    QUERY_GET_SERIAL_NUMBERS,
+    (err, row) => {
+      if (err !== undefined && err !== null) {
+        return
+      }
+
+      const {SERIAL_NUMBER} = row
+
+      result.push(SERIAL_NUMBER)
+    },
+    (err) => {
+      if (err !== undefined && err !== null) {
+        console.log('getSerialNumbers failed', err)
+      }
+
+      callback(result)
+    },
+  )
 
   db.close()
 

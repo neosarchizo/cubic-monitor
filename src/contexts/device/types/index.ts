@@ -7,11 +7,11 @@ import {CM1106} from '../models/cm1106/types'
 import {CM1107} from '../models/cm1107/types'
 import {AM1008WK} from '../models/am1008w-k/types'
 
-export type SerialEventListener = (event: IpcRendererEvent, ...args: any[]) => void
+export type DeviceEventListener = (event: IpcRendererEvent, ...args: any[]) => void
 
 export interface API {
-  subscribe: (func: SerialEventListener) => void
-  unsubscribe: (func: SerialEventListener) => void
+  subscribe: (func: DeviceEventListener) => void
+  unsubscribe: (func: DeviceEventListener) => void
   removeAllListeners: () => void
   list: () => void
   add: (path: string, model: DeviceModel) => void
@@ -32,10 +32,10 @@ export interface Port {
   vendorId?: string | undefined
 }
 
-export type SerialEventType = 'LIST' | 'DEVICES' | 'APP_PATH'
+export type DeviceEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS'
 
-export interface SerialEvent {
-  type: SerialEventType
+export interface DeviceEvent {
+  type: DeviceEventType
   data?
 }
 

@@ -15,11 +15,11 @@ import {
   DeviceManager,
   Props,
   Port,
-  SerialEvent,
+  DeviceEvent,
   Device,
   Event,
   API,
-  SerialEventListener,
+  DeviceEventListener,
 } from './types'
 import {KEY_DB_PATH} from './constants'
 
@@ -59,13 +59,13 @@ export const DeviceProvider: FC<Props> = (props) => {
 
   const subject = useRef(new Subject<Event>())
 
-  const handleOnSpEvent: SerialEventListener = useCallback(
+  const handleOnSpEvent: DeviceEventListener = useCallback(
     (_, ...args) => {
       if (args.length < 1) {
         return
       }
 
-      const packet: SerialEvent = args[0]
+      const packet: DeviceEvent = args[0]
 
       const {type, data} = packet
 
@@ -104,6 +104,10 @@ export const DeviceProvider: FC<Props> = (props) => {
               dbPath: data,
             }
           })
+          break
+        }
+        case 'GET_SERIAL_NUMBERS': {
+          console.log('GET_SERIAL_NUMBERS here!!!!', data)
           break
         }
         default:
