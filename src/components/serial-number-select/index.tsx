@@ -1,17 +1,19 @@
-import {FC, useCallback, ChangeEvent, useState} from 'react'
+import {FC, useCallback, ChangeEvent, useState, useEffect} from 'react'
 import {InputLabel, MenuItem} from '@material-ui/core'
 
 import {useI18n} from '../../utils/i18n'
-import {Props} from './types'
-import {ModelOption} from '../../types'
+import {Props, ModelOption} from './types'
 import {MySelect} from './styles'
+import {useDevice} from '../../contexts/device'
+import {EventListener, DeviceModel} from '../../contexts/device/types'
 
 const Main: FC<Props> = (props) => {
   const {t} = useI18n()
+  const [, deviceManager] = useDevice()
 
-  const {value, onChange, ref} = props
+  const {value, onChange, ref, model} = props
 
-  const [options] = useState<ModelOption[]>([{id: 'NONE', name: t('none')}])
+  const [options, setOptions] = useState<ModelOption[]>([{id: 'NONE', name: t('none')}])
 
   const handleOnSelectChange = useCallback<
     (
@@ -30,6 +32,53 @@ const Main: FC<Props> = (props) => {
     },
     [onChange],
   )
+
+  useEffect(() => {
+    deviceManager.getSerialNumbers(model)
+  }, [deviceManager, model])
+
+  const handleOnGetSerialNumbers: EventListener = useCallback(
+    (event) => {
+      const {type, payload} = event
+
+      if (type !== 'GET_SERIAL_NUMBERS') {
+        return
+      }
+
+      const param = payload as {model: DeviceModel; serialNumbers: string[]}
+
+      const {model: m, serialNumbers} = param
+
+      if (m !== model) {
+        return
+      }
+
+      if (serialNumbers.length === 0) {
+        setOptions([{id: 'NONE', name: t('none')}])
+        onChange('NONE')
+        return
+      }
+
+      setOptions(
+        serialNumbers.map((sn) => {
+          return {
+            id: sn,
+            name: sn,
+          }
+        }),
+      )
+      onChange(serialNumbers[0])
+    },
+    [model, t, onChange],
+  )
+
+  useEffect(() => {
+    const sub = deviceManager.subscribe(handleOnGetSerialNumbers)
+
+    return () => {
+      sub.unsubscribe()
+    }
+  }, [deviceManager, handleOnGetSerialNumbers])
 
   return (
     <>

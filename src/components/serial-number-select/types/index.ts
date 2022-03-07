@@ -1,5 +1,12 @@
+import {DeviceModel} from '../../../contexts/device/types'
+
+export interface ModelOption {
+  id: string
+  name: string
+}
+
 export interface Props {
-  model: string
+  model: DeviceModel
   onChange: (value: string) => void
   value: string
   ref?

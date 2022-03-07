@@ -169,169 +169,175 @@ const Main: VFC = () => {
     ]
   }, [t, renderModelCell, renderTopOptionCell])
 
-  const handleOnSerialNumberFormat: (params: GridValueFormatterParams) => GridCellValue = (
-    params,
-  ) => {
-    let result = ''
+  const handleOnSerialNumberFormat = useCallback<
+    (params: GridValueFormatterParams) => GridCellValue
+  >(
+    (params) => {
+      let result = ''
 
-    const {id} = params
+      const {id} = params
 
-    const device = devices.find((d) => {
-      const {id: dId} = d
-      return id === dId
-    })
+      const device = devices.find((d) => {
+        const {id: dId} = d
+        return id === dId
+      })
 
-    if (device === undefined || device === null) {
+      if (device === undefined || device === null) {
+        return result
+      }
+
+      const {model, pm2008, cm1106, cm1107, am1008wk} = device
+
+      switch (model) {
+        case 'PM2008': {
+          if (pm2008 === undefined) {
+            break
+          }
+
+          const {serialNumber} = pm2008
+
+          if (serialNumber === null) {
+            break
+          }
+
+          result = serialNumber
+          break
+        }
+        case 'CM1106': {
+          if (cm1106 === undefined) {
+            break
+          }
+
+          const {serialNumber} = cm1106
+
+          if (serialNumber === null) {
+            break
+          }
+
+          result = serialNumber
+          break
+        }
+        case 'CM1107': {
+          if (cm1107 === undefined) {
+            break
+          }
+
+          const {serialNumber} = cm1107
+
+          if (serialNumber === null) {
+            break
+          }
+
+          result = serialNumber
+          break
+        }
+        case 'AM1008W-K': {
+          if (am1008wk === undefined) {
+            break
+          }
+
+          const {serialNumber} = am1008wk
+
+          if (serialNumber === null) {
+            break
+          }
+
+          result = serialNumber
+          break
+        }
+
+        default:
+          break
+      }
+
       return result
-    }
+    },
+    [devices],
+  )
 
-    const {model, pm2008, cm1106, cm1107, am1008wk} = device
+  const handleOnSwVersionFormat = useCallback<(params: GridValueFormatterParams) => GridCellValue>(
+    (params) => {
+      let result = ''
 
-    switch (model) {
-      case 'PM2008': {
-        if (pm2008 === undefined) {
-          break
-        }
+      const {id} = params
 
-        const {serialNumber} = pm2008
+      const device = devices.find((d) => {
+        const {id: dId} = d
+        return id === dId
+      })
 
-        if (serialNumber === null) {
-          break
-        }
-
-        result = serialNumber
-        break
-      }
-      case 'CM1106': {
-        if (cm1106 === undefined) {
-          break
-        }
-
-        const {serialNumber} = cm1106
-
-        if (serialNumber === null) {
-          break
-        }
-
-        result = serialNumber
-        break
-      }
-      case 'CM1107': {
-        if (cm1107 === undefined) {
-          break
-        }
-
-        const {serialNumber} = cm1107
-
-        if (serialNumber === null) {
-          break
-        }
-
-        result = serialNumber
-        break
-      }
-      case 'AM1008W-K': {
-        if (am1008wk === undefined) {
-          break
-        }
-
-        const {serialNumber} = am1008wk
-
-        if (serialNumber === null) {
-          break
-        }
-
-        result = serialNumber
-        break
+      if (device === undefined || device === null) {
+        return result
       }
 
-      default:
-        break
-    }
+      const {model, pm2008, cm1106, cm1107, am1008wk} = device
 
-    return result
-  }
+      switch (model) {
+        case 'PM2008': {
+          if (pm2008 === undefined) {
+            break
+          }
 
-  const handleOnSwVersionFormat: (params: GridValueFormatterParams) => GridCellValue = (params) => {
-    let result = ''
+          const {swVer} = pm2008
 
-    const {id} = params
+          if (swVer === null) {
+            break
+          }
 
-    const device = devices.find((d) => {
-      const {id: dId} = d
-      return id === dId
-    })
+          result = swVer
+          break
+        }
+        case 'CM1106': {
+          if (cm1106 === undefined) {
+            break
+          }
 
-    if (device === undefined || device === null) {
+          const {swVer} = cm1106
+
+          if (swVer === null) {
+            break
+          }
+
+          result = swVer
+          break
+        }
+        case 'CM1107': {
+          if (cm1107 === undefined) {
+            break
+          }
+
+          const {swVer} = cm1107
+
+          if (swVer === null) {
+            break
+          }
+
+          result = swVer
+          break
+        }
+        case 'AM1008W-K': {
+          if (am1008wk === undefined) {
+            break
+          }
+
+          const {swVer} = am1008wk
+
+          if (swVer === null) {
+            break
+          }
+
+          result = swVer
+          break
+        }
+
+        default:
+          break
+      }
+
       return result
-    }
-
-    const {model, pm2008, cm1106, cm1107, am1008wk} = device
-
-    switch (model) {
-      case 'PM2008': {
-        if (pm2008 === undefined) {
-          break
-        }
-
-        const {swVer} = pm2008
-
-        if (swVer === null) {
-          break
-        }
-
-        result = swVer
-        break
-      }
-      case 'CM1106': {
-        if (cm1106 === undefined) {
-          break
-        }
-
-        const {swVer} = cm1106
-
-        if (swVer === null) {
-          break
-        }
-
-        result = swVer
-        break
-      }
-      case 'CM1107': {
-        if (cm1107 === undefined) {
-          break
-        }
-
-        const {swVer} = cm1107
-
-        if (swVer === null) {
-          break
-        }
-
-        result = swVer
-        break
-      }
-      case 'AM1008W-K': {
-        if (am1008wk === undefined) {
-          break
-        }
-
-        const {swVer} = am1008wk
-
-        if (swVer === null) {
-          break
-        }
-
-        result = swVer
-        break
-      }
-
-      default:
-        break
-    }
-
-    return result
-  }
+    },
+    [devices],
+  )
 
   const bottomColumns = useMemo<GridColumns>(() => {
     return [
@@ -351,7 +357,7 @@ const Main: VFC = () => {
       },
       {field: ' ', headerName: '', width: 150, renderCell: renderBottomOptionCell},
     ]
-  }, [t, renderBottomOptionCell])
+  }, [t, renderBottomOptionCell, handleOnSerialNumberFormat, handleOnSwVersionFormat])
 
   const handleOnList: EventListener = useCallback((event) => {
     const {type, payload} = event

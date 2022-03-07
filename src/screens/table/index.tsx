@@ -4,11 +4,12 @@ import {Grid} from '@material-ui/core'
 import {Layout, ModelSelect, SerialNumberSelect} from '../../components'
 import {useI18n} from '../../utils/i18n'
 import {Container, GridContainer} from './styles'
+import {DeviceModel} from '../../contexts/device/types'
 
 const Main: VFC = () => {
   const {t} = useI18n()
 
-  const [modelOption, setModelOption] = useState<string>('PM2008')
+  const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
   const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
 
   return (

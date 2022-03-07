@@ -49,6 +49,7 @@ const DeviceContext = createContext<[DeviceState, DeviceManager]>([
     play: () => {},
     stop: () => {},
     getAppPath: () => {},
+    getSerialNumbers: () => {},
   },
 ])
 
@@ -107,7 +108,7 @@ export const DeviceProvider: FC<Props> = (props) => {
           break
         }
         case 'GET_SERIAL_NUMBERS': {
-          console.log('GET_SERIAL_NUMBERS here!!!!', data)
+          subject.current.next({type: 'GET_SERIAL_NUMBERS', payload: data})
           break
         }
         default:
@@ -169,6 +170,9 @@ export const DeviceProvider: FC<Props> = (props) => {
       },
       getAppPath: () => {
         deviceManager.getAppPath()
+      },
+      getSerialNumbers: (model) => {
+        deviceManager.getSerialNumbers(model)
       },
     }
   }, [state])

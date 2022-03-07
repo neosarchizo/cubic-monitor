@@ -56,7 +56,7 @@ export interface DeviceState {
   dbPath: string
 }
 
-export type EventType = 'LIST' | 'APP_PATH'
+export type EventType = 'LIST' | 'APP_PATH' | 'GET_SERIAL_NUMBERS'
 
 export interface Event {
   type: EventType
@@ -74,6 +74,7 @@ export interface DeviceManager {
   play: (path: string) => void
   stop: (path: string) => void
   getAppPath: () => void
+  getSerialNumbers: (model: DeviceModel) => void
 }
 
 export interface Props {

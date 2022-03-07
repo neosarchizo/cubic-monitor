@@ -664,7 +664,7 @@ export const main: (window: BrowserWindow) => void = (window) => {
         const {model} = param
 
         ModelManager.getSerialNumbers(model, (result) => {
-          sendEvent('GET_SERIAL_NUMBERS', {serialNumbers: result})
+          sendEvent('GET_SERIAL_NUMBERS', {model, serialNumbers: result})
         })
         break
       }
