@@ -50,12 +50,13 @@ export type EventType =
   | 'STOP'
   | 'APP_PATH'
   | 'GET_SERIAL_NUMBERS'
+  | 'GET_DATA'
 export interface Event {
   type: EventType
   data?
 }
 
-export type AppEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS'
+export type AppEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA'
 
 export interface AppEvent {
   type: AppEventType

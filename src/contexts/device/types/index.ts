@@ -20,6 +20,7 @@ export interface API {
   stop: (path: string) => void
   getAppPath: () => void
   getSerialNumbers: (model: DeviceModel) => void
+  getData: (model: DeviceModel, serialNumber: string) => void
 }
 
 export interface Port {
@@ -32,7 +33,7 @@ export interface Port {
   vendorId?: string | undefined
 }
 
-export type DeviceEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS'
+export type DeviceEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA'
 
 export interface DeviceEvent {
   type: DeviceEventType
@@ -56,7 +57,7 @@ export interface DeviceState {
   dbPath: string
 }
 
-export type EventType = 'LIST' | 'APP_PATH' | 'GET_SERIAL_NUMBERS'
+export type EventType = 'LIST' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA'
 
 export interface Event {
   type: EventType
@@ -75,6 +76,7 @@ export interface DeviceManager {
   stop: (path: string) => void
   getAppPath: () => void
   getSerialNumbers: (model: DeviceModel) => void
+  getData: (model: DeviceModel, serialNumber: string) => void
 }
 
 export interface Props {

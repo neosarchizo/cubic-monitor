@@ -40,3 +40,6 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 
 export const QUERY_GET_SERIAL_NUMBERS = `SELECT DISTINCT SERIAL_NUMBER FROM ${TABLE_NAME} ORDER BY SERIAL_NUMBER ASC;`
+
+export const QUERY_GET_DATA: (serialNumber: string) => string = (serialNumber) =>
+  `SELECT * FROM ${TABLE_NAME} WHERE SERIAL_NUMBER = "${serialNumber}" ORDER BY ID DESC LIMIT 1000`

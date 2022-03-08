@@ -50,6 +50,7 @@ const DeviceContext = createContext<[DeviceState, DeviceManager]>([
     stop: () => {},
     getAppPath: () => {},
     getSerialNumbers: () => {},
+    getData: () => {},
   },
 ])
 
@@ -60,7 +61,7 @@ export const DeviceProvider: FC<Props> = (props) => {
 
   const subject = useRef(new Subject<Event>())
 
-  const handleOnSpEvent: DeviceEventListener = useCallback(
+  const handleOnDeviceEvent: DeviceEventListener = useCallback(
     (_, ...args) => {
       if (args.length < 1) {
         return
@@ -119,12 +120,12 @@ export const DeviceProvider: FC<Props> = (props) => {
   )
 
   useEffect(() => {
-    deviceManager.subscribe(handleOnSpEvent)
+    deviceManager.subscribe(handleOnDeviceEvent)
 
     return () => {
       deviceManager.removeAllListeners()
     }
-  }, [handleOnSpEvent])
+  }, [handleOnDeviceEvent])
 
   useEffect(() => {
     const dbPath = localStorage.getItem(KEY_DB_PATH)
@@ -174,6 +175,7 @@ export const DeviceProvider: FC<Props> = (props) => {
       getSerialNumbers: (model) => {
         deviceManager.getSerialNumbers(model)
       },
+      getData: () => {},
     }
   }, [state])
 

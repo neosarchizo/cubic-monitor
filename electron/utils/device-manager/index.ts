@@ -668,6 +668,18 @@ export const main: (window: BrowserWindow) => void = (window) => {
         })
         break
       }
+      case 'GET_DATA': {
+        if (data === undefined || data === null) {
+          break
+        }
+
+        const param = data as {model: DeviceModel; serialNumber: string}
+
+        const {model, serialNumber} = param
+
+        ModelManager.getData(model, serialNumber)
+        break
+      }
       default:
         break
     }

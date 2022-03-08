@@ -27,7 +27,12 @@ import {
 } from './types'
 import * as DB from '../../../db-manager'
 import {FORMAT_TIME} from '../constants'
-import {QUERY_CREATE_TABLE, QUERY_INSERT_INTO, QUERY_GET_SERIAL_NUMBERS} from './queries'
+import {
+  QUERY_CREATE_TABLE,
+  QUERY_INSERT_INTO,
+  QUERY_GET_SERIAL_NUMBERS,
+  QUERY_GET_DATA,
+} from './queries'
 
 const timeTable: {[sn: string]: string} = {}
 
@@ -396,7 +401,7 @@ export const record: (device: Device) => void = (device) => {
   db.close()
 }
 
-export const getSerialNumbers: (callback: (result: string[]) => void) => string[] = (callback) => {
+export const getSerialNumbers: (callback: (result: string[]) => void) => void = (callback) => {
   const db = DB.getDb()
 
   const result: string[] = []
@@ -422,6 +427,30 @@ export const getSerialNumbers: (callback: (result: string[]) => void) => string[
   )
 
   db.close()
+}
 
-  return []
+export const getData: (serialNumber: string) => void = (serialNumber) => {
+  const db = DB.getDb()
+
+  const result: any[] = []
+
+  db.each(
+    QUERY_GET_DATA(serialNumber),
+    (err, row) => {
+      if (err !== undefined && err !== null) {
+        return
+      }
+
+      result.push(row)
+    },
+    (err) => {
+      if (err !== undefined && err !== null) {
+        console.log('getData failed', err)
+      }
+
+      console.log('getData success', result)
+    },
+  )
+
+  db.close()
 }

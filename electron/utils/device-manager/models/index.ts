@@ -116,24 +116,53 @@ export const record: (device: Device) => void = (device) => {
 export const getSerialNumbers: (
   model: DeviceModel,
   callback: (result: string[]) => void,
-) => string[] = (model, callback) => {
+) => void = (model, callback) => {
   switch (model) {
     case 'PM2008': {
-      return PM2008.getSerialNumbers(callback)
+      PM2008.getSerialNumbers(callback)
+      break
     }
     case 'CM1106': {
-      return CM1106.getSerialNumbers(callback)
+      CM1106.getSerialNumbers(callback)
+      break
     }
     case 'CM1107': {
-      return CM1107.getSerialNumbers(callback)
+      CM1107.getSerialNumbers(callback)
+      break
     }
     case 'AM1008W-K': {
-      return AM1008WK.getSerialNumbers(callback)
+      AM1008WK.getSerialNumbers(callback)
+      break
     }
 
     default:
       break
   }
+}
 
-  return []
+export const getData: (model: DeviceModel, serialNumber: string) => void = (
+  model,
+  serialNumber,
+) => {
+  switch (model) {
+    case 'PM2008': {
+      PM2008.getData(serialNumber)
+      break
+    }
+    case 'CM1106': {
+      CM1106.getData(serialNumber)
+      break
+    }
+    case 'CM1107': {
+      CM1107.getData(serialNumber)
+      break
+    }
+    case 'AM1008W-K': {
+      AM1008WK.getData(serialNumber)
+      break
+    }
+
+    default:
+      break
+  }
 }
