@@ -16,7 +16,14 @@ import {
   CMD_READ_SOFTWARE_VERSION_NUMBER,
   CMD_READ_SERIAL_NUMBER,
 } from './constants'
-import {OpenCloseParticleType, PM2008, PM2008Event, PM2008PropType, MeasureData} from './types'
+import {
+  OpenCloseParticleType,
+  PM2008,
+  PM2008Event,
+  PM2008PropType,
+  MeasureData,
+  Data,
+} from './types'
 import {FRAME_SEND_STX, FRAME_RESP_STX} from '../../../packet/constants'
 import * as DB from '../../../db-manager'
 import {
@@ -427,7 +434,41 @@ export const getData: (serialNumber: string) => void = (serialNumber) => {
         return
       }
 
-      result.push(row)
+      const data = row as Data
+
+      const {
+        ID,
+        SERIAL_NUMBER,
+        TIMESTAMP,
+        CO2,
+        VOC,
+        RELATED_HUMIDITY,
+        TEMPERATURE,
+        PM_1P0_GRIMM,
+        PM_2P5_GRIMM,
+        PM_10P_GRIMM,
+        VOC_NOW_REF,
+        VOC_REF_R_VALUE,
+        VOC_NOW_R_VALUE,
+        PM_SENSOR_STATE,
+      } = data
+
+      result.push([
+        ID,
+        SERIAL_NUMBER,
+        TIMESTAMP,
+        CO2,
+        VOC,
+        RELATED_HUMIDITY,
+        TEMPERATURE,
+        PM_1P0_GRIMM,
+        PM_2P5_GRIMM,
+        PM_10P_GRIMM,
+        VOC_NOW_REF,
+        VOC_REF_R_VALUE,
+        VOC_NOW_R_VALUE,
+        PM_SENSOR_STATE,
+      ])
     },
     (err) => {
       if (err !== undefined && err !== null) {

@@ -16,3 +16,10 @@ export interface CM1106 {
 export interface MeasureData {
   co2: number
 }
+
+export interface Data {
+  ID: number
+  SERIAL_NUMBER: string
+  TIMESTAMP: string
+  CO2: number
+}

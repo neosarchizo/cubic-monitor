@@ -38,3 +38,20 @@ export interface MeasureData {
   vocNowRValue: number
   pmSensorState: number
 }
+
+export interface Data {
+  ID: number
+  SERIAL_NUMBER: string
+  TIMESTAMP: string
+  CO2: number
+  VOC: number
+  RELATED_HUMIDITY: number
+  TEMPERATURE: number
+  PM_1P0_GRIMM: number
+  PM_2P5_GRIMM: number
+  PM_10P_GRIMM: number
+  VOC_NOW_REF: number
+  VOC_REF_R_VALUE: number
+  VOC_NOW_R_VALUE: number
+  PM_SENSOR_STATE: number
+}

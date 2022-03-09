@@ -11,7 +11,7 @@ import {
   CMD_READ_SOFTWARE_VERSION_NUMBER,
 } from './constants'
 import {FRAME_SEND_STX, FRAME_RESP_STX} from '../../../packet/constants'
-import {CM1107Event, CM1107PropType, CM1107, MeasureData} from './types'
+import {CM1107Event, CM1107PropType, CM1107, MeasureData, Data} from './types'
 import * as DB from '../../../db-manager'
 import {FORMAT_TIME} from '../constants'
 import {
@@ -281,7 +281,11 @@ export const getData: (serialNumber: string) => void = (serialNumber) => {
         return
       }
 
-      result.push(row)
+      const data = row as Data
+
+      const {ID, SERIAL_NUMBER, TIMESTAMP, CO2} = data
+
+      result.push([ID, SERIAL_NUMBER, TIMESTAMP, CO2])
     },
     (err) => {
       if (err !== undefined && err !== null) {
