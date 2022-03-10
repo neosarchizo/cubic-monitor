@@ -140,25 +140,26 @@ export const getSerialNumbers: (
   }
 }
 
-export const getData: (model: DeviceModel, serialNumber: string) => void = (
-  model,
-  serialNumber,
-) => {
+export const getData: (
+  model: DeviceModel,
+  serialNumber: string,
+  callback: (results: any[]) => void,
+) => void = (model, serialNumber, callback) => {
   switch (model) {
     case 'PM2008': {
-      PM2008.getData(serialNumber)
+      PM2008.getData(serialNumber, callback)
       break
     }
     case 'CM1106': {
-      CM1106.getData(serialNumber)
+      CM1106.getData(serialNumber, callback)
       break
     }
     case 'CM1107': {
-      CM1107.getData(serialNumber)
+      CM1107.getData(serialNumber, callback)
       break
     }
     case 'AM1008W-K': {
-      AM1008WK.getData(serialNumber)
+      AM1008WK.getData(serialNumber, callback)
       break
     }
 

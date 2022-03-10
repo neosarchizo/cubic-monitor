@@ -5,7 +5,7 @@ import {useI18n} from '../../utils/i18n'
 import {Props, ModelOption} from './types'
 import {MySelect} from './styles'
 import {useDevice} from '../../contexts/device'
-import {EventListener, DeviceModel} from '../../contexts/device/types'
+import {EventListener, ResGetSerialNumbers} from '../../contexts/device/types'
 
 const Main: FC<Props> = (props) => {
   const {t} = useI18n()
@@ -37,7 +37,7 @@ const Main: FC<Props> = (props) => {
     deviceManager.getSerialNumbers(model)
   }, [deviceManager, model])
 
-  const handleOnGetSerialNumbers: EventListener = useCallback(
+  const handleOnGetSerialNumbers = useCallback<EventListener>(
     (event) => {
       const {type, payload} = event
 
@@ -45,7 +45,7 @@ const Main: FC<Props> = (props) => {
         return
       }
 
-      const param = payload as {model: DeviceModel; serialNumbers: string[]}
+      const param = payload as ResGetSerialNumbers
 
       const {model: m, serialNumbers} = param
 

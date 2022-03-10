@@ -82,3 +82,13 @@ export interface DeviceManager {
 export interface Props {
   children: ReactNode
 }
+
+export interface ResGetSerialNumbers {
+  model: DeviceModel
+  serialNumbers: string[]
+}
+
+export interface ResGetData {
+  model: DeviceModel
+  data: any[]
+}

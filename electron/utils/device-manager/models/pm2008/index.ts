@@ -422,7 +422,10 @@ export const getSerialNumbers: (callback: (result: string[]) => void) => void = 
   db.close()
 }
 
-export const getData: (serialNumber: string) => void = (serialNumber) => {
+export const getData: (serialNumber: string, callback: (result: any[]) => void) => void = (
+  serialNumber,
+  callback,
+) => {
   const db = DB.getDb()
 
   const result: any[] = []
@@ -475,7 +478,7 @@ export const getData: (serialNumber: string) => void = (serialNumber) => {
         console.log('getData failed', err)
       }
 
-      console.log('getData success', result)
+      callback(result)
     },
   )
 

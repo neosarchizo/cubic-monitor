@@ -112,6 +112,10 @@ export const DeviceProvider: FC<Props> = (props) => {
           subject.current.next({type: 'GET_SERIAL_NUMBERS', payload: data})
           break
         }
+        case 'GET_DATA': {
+          subject.current.next({type: 'GET_DATA', payload: data})
+          break
+        }
         default:
           break
       }
@@ -175,7 +179,9 @@ export const DeviceProvider: FC<Props> = (props) => {
       getSerialNumbers: (model) => {
         deviceManager.getSerialNumbers(model)
       },
-      getData: () => {},
+      getData: (model, serialNumber) => {
+        deviceManager.getData(model, serialNumber)
+      },
     }
   }, [state])
 
