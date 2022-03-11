@@ -286,9 +286,9 @@ export const getData: (serialNumber: string, callback: (result: any[]) => void) 
 
       const data = row as Data
 
-      const {ID, SERIAL_NUMBER, TIMESTAMP, CO2} = data
+      const {ID, TIMESTAMP, CO2} = data
 
-      result.push([ID, SERIAL_NUMBER, TIMESTAMP, CO2])
+      result.push([ID, TIMESTAMP, CO2])
     },
     (err) => {
       if (err !== undefined && err !== null) {

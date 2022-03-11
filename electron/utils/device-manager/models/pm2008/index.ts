@@ -441,7 +441,6 @@ export const getData: (serialNumber: string, callback: (result: any[]) => void) 
 
       const {
         ID,
-        SERIAL_NUMBER,
         TIMESTAMP,
         CO2,
         VOC,
@@ -458,7 +457,6 @@ export const getData: (serialNumber: string, callback: (result: any[]) => void) 
 
       result.push([
         ID,
-        SERIAL_NUMBER,
         TIMESTAMP,
         CO2,
         VOC,

@@ -42,4 +42,23 @@ VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 export const QUERY_GET_SERIAL_NUMBERS = `SELECT DISTINCT SERIAL_NUMBER FROM ${TABLE_NAME} ORDER BY SERIAL_NUMBER ASC;`
 
 export const QUERY_GET_DATA: (serialNumber: string) => string = (serialNumber) =>
-  `SELECT * FROM ${TABLE_NAME} WHERE SERIAL_NUMBER = "${serialNumber}" ORDER BY ID DESC LIMIT 1000`
+  `
+SELECT
+  ID,
+  TIMESTAMP,
+  PM_1P0_GRIMM,
+  PM_2P5_GRIMM,
+  PM_10P_GRIMM,
+  PM_1P0_TSI,
+  PM_2P5_TSI,
+  PM_10P_TSI,
+  PN_0P3,
+  PN_0P5,
+  PN_1P0,
+  PN_2P5,
+  PN_5P0,
+  PN_10P
+FROM ${TABLE_NAME}
+WHERE SERIAL_NUMBER = "${serialNumber}"
+ORDER BY ID DESC
+LIMIT 1000`

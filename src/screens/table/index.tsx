@@ -1,9 +1,10 @@
-import {useEffect, useState, VFC, useCallback} from 'react'
+import {useEffect, useState, VFC, useCallback, useMemo} from 'react'
 import {Grid} from '@material-ui/core'
+import {GridColumns} from '@mui/x-data-grid'
 
 import {Layout, ModelSelect, SerialNumberSelect} from '../../components'
 import {useI18n} from '../../utils/i18n'
-import {Container, GridContainer} from './styles'
+import {Container, DataGridContainer, GridContainer, MyDataGrid} from './styles'
 import {DeviceModel, EventListener, ResGetData} from '../../contexts/device/types'
 import {useDevice} from '../../contexts/device'
 
@@ -52,6 +53,13 @@ const Main: VFC = () => {
     }
   }, [deviceManager, handleOnGetData])
 
+  const columns = useMemo<GridColumns>(() => {
+    return [
+      {field: 'id', headerName: t('path'), width: 300},
+      {field: 'model', headerName: t('model'), width: 150},
+    ]
+  }, [t])
+
   return (
     <Layout title={t('table')}>
       <Container>
@@ -67,6 +75,9 @@ const Main: VFC = () => {
             />
           </Grid>
         </GridContainer>
+        <DataGridContainer>
+          <MyDataGrid rows={[]} columns={columns} />
+        </DataGridContainer>
       </Container>
     </Layout>
   )
