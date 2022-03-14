@@ -19,6 +19,18 @@ export type Language = {
   cubic: string
   devices: string
   none: string
+  createdAt: string
+  co2: string
+  voc: string
+  relatedHumidity: string
+  temperature: string
+  pm1P0Grimm: string
+  pm2P5Grimm: string
+  pm10PGrimm: string
+  vocNowRef: string
+  vocRefRValue: string
+  vocNowRValue: string
+  pmSensorState: string
 }
 
 export type Translation = {
