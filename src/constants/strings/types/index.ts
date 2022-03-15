@@ -31,6 +31,15 @@ export type Language = {
   vocRefRValue: string
   vocNowRValue: string
   pmSensorState: string
+  pm1P0Tsi: string
+  pm2P5Tsi: string
+  pm10PTsi: string
+  particleNumber0p3UmAbove: string
+  particleNumber0p5UmAbove: string
+  particleNumber1p0UmAbove: string
+  particleNumber2p5UmAbove: string
+  particleNumber5p0UmAbove: string
+  particleNumber10pUmAbove: string
 }
 
 export type Translation = {
