@@ -428,23 +428,7 @@ export const getData: (serialNumber: string, callback: (result: any[]) => void) 
 ) => {
   const db = DB.getDb()
 
-  const result: any[] = [
-    [
-      'ID',
-      'TIMESTAMP',
-      'CO2',
-      'VOC',
-      'RELATED_HUMIDITY',
-      'TEMPERATURE',
-      'PM_1P0_GRIMM',
-      'PM_2P5_GRIMM',
-      'PM_10P_GRIMM',
-      'VOC_NOW_REF',
-      'VOC_REF_R_VALUE',
-      'VOC_NOW_R_VALUE',
-      'PM_SENSOR_STATE',
-    ],
-  ]
+  const result: any[] = []
 
   db.each(
     QUERY_GET_DATA(serialNumber),
@@ -458,33 +442,35 @@ export const getData: (serialNumber: string, callback: (result: any[]) => void) 
       const {
         ID,
         TIMESTAMP,
-        CO2,
-        VOC,
-        RELATED_HUMIDITY,
-        TEMPERATURE,
         PM_1P0_GRIMM,
         PM_2P5_GRIMM,
         PM_10P_GRIMM,
-        VOC_NOW_REF,
-        VOC_REF_R_VALUE,
-        VOC_NOW_R_VALUE,
-        PM_SENSOR_STATE,
+        PM_1P0_TSI,
+        PM_2P5_TSI,
+        PM_10P_TSI,
+        PN_0P3,
+        PN_0P5,
+        PN_1P0,
+        PN_2P5,
+        PN_5P0,
+        PN_10P,
       } = data
 
       result.push([
         ID,
         TIMESTAMP,
-        CO2,
-        VOC,
-        RELATED_HUMIDITY,
-        TEMPERATURE,
         PM_1P0_GRIMM,
         PM_2P5_GRIMM,
         PM_10P_GRIMM,
-        VOC_NOW_REF,
-        VOC_REF_R_VALUE,
-        VOC_NOW_R_VALUE,
-        PM_SENSOR_STATE,
+        PM_1P0_TSI,
+        PM_2P5_TSI,
+        PM_10P_TSI,
+        PN_0P3,
+        PN_0P5,
+        PN_1P0,
+        PN_2P5,
+        PN_5P0,
+        PN_10P,
       ])
     },
     (err) => {

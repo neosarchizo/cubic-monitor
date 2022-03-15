@@ -22,18 +22,18 @@ const Main: VFC = () => {
     switch (modelOption) {
       case 'AM1008W-K': {
         return [
-          {field: 'createdAt', headerName: t('createdAt'), width: 300},
-          {field: 'co2', headerName: t('co2'), width: 300},
-          {field: 'voc', headerName: t('voc'), width: 300},
-          {field: 'relatedHumidity', headerName: t('relatedHumidity'), width: 300},
-          {field: 'temperature', headerName: t('temperature'), width: 300},
-          {field: 'pm1P0Grimm', headerName: t('pm1P0Grimm'), width: 300},
-          {field: 'pm2P5Grimm', headerName: t('pm2P5Grimm'), width: 300},
-          {field: 'pm10PGrimm', headerName: t('pm10PGrimm'), width: 300},
-          {field: 'vocNowRef', headerName: t('vocNowRef'), width: 300},
-          {field: 'vocRefRValue', headerName: t('vocRefRValue'), width: 300},
-          {field: 'vocNowRValue', headerName: t('vocNowRValue'), width: 300},
-          {field: 'pmSensorState', headerName: t('pmSensorState'), width: 300},
+          {field: 'createdAt', headerName: t('createdAt'), width: 200},
+          {field: 'co2', headerName: t('co2'), width: 150},
+          {field: 'voc', headerName: t('voc'), width: 150},
+          {field: 'relatedHumidity', headerName: t('relatedHumidity'), width: 150},
+          {field: 'temperature', headerName: t('temperature'), width: 150},
+          {field: 'pm1P0Grimm', headerName: t('pm1P0Grimm'), width: 150},
+          {field: 'pm2P5Grimm', headerName: t('pm2P5Grimm'), width: 150},
+          {field: 'pm10PGrimm', headerName: t('pm10PGrimm'), width: 150},
+          {field: 'vocNowRef', headerName: t('vocNowRef'), width: 150},
+          {field: 'vocRefRValue', headerName: t('vocRefRValue'), width: 150},
+          {field: 'vocNowRValue', headerName: t('vocNowRValue'), width: 150},
+          {field: 'pmSensorState', headerName: t('pmSensorState'), width: 150},
         ]
       }
       default:
@@ -55,7 +55,7 @@ const Main: VFC = () => {
       case 'AM1008W-K': {
         const am1008wkData = data as AM1008WKData[]
 
-        return am1008wkData.slice(1).map((d) => {
+        return am1008wkData.map((d) => {
           return {
             id: d[0].toString(),
             createdAt: d[1],

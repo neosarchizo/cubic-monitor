@@ -436,23 +436,7 @@ export const getData: (serialNumber: string, callback: (result: any[]) => void) 
 ) => {
   const db = DB.getDb()
 
-  const result: any[] = [
-    [
-      'ID',
-      'TIMESTAMP',
-      'CO2',
-      'VOC',
-      'RELATED_HUMIDITY',
-      'TEMPERATURE',
-      'PM_1P0_GRIMM',
-      'PM_2P5_GRIMM',
-      'PM_10P_GRIMM',
-      'VOC_NOW_REF',
-      'VOC_REF_R_VALUE',
-      'VOC_NOW_R_VALUE',
-      'PM_SENSOR_STATE',
-    ],
-  ]
+  const result: any[] = []
 
   db.each(
     QUERY_GET_DATA(serialNumber),
