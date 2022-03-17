@@ -189,8 +189,6 @@ const handleOnModelEvent = (path: string) => (payload) => {
               pm2008: PM2008.updateProp('MEASURE', pm2008, data),
             }
           })
-
-          sendDevices()
           break
         }
 
@@ -256,8 +254,6 @@ const handleOnModelEvent = (path: string) => (payload) => {
               cm1106: CM1106.updateProp('MEASURE', cm1106, data),
             }
           })
-
-          sendDevices()
           break
         }
 
@@ -323,8 +319,6 @@ const handleOnModelEvent = (path: string) => (payload) => {
               cm1107: CM1107.updateProp('MEASURE', cm1107, data),
             }
           })
-
-          sendDevices()
           break
         }
 
@@ -390,8 +384,6 @@ const handleOnModelEvent = (path: string) => (payload) => {
               am1008wk: AM1008WK.updateProp('MEASURE', am1008wk, data),
             }
           })
-
-          sendDevices()
           break
         }
 
