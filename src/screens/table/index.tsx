@@ -2,7 +2,7 @@ import {useEffect, useState, VFC, useCallback, useMemo} from 'react'
 import {Grid} from '@material-ui/core'
 import {GridColumns} from '@mui/x-data-grid'
 
-import {Layout, ModelSelect, SerialNumberSelect} from '../../components'
+import {Layout, ModelSelect, RefreshIntervalSelect, SerialNumberSelect} from '../../components'
 import {useI18n} from '../../utils/i18n'
 import {Container, DataGridContainer, GridContainer, MyDataGrid} from './styles'
 import {DeviceModel, EventListener, ResGetData} from '../../contexts/device/types'
@@ -11,12 +11,14 @@ import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {useDevice} from '../../contexts/device'
+import {RefreshIntervalType} from '../../types'
 
 const Main: VFC = () => {
   const {t} = useI18n()
 
   const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
   const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
+  const [refreshIntervalOption, setRefreshIntervalOption] = useState<RefreshIntervalType>('5_SECS')
 
   const [, deviceManager] = useDevice()
   const [data, setData] = useState<any[]>([])
@@ -225,6 +227,12 @@ const Main: VFC = () => {
               model={modelOption}
               value={serialNumberOption}
               onChange={setSerialNumberOption}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <RefreshIntervalSelect
+              value={refreshIntervalOption}
+              onChange={setRefreshIntervalOption}
             />
           </Grid>
         </GridContainer>

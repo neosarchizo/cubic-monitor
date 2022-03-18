@@ -44,6 +44,9 @@ const strings: Strings = {
       particleNumber2p5UmAbove: '2.5 um 갯수',
       particleNumber5p0UmAbove: '5 um 갯수',
       particleNumber10pUmAbove: '10 um 갯수',
+      refreshInterval: '새로고침 주기',
+      seconds: '초',
+      minute: '분',
     },
   },
 }
