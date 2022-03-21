@@ -12,6 +12,7 @@ import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {useDevice} from '../../contexts/device'
 import {RefreshIntervalType} from '../../types'
+import {useIntervalOnlyEffect} from '../../utils/use-interval'
 
 const Main: VFC = () => {
   const {t} = useI18n()
@@ -22,6 +23,42 @@ const Main: VFC = () => {
 
   const [, deviceManager] = useDevice()
   const [data, setData] = useState<any[]>([])
+
+  const refreshInterval = useMemo<number | null>(() => {
+    let result: number | null = null
+
+    switch (refreshIntervalOption) {
+      case '5_SECS': {
+        result = 5000
+        break
+      }
+      case '10_SECS': {
+        result = 10000
+        break
+      }
+      case '30_SECS': {
+        result = 30000
+        break
+      }
+      case '1_MIN': {
+        result = 60000
+        break
+      }
+      default:
+        break
+    }
+
+    return result
+  }, [refreshIntervalOption])
+
+  const handleOnIntervalTimeout = useCallback<() => void>(() => {
+    if (serialNumberOption === 'NONE') {
+      return
+    }
+    deviceManager.getData(modelOption, serialNumberOption)
+  }, [modelOption, serialNumberOption, deviceManager])
+
+  useIntervalOnlyEffect(handleOnIntervalTimeout, refreshInterval)
 
   const columns = useMemo<GridColumns>(() => {
     switch (modelOption) {
@@ -177,14 +214,6 @@ const Main: VFC = () => {
 
     return []
   }, [modelOption, serialNumberOption, data])
-
-  useEffect(() => {
-    if (serialNumberOption === 'NONE') {
-      return
-    }
-
-    deviceManager.getData(modelOption, serialNumberOption)
-  }, [modelOption, serialNumberOption, deviceManager])
 
   const handleOnGetData = useCallback<EventListener>(
     (event) => {
