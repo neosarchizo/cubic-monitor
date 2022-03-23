@@ -1,5 +1,6 @@
 import {VFC, useState, useCallback, useMemo, useEffect} from 'react'
 import {Grid} from '@material-ui/core'
+import Plot from 'react-plotly.js'
 
 import {Layout, ModelSelect, RefreshIntervalSelect, SerialNumberSelect} from '../../components'
 import {useI18n} from '../../utils/i18n'
@@ -105,7 +106,21 @@ const Main: VFC = () => {
             />
           </Grid>
         </GridContainer>
-        <Body />
+        <Body>
+          <Plot
+            data={[
+              {
+                x: [1, 2, 3],
+                y: [2, 6, 3],
+                type: 'scatter',
+                mode: 'lines+markers',
+                marker: {color: 'red'},
+              },
+              {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
+            ]}
+            layout={{width: 320, height: 240, title: 'A Fancy Plot'}}
+          />
+        </Body>
       </Container>
     </Layout>
   )
