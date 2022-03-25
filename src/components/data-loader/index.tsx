@@ -2,7 +2,7 @@ import {FC, useState, useEffect, useMemo, useCallback} from 'react'
 
 import {Container, Item} from './styles'
 import {useDevice} from '../../contexts/device'
-import {DeviceModel, EventListener, ResGetData} from '../../contexts/device/types'
+import {EventListener, ResGetData} from '../../contexts/device/types'
 import {RefreshIntervalType} from '../../types'
 import ModelSelect from '../model-select'
 import RefreshIntervalSelect from '../refresh-interval-select'
@@ -11,12 +11,11 @@ import {useIntervalOnlyEffect} from '../../utils/use-interval'
 import {Props} from './types'
 
 const Main: FC<Props> = (props) => {
-  const {onData} = props
+  const {onData, modelOption, serialNumberOption, onModelOptionChange, onSerialNumberOptionChange} =
+    props
 
   const [, deviceManager] = useDevice()
 
-  const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
-  const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
   const [refreshIntervalOption, setRefreshIntervalOption] = useState<RefreshIntervalType>('5_SECS')
 
   const refreshInterval = useMemo<number | null>(() => {
@@ -55,6 +54,13 @@ const Main: FC<Props> = (props) => {
 
   useIntervalOnlyEffect(handleOnIntervalTimeout, refreshInterval)
 
+  useEffect(() => {
+    if (serialNumberOption === 'NONE') {
+      return
+    }
+    deviceManager.getData(modelOption, serialNumberOption)
+  }, [modelOption, serialNumberOption, deviceManager])
+
   const handleOnGetData = useCallback<EventListener>(
     (event) => {
       const {type, payload} = event
@@ -87,13 +93,13 @@ const Main: FC<Props> = (props) => {
   return (
     <Container>
       <Item>
-        <ModelSelect value={modelOption} onChange={setModelOption} />
+        <ModelSelect value={modelOption} onChange={onModelOptionChange} />
       </Item>
       <Item>
         <SerialNumberSelect
           model={modelOption}
           value={serialNumberOption}
-          onChange={setSerialNumberOption}
+          onChange={onSerialNumberOptionChange}
         />
       </Item>
       <Item>

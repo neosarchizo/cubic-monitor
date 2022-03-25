@@ -4,12 +4,14 @@ import Plot from 'react-plotly.js'
 import {Layout, DataLoader} from '../../components'
 import {useI18n} from '../../utils/i18n'
 import {Container, Body} from './styles'
-import {ResGetData} from '../../contexts/device/types'
+import {ResGetData, DeviceModel} from '../../contexts/device/types'
 
 const Main: VFC = () => {
   const {t} = useI18n()
 
   const [, setData] = useState<any[]>([])
+  const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
+  const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
 
   const handleOnData = useCallback<(resGetData: ResGetData) => void>((resGetData) => {
     const {data: d} = resGetData
@@ -20,7 +22,13 @@ const Main: VFC = () => {
   return (
     <Layout title={t('chart')}>
       <Container>
-        <DataLoader onData={handleOnData} />
+        <DataLoader
+          onData={handleOnData}
+          modelOption={modelOption}
+          serialNumberOption={serialNumberOption}
+          onModelOptionChange={setModelOption}
+          onSerialNumberOptionChange={setSerialNumberOption}
+        />
         <Body>
           <Plot
             data={[

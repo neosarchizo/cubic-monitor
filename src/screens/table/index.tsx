@@ -1,64 +1,22 @@
-import {useEffect, useState, VFC, useCallback, useMemo} from 'react'
-import {Grid} from '@material-ui/core'
+import {useState, VFC, useCallback, useMemo} from 'react'
 import {GridColumns} from '@mui/x-data-grid'
 
-import {Layout, ModelSelect, RefreshIntervalSelect, SerialNumberSelect} from '../../components'
+import {Layout, DataLoader} from '../../components'
 import {useI18n} from '../../utils/i18n'
-import {Container, DataGridContainer, GridContainer, MyDataGrid} from './styles'
-import {DeviceModel, EventListener, ResGetData} from '../../contexts/device/types'
+import {Container, Body, MyDataGrid} from './styles'
+import {DeviceModel, ResGetData} from '../../contexts/device/types'
 import {AM1008WKData} from '../../contexts/device/models/am1008w-k/types'
 import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
-import {useDevice} from '../../contexts/device'
-import {RefreshIntervalType} from '../../types'
-import {useIntervalOnlyEffect} from '../../utils/use-interval'
 
 const Main: VFC = () => {
   const {t} = useI18n()
 
   const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
   const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
-  const [refreshIntervalOption, setRefreshIntervalOption] = useState<RefreshIntervalType>('5_SECS')
 
-  const [, deviceManager] = useDevice()
   const [data, setData] = useState<any[]>([])
-
-  const refreshInterval = useMemo<number | null>(() => {
-    let result: number | null = null
-
-    switch (refreshIntervalOption) {
-      case '5_SECS': {
-        result = 5000
-        break
-      }
-      case '10_SECS': {
-        result = 10000
-        break
-      }
-      case '30_SECS': {
-        result = 30000
-        break
-      }
-      case '1_MIN': {
-        result = 60000
-        break
-      }
-      default:
-        break
-    }
-
-    return result
-  }, [refreshIntervalOption])
-
-  const handleOnIntervalTimeout = useCallback<() => void>(() => {
-    if (serialNumberOption === 'NONE') {
-      return
-    }
-    deviceManager.getData(modelOption, serialNumberOption)
-  }, [modelOption, serialNumberOption, deviceManager])
-
-  useIntervalOnlyEffect(handleOnIntervalTimeout, refreshInterval)
 
   const columns = useMemo<GridColumns>(() => {
     switch (modelOption) {
@@ -215,59 +173,25 @@ const Main: VFC = () => {
     return []
   }, [modelOption, serialNumberOption, data])
 
-  const handleOnGetData = useCallback<EventListener>(
-    (event) => {
-      const {type, payload} = event
+  const handleOnData = useCallback<(resGetData: ResGetData) => void>((resGetData) => {
+    const {data: d} = resGetData
 
-      if (type !== 'GET_DATA') {
-        return
-      }
-
-      const param = payload as ResGetData
-
-      const {model: m, data: d} = param
-
-      if (m !== modelOption) {
-        return
-      }
-
-      setData(d)
-    },
-    [modelOption],
-  )
-
-  useEffect(() => {
-    const sub = deviceManager.subscribe(handleOnGetData)
-
-    return () => {
-      sub.unsubscribe()
-    }
-  }, [deviceManager, handleOnGetData])
+    setData(d)
+  }, [])
 
   return (
     <Layout title={t('table')}>
       <Container>
-        <GridContainer>
-          <Grid item xs={12} sm={6} md={3}>
-            <ModelSelect value={modelOption} onChange={setModelOption} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <SerialNumberSelect
-              model={modelOption}
-              value={serialNumberOption}
-              onChange={setSerialNumberOption}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <RefreshIntervalSelect
-              value={refreshIntervalOption}
-              onChange={setRefreshIntervalOption}
-            />
-          </Grid>
-        </GridContainer>
-        <DataGridContainer>
+        <DataLoader
+          onData={handleOnData}
+          modelOption={modelOption}
+          serialNumberOption={serialNumberOption}
+          onModelOptionChange={setModelOption}
+          onSerialNumberOptionChange={setSerialNumberOption}
+        />
+        <Body>
           <MyDataGrid rows={records} columns={columns} />
-        </DataGridContainer>
+        </Body>
       </Container>
     </Layout>
   )
