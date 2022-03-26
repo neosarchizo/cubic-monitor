@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Plot from 'react-plotly.js'
 
 export const Container = styled.div`
   height: 100%;
@@ -13,4 +14,16 @@ export const Body = styled.div`
   display: flex;
   flex-direction: column;
   background: green;
+`
+
+export const MyPlot = styled(Plot).attrs({
+  layout: {
+    autosize: true,
+    yaxis: {fixedrange: true},
+    xaxis: {fixedrange: true},
+  },
+  useResizeHandler: true,
+})`
+  width: 100%;
+  height: 100%;
 `

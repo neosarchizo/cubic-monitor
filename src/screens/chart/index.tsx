@@ -1,9 +1,8 @@
 import {VFC, useState, useCallback} from 'react'
-import Plot from 'react-plotly.js'
 
 import {Layout, DataLoader} from '../../components'
 import {useI18n} from '../../utils/i18n'
-import {Container, Body} from './styles'
+import {Container, Body, MyPlot} from './styles'
 import {ResGetData, DeviceModel} from '../../contexts/device/types'
 
 const Main: VFC = () => {
@@ -30,7 +29,7 @@ const Main: VFC = () => {
           onSerialNumberOptionChange={setSerialNumberOption}
         />
         <Body>
-          <Plot
+          <MyPlot
             data={[
               {
                 x: [1, 2, 3],
@@ -41,7 +40,7 @@ const Main: VFC = () => {
               },
               {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
             ]}
-            layout={{width: 320, height: 240, title: 'A Fancy Plot'}}
+            layout={{title: 'A Fancy Plot'}}
           />
         </Body>
       </Container>
