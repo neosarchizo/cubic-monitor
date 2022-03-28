@@ -33,8 +33,6 @@ const Main: VFC = () => {
 
         const cm1107Data = data as CM1107Data[]
 
-        console.log('CM1107', cm1107Data)
-
         const co2Trace: Trace = {
           x: [],
           y: [],
@@ -45,7 +43,7 @@ const Main: VFC = () => {
 
         const {x, y} = co2Trace
 
-        cm1107Data.forEach((d) => {
+        cm1107Data.reverse().forEach((d) => {
           const [, createdAt, co2] = d
 
           x.push(createdAt)

@@ -20,7 +20,6 @@ export const MyPlot = styled(Plot).attrs({
   layout: {
     autosize: true,
     yaxis: {fixedrange: true},
-    xaxis: {fixedrange: true},
   },
   useResizeHandler: true,
 })`
