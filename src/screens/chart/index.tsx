@@ -43,7 +43,7 @@ const Main: VFC = () => {
 
         const {x, y} = co2Trace
 
-        cm1107Data.reverse().forEach((d) => {
+        cm1107Data.forEach((d) => {
           const [, createdAt, co2] = d
 
           x.push(createdAt)
