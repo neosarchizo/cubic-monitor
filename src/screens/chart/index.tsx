@@ -8,6 +8,7 @@ import {Trace} from './types'
 import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
+import {AM1008WKData} from '../../contexts/device/models/am1008w-k/types'
 import {getTrace} from './helpers'
 
 const Main: VFC = () => {
@@ -140,6 +141,64 @@ const Main: VFC = () => {
         break
       }
       case 'AM1008W-K': {
+        const am1008wkData = data as AM1008WKData[]
+
+        const arrCreatedAt: string[] = []
+        const arrCo2: number[] = []
+        const arrVoc: number[] = []
+        const arrRelatedHumidity: number[] = []
+        const arrTemperature: number[] = []
+        const arrPm1P0Grimm: number[] = []
+        const arrPm2P5Grimm: number[] = []
+        const arrPm10PGrimm: number[] = []
+        const arrVocNowRef: number[] = []
+        const arrVocRefRValue: number[] = []
+        const arrVocNowRValue: number[] = []
+        const arrPmSensorState: number[] = []
+
+        am1008wkData.forEach((d) => {
+          const [
+            ,
+            createdAt,
+            co2,
+            voc,
+            relatedHumidity,
+            temperature,
+            pm1P0Grimm,
+            pm2P5Grimm,
+            pm10PGrimm,
+            vocNowRef,
+            vocRefRValue,
+            vocNowRValue,
+            pmSensorState,
+          ] = d
+
+          arrCreatedAt.push(createdAt)
+          arrCo2.push(co2)
+          arrVoc.push(voc)
+          arrRelatedHumidity.push(relatedHumidity)
+          arrTemperature.push(temperature)
+          arrPm1P0Grimm.push(pm1P0Grimm)
+          arrPm2P5Grimm.push(pm2P5Grimm)
+          arrPm10PGrimm.push(pm10PGrimm)
+          arrVocNowRef.push(vocNowRef)
+          arrVocRefRValue.push(vocRefRValue)
+          arrVocNowRValue.push(vocNowRValue)
+          arrPmSensorState.push(pmSensorState)
+        })
+
+        newTraces.push(getTrace(arrCreatedAt, arrCo2, t('co2')))
+        newTraces.push(getTrace(arrCreatedAt, arrVoc, t('voc')))
+        newTraces.push(getTrace(arrCreatedAt, arrRelatedHumidity, t('relatedHumidity')))
+        newTraces.push(getTrace(arrCreatedAt, arrTemperature, t('temperature')))
+        newTraces.push(getTrace(arrCreatedAt, arrPm1P0Grimm, t('pm1P0Grimm')))
+        newTraces.push(getTrace(arrCreatedAt, arrPm2P5Grimm, t('pm2P5Grimm')))
+        newTraces.push(getTrace(arrCreatedAt, arrPm10PGrimm, t('pm10PGrimm')))
+        newTraces.push(getTrace(arrCreatedAt, arrVocNowRef, t('vocNowRef')))
+        newTraces.push(getTrace(arrCreatedAt, arrVocRefRValue, t('vocRefRValue')))
+        newTraces.push(getTrace(arrCreatedAt, arrVocNowRValue, t('vocNowRValue')))
+        newTraces.push(getTrace(arrCreatedAt, arrPmSensorState, t('pmSensorState')))
+
         break
       }
       default:
