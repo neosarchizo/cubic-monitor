@@ -9,3 +9,8 @@ export interface Trace {
   name: string
   visible: Visible
 }
+
+export interface Layout {
+  title?: string
+  datarevision?: string
+}

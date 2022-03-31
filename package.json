@@ -86,8 +86,8 @@
     ]
   },
   "build": {
-    "appId": "io.neosarchizo.neopixel-tester",
-    "productName": "YLL NeoPixel Tester",
+    "appId": "io.neosarchizo.cubic-monitor",
+    "productName": "CUBIc monitor",
     "copyright": "Copyright © 2021 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
