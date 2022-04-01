@@ -13,7 +13,6 @@ export const Body = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: green;
 `
 
 export const MyPlot = styled(Plot).attrs({
