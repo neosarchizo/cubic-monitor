@@ -11,6 +11,7 @@ import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {AM1008WKData} from '../../contexts/device/models/am1008w-k/types'
 import {getTrace} from './helpers'
+import {FORMAT_DATA_REVISION} from './constants'
 
 const Main: VFC = () => {
   const {t} = useI18n()
@@ -28,12 +29,14 @@ const Main: VFC = () => {
     (resGetData) => {
       const {data} = resGetData
 
+      console.log('data!!!!', data)
+
       const newTraces: Trace[] = []
 
       if (serialNumberOption === 'NONE') {
         layout.current = {
           title: '',
-          datarevision: moment().format('YYYY-MM-DD HH:mm:ss'),
+          datarevision: moment().format(FORMAT_DATA_REVISION),
         }
       }
 
@@ -41,6 +44,14 @@ const Main: VFC = () => {
         case 'PM2008': {
           // id, createdAt
           const pm2008Data = data as PM2008Data[]
+
+          if (pm2008Data.length === 0) {
+            layout.current = {
+              title: t('pm2008'),
+              datarevision: moment().format(FORMAT_DATA_REVISION),
+            }
+            break
+          }
 
           const arrCreatedAt: string[] = []
 
@@ -117,7 +128,7 @@ const Main: VFC = () => {
 
           layout.current = {
             title: t('pm2008'),
-            datarevision: arrCreatedAt[0],
+            datarevision: moment().format(FORMAT_DATA_REVISION),
           }
 
           break
@@ -126,6 +137,14 @@ const Main: VFC = () => {
           // id, createdAt, co2
 
           const cm1106Data = data as CM1106Data[]
+
+          if (cm1106Data.length === 0) {
+            layout.current = {
+              title: t('cm1106'),
+              datarevision: moment().format(FORMAT_DATA_REVISION),
+            }
+            break
+          }
 
           const arrCreatedAt: string[] = []
           const arrCo2: number[] = []
@@ -141,7 +160,7 @@ const Main: VFC = () => {
 
           layout.current = {
             title: t('cm1106'),
-            datarevision: arrCreatedAt[0],
+            datarevision: moment().format(FORMAT_DATA_REVISION),
           }
           break
         }
@@ -149,6 +168,14 @@ const Main: VFC = () => {
           // id, createdAt, co2
 
           const cm1107Data = data as CM1107Data[]
+
+          if (cm1107Data.length === 0) {
+            layout.current = {
+              title: t('cm1107'),
+              datarevision: moment().format(FORMAT_DATA_REVISION),
+            }
+            break
+          }
 
           const arrCreatedAt: string[] = []
           const arrCo2: number[] = []
@@ -164,12 +191,20 @@ const Main: VFC = () => {
 
           layout.current = {
             title: t('cm1107'),
-            datarevision: arrCreatedAt[0],
+            datarevision: moment().format(FORMAT_DATA_REVISION),
           }
           break
         }
         case 'AM1008W-K': {
           const am1008wkData = data as AM1008WKData[]
+
+          if (am1008wkData.length === 0) {
+            layout.current = {
+              title: t('am1008wk'),
+              datarevision: moment().format(FORMAT_DATA_REVISION),
+            }
+            break
+          }
 
           const arrCreatedAt: string[] = []
           const arrCo2: number[] = []
@@ -229,7 +264,7 @@ const Main: VFC = () => {
 
           layout.current = {
             title: t('am1008wk'),
-            datarevision: arrCreatedAt[0],
+            datarevision: moment().format(FORMAT_DATA_REVISION),
           }
           break
         }
@@ -237,6 +272,7 @@ const Main: VFC = () => {
           break
       }
 
+      console.log('here!!', newTraces)
       traces.current = newTraces
     },
     [serialNumberOption, modelOption, t],
