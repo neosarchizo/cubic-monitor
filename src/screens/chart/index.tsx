@@ -1,4 +1,4 @@
-import {VFC, useState, useCallback, useRef, useMemo} from 'react'
+import {VFC, useState, useCallback, useMemo} from 'react'
 import moment from 'moment'
 
 import {Layout, DataLoader} from '../../components'
@@ -19,8 +19,7 @@ const Main: VFC = () => {
   const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
   const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
   const [data, setData] = useState<any[]>([])
-
-  const layout = useRef<LayoutType>({
+  const [layout, setLayout] = useState<LayoutType>({
     title: '',
     datarevision: '',
   })
@@ -29,10 +28,10 @@ const Main: VFC = () => {
     const newTraces: Trace[] = []
 
     if (serialNumberOption === 'NONE') {
-      layout.current = {
+      setLayout({
         title: '',
         datarevision: moment().format(FORMAT_DATA_REVISION),
-      }
+      })
     }
 
     switch (modelOption) {
@@ -41,10 +40,10 @@ const Main: VFC = () => {
         const pm2008Data = data as PM2008Data[]
 
         if (pm2008Data.length === 0) {
-          layout.current = {
+          setLayout({
             title: t('pm2008'),
             datarevision: moment().format(FORMAT_DATA_REVISION),
-          }
+          })
           break
         }
 
@@ -121,11 +120,10 @@ const Main: VFC = () => {
           getTrace(arrCreatedAt, arrParticleNumber10pUmAbove, t('particleNumber10pUmAbove')),
         )
 
-        layout.current = {
+        setLayout({
           title: t('pm2008'),
           datarevision: moment().format(FORMAT_DATA_REVISION),
-        }
-
+        })
         break
       }
       case 'CM1106': {
@@ -134,10 +132,10 @@ const Main: VFC = () => {
         const cm1106Data = data as CM1106Data[]
 
         if (cm1106Data.length === 0) {
-          layout.current = {
+          setLayout({
             title: t('cm1106'),
             datarevision: moment().format(FORMAT_DATA_REVISION),
-          }
+          })
           break
         }
 
@@ -153,10 +151,10 @@ const Main: VFC = () => {
 
         newTraces.push(getTrace(arrCreatedAt, arrCo2, t('co2')))
 
-        layout.current = {
+        setLayout({
           title: t('cm1106'),
           datarevision: moment().format(FORMAT_DATA_REVISION),
-        }
+        })
         break
       }
       case 'CM1107': {
@@ -165,10 +163,10 @@ const Main: VFC = () => {
         const cm1107Data = data as CM1107Data[]
 
         if (cm1107Data.length === 0) {
-          layout.current = {
+          setLayout({
             title: t('cm1107'),
             datarevision: moment().format(FORMAT_DATA_REVISION),
-          }
+          })
           break
         }
 
@@ -184,20 +182,20 @@ const Main: VFC = () => {
 
         newTraces.push(getTrace(arrCreatedAt, arrCo2, t('co2')))
 
-        layout.current = {
+        setLayout({
           title: t('cm1107'),
           datarevision: moment().format(FORMAT_DATA_REVISION),
-        }
+        })
         break
       }
       case 'AM1008W-K': {
         const am1008wkData = data as AM1008WKData[]
 
         if (am1008wkData.length === 0) {
-          layout.current = {
+          setLayout({
             title: t('am1008wk'),
             datarevision: moment().format(FORMAT_DATA_REVISION),
-          }
+          })
           break
         }
 
@@ -257,10 +255,10 @@ const Main: VFC = () => {
         newTraces.push(getTrace(arrCreatedAt, arrVocNowRValue, t('vocNowRValue')))
         newTraces.push(getTrace(arrCreatedAt, arrPmSensorState, t('pmSensorState')))
 
-        layout.current = {
+        setLayout({
           title: t('am1008wk'),
           datarevision: moment().format(FORMAT_DATA_REVISION),
-        }
+        })
         break
       }
       default:
@@ -287,7 +285,7 @@ const Main: VFC = () => {
           onSerialNumberOptionChange={setSerialNumberOption}
         />
         <Body>
-          <MyPlot data={traces} layout={layout.current} />
+          <MyPlot data={traces} layout={layout} />
         </Body>
       </Container>
     </Layout>
