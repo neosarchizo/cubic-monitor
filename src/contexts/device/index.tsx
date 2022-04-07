@@ -51,6 +51,7 @@ const DeviceContext = createContext<[DeviceState, DeviceManager]>([
     getAppPath: () => {},
     getSerialNumbers: () => {},
     getData: () => {},
+    getRange: () => {},
   },
 ])
 
@@ -181,6 +182,9 @@ export const DeviceProvider: FC<Props> = (props) => {
       },
       getData: (model, serialNumber) => {
         deviceManager.getData(model, serialNumber)
+      },
+      getRange: (model, serialNumber) => {
+        deviceManager.getRange(model, serialNumber)
       },
     }
   }, [state])

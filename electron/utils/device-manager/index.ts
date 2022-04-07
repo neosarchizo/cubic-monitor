@@ -674,6 +674,18 @@ export const main: (window: BrowserWindow) => void = (window) => {
         })
         break
       }
+      case 'GET_RANGE': {
+        if (data === undefined || data === null) {
+          break
+        }
+
+        const param = data as {model: DeviceModel; serialNumber: string}
+
+        const {model, serialNumber} = param
+
+        console.log('GET_RANGE', model, serialNumber)
+        break
+      }
       default:
         break
     }

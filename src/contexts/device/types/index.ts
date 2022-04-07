@@ -21,6 +21,7 @@ export interface API {
   getAppPath: () => void
   getSerialNumbers: (model: DeviceModel) => void
   getData: (model: DeviceModel, serialNumber: string) => void
+  getRange: (model: DeviceModel, serialNumber: string) => void
 }
 
 export interface Port {
@@ -77,6 +78,7 @@ export interface DeviceManager {
   getAppPath: () => void
   getSerialNumbers: (model: DeviceModel) => void
   getData: (model: DeviceModel, serialNumber: string) => void
+  getRange: (model: DeviceModel, serialNumber: string) => void
 }
 
 export interface Props {

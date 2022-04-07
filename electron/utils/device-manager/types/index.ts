@@ -51,12 +51,19 @@ export type EventType =
   | 'APP_PATH'
   | 'GET_SERIAL_NUMBERS'
   | 'GET_DATA'
+  | 'GET_RANGE'
 export interface Event {
   type: EventType
   data?
 }
 
-export type AppEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA'
+export type AppEventType =
+  | 'LIST'
+  | 'DEVICES'
+  | 'APP_PATH'
+  | 'GET_SERIAL_NUMBERS'
+  | 'GET_DATA'
+  | 'GET_RANGE'
 
 export interface AppEvent {
   type: AppEventType

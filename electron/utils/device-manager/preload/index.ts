@@ -39,6 +39,9 @@ const api: API = {
   getData: (model, serialNumber) => {
     sendEvent({type: 'GET_DATA', data: {model, serialNumber}})
   },
+  getRange: (model, serialNumber) => {
+    sendEvent({type: 'GET_RANGE', data: {model, serialNumber}})
+  },
 }
 
 const expose: () => void = () => {
