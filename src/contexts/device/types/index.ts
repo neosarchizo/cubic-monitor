@@ -34,7 +34,13 @@ export interface Port {
   vendorId?: string | undefined
 }
 
-export type DeviceEventType = 'LIST' | 'DEVICES' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA'
+export type DeviceEventType =
+  | 'LIST'
+  | 'DEVICES'
+  | 'APP_PATH'
+  | 'GET_SERIAL_NUMBERS'
+  | 'GET_DATA'
+  | 'GET_RANGE'
 
 export interface DeviceEvent {
   type: DeviceEventType
@@ -58,7 +64,7 @@ export interface DeviceState {
   dbPath: string
 }
 
-export type EventType = 'LIST' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA'
+export type EventType = 'LIST' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA' | 'GET_RANGE'
 
 export interface Event {
   type: EventType
@@ -91,6 +97,11 @@ export interface ResGetSerialNumbers {
 }
 
 export interface ResGetData {
+  model: DeviceModel
+  data: any[]
+}
+
+export interface ResGetRange {
   model: DeviceModel
   data: any[]
 }
