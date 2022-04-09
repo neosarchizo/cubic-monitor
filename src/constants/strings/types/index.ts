@@ -43,6 +43,7 @@ export type Language = {
   refreshInterval: string
   seconds: string
   minute: string
+  export: string
 }
 
 export type Translation = {

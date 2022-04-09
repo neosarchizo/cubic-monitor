@@ -47,6 +47,7 @@ const strings: Strings = {
       refreshInterval: '새로고침 주기',
       seconds: '초',
       minute: '분',
+      export: '내보내기',
     },
   },
 }
