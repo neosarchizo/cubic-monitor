@@ -1,5 +1,5 @@
 import {FC, useMemo} from 'react'
-import {Usb, ShowChart, TableChart} from '@material-ui/icons'
+import {Usb, ShowChart, TableChart, CloudDownload} from '@material-ui/icons'
 import {List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core'
 import {useLocation, Link} from 'react-router-dom'
 
@@ -8,7 +8,7 @@ import {Props} from './types'
 import {useI18n} from '../../../../utils/i18n'
 import RouteMap from '../../../../constants/routes'
 
-const {ROUTE_MAIN, ROUTE_TABLE, ROUTE_CHART} = RouteMap
+const {ROUTE_MAIN, ROUTE_TABLE, ROUTE_CHART, ROUTE_EXPORT} = RouteMap
 
 const Main: FC<Props> = (props) => {
   const {onToggle} = props
@@ -55,6 +55,17 @@ const Main: FC<Props> = (props) => {
             <ShowChart />
           </ListItemIcon>
           <ListItemText primary={t('chart')} />
+        </ListItem>
+        <ListItem
+          button
+          key="export"
+          selected={pathname === ROUTE_EXPORT}
+          component={Link}
+          to={ROUTE_EXPORT}>
+          <ListItemIcon>
+            <CloudDownload />
+          </ListItemIcon>
+          <ListItemText primary={t('export')} />
         </ListItem>
       </List>
     </Container>
