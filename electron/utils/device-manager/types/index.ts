@@ -69,3 +69,8 @@ export interface AppEvent {
   type: AppEventType
   data?
 }
+
+export interface Range {
+  max: string | null
+  min: string | null
+}

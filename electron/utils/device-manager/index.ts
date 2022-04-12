@@ -2,7 +2,7 @@ import {BrowserWindow, ipcMain, WebContents, app} from 'electron'
 
 import SerialPort = require('serialport')
 
-import {Device, Event, AppEventType, AppDevice, DeviceModel} from './types'
+import {Device, Event, AppEventType, AppDevice, DeviceModel, Range} from './types'
 import {API_NAME, BAUD_RATE} from './constants'
 import * as ModelManager from './models'
 import {PM2008Event} from './models/pm2008/types'
@@ -13,6 +13,8 @@ import * as CM1106 from './models/cm1106'
 import * as CM1107 from './models/cm1107'
 import * as AM1008WK from './models/am1008w-k'
 import {AM1008WKEvent} from './models/am1008w-k/types'
+import * as DB from '../db-manager'
+import {QUERY_GET_RANGE} from './queries'
 
 let devices: Array<Device> = []
 
@@ -683,7 +685,34 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
         const {model, serialNumber} = param
 
-        console.log('GET_RANGE', model, serialNumber)
+        const db = DB.getDb()
+
+        const result: any[] = []
+
+        db.each(
+          QUERY_GET_RANGE(model, serialNumber),
+          (err, row) => {
+            if (err !== undefined && err !== null) {
+              return
+            }
+
+            const d = row as Range
+
+            const {min, max} = d
+
+            result.push([min, max])
+          },
+          (err) => {
+            if (err !== undefined && err !== null) {
+              console.log('getRange failed', err)
+            }
+
+            sendEvent('GET_RANGE', {model, data: result})
+          },
+        )
+
+        db.close()
+
         break
       }
       default:

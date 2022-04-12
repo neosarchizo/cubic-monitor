@@ -117,6 +117,10 @@ export const DeviceProvider: FC<Props> = (props) => {
           subject.current.next({type: 'GET_DATA', payload: data})
           break
         }
+        case 'GET_RANGE': {
+          console.log('GET_RANGE', data)
+          break
+        }
         default:
           break
       }

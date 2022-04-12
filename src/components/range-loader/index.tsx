@@ -22,7 +22,7 @@ const Main: FC<Props> = (props) => {
     if (serialNumberOption === 'NONE') {
       return
     }
-    deviceManager.getData(modelOption, serialNumberOption)
+    deviceManager.getRange(modelOption, serialNumberOption)
   }, [modelOption, serialNumberOption, deviceManager])
 
   const handleOnGetRange = useCallback<EventListener>(
