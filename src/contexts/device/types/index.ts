@@ -103,5 +103,5 @@ export interface ResGetData {
 
 export interface ResGetRange {
   model: DeviceModel
-  data: any[]
+  data: [string, string, number][]
 }

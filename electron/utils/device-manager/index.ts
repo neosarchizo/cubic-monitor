@@ -698,9 +698,9 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
             const d = row as Range
 
-            const {min, max} = d
+            const {min, max, count} = d
 
-            result.push([min, max])
+            result.push([min, max, count])
           },
           (err) => {
             if (err !== undefined && err !== null) {

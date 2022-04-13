@@ -44,6 +44,7 @@ export type Language = {
   seconds: string
   minute: string
   export: string
+  noData: string
 }
 
 export type Translation = {

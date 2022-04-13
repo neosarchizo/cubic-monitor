@@ -1,11 +1,12 @@
-import {FC, useEffect, useCallback} from 'react'
+import {FC, useEffect, useCallback, useState} from 'react'
 
-import {Container, Item} from './styles'
+import {Container, Item, Br, Text, TextContainer} from './styles'
 import {useDevice} from '../../contexts/device'
 import {EventListener, ResGetRange} from '../../contexts/device/types'
 import ModelSelect from '../model-select'
 import SerialNumberSelect from '../serial-number-select'
 import {Props} from './types'
+import {useI18n} from '../../utils/i18n'
 
 const Main: FC<Props> = (props) => {
   const {
@@ -15,6 +16,10 @@ const Main: FC<Props> = (props) => {
     onModelOptionChange,
     onSerialNumberOptionChange,
   } = props
+
+  const {t} = useI18n()
+
+  const [lblRange, setLblRange] = useState<string>(t('noData'))
 
   const [, deviceManager] = useDevice()
 
@@ -35,15 +40,23 @@ const Main: FC<Props> = (props) => {
 
       const param = payload as ResGetRange
 
-      const {model: m} = param
+      const {model: m, data} = param
 
       if (m !== modelOption) {
         return
       }
 
+      if (data.length === 0) {
+        setLblRange(t('noData'))
+      } else {
+        const [min, max, count] = data[0]
+
+        setLblRange(`${min} ~ ${max} : ${count}건`)
+      }
+
       onRange(param)
     },
-    [modelOption, onRange],
+    [modelOption, onRange, t],
   )
 
   useEffect(() => {
@@ -66,6 +79,10 @@ const Main: FC<Props> = (props) => {
           onChange={onSerialNumberOptionChange}
         />
       </Item>
+      <Br />
+      <TextContainer>
+        <Text>{lblRange}</Text>
+      </TextContainer>
     </Container>
   )
 }
