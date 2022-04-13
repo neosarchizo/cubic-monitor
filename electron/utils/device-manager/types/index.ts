@@ -73,4 +73,5 @@ export interface AppEvent {
 export interface Range {
   max: string | null
   min: string | null
+  count: number
 }

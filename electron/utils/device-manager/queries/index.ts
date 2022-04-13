@@ -5,4 +5,4 @@ export const QUERY_GET_RANGE: (name: string, serialNumber: string) => string = (
   name,
   serialNumber,
 ) =>
-  `SELECT MAX(TIMESTAMP) AS max, MIN(TIMESTAMP) AS min FROM ${name} WHERE SERIAL_NUMBER == "${serialNumber}";`
+  `SELECT MAX(TIMESTAMP) AS max, MIN(TIMESTAMP) AS min, COUNT(*) as count FROM ${name} WHERE SERIAL_NUMBER == "${serialNumber}";`
