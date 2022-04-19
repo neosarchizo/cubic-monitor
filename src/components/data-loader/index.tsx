@@ -47,19 +47,21 @@ const Main: FC<Props> = (props) => {
 
   const handleOnIntervalTimeout = useCallback<() => void>(() => {
     if (serialNumberOption === 'NONE') {
+      onData({model: modelOption, serialNumber: 'NONE', data: []})
       return
     }
     deviceManager.getData(modelOption, serialNumberOption)
-  }, [modelOption, serialNumberOption, deviceManager])
+  }, [modelOption, serialNumberOption, deviceManager, onData])
 
   useIntervalOnlyEffect(handleOnIntervalTimeout, refreshInterval)
 
   useEffect(() => {
     if (serialNumberOption === 'NONE') {
+      onData({model: modelOption, serialNumber: 'NONE', data: []})
       return
     }
     deviceManager.getData(modelOption, serialNumberOption)
-  }, [modelOption, serialNumberOption, deviceManager])
+  }, [modelOption, serialNumberOption, deviceManager, onData])
 
   const handleOnGetData = useCallback<EventListener>(
     (event) => {
@@ -71,15 +73,15 @@ const Main: FC<Props> = (props) => {
 
       const param = payload as ResGetData
 
-      const {model: m} = param
+      const {model: m, serialNumber: sn} = param
 
-      if (m !== modelOption) {
+      if (m !== modelOption || sn !== serialNumberOption) {
         return
       }
 
       onData(param)
     },
-    [modelOption, onData],
+    [modelOption, serialNumberOption, onData],
   )
 
   useEffect(() => {

@@ -98,6 +98,7 @@ export interface ResGetSerialNumbers {
 
 export interface ResGetData {
   model: DeviceModel
+  serialNumber: string
   data: any[]
 }
 

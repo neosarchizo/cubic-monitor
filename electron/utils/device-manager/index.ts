@@ -672,7 +672,7 @@ export const main: (window: BrowserWindow) => void = (window) => {
         const {model, serialNumber} = param
 
         ModelManager.getData(model, serialNumber, (result) => {
-          sendEvent('GET_DATA', {model, data: result})
+          sendEvent('GET_DATA', {model, serialNumber, data: result})
         })
         break
       }
