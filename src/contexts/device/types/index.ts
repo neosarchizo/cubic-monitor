@@ -103,5 +103,12 @@ export interface ResGetData {
 
 export interface ResGetRange {
   model: DeviceModel
+  serialNumber: string
   data: [string, string, number][]
+}
+
+export interface ResGetCountByRange {
+  model: DeviceModel
+  serialNumber: string
+  data: [number][]
 }

@@ -6,3 +6,11 @@ export const QUERY_GET_RANGE: (name: string, serialNumber: string) => string = (
   serialNumber,
 ) =>
   `SELECT MAX(TIMESTAMP) AS max, MIN(TIMESTAMP) AS min, COUNT(*) as count FROM ${name} WHERE SERIAL_NUMBER == "${serialNumber}";`
+
+export const QUERY_GET_COUNT_BY_RANGE: (
+  name: string,
+  serialNumber: string,
+  startedAt: string,
+  endedAt: string,
+) => string = (name, serialNumber, startedAt, endedAt) =>
+  `SELECT COUNT(*) as count FROM ${name} WHERE SERIAL_NUMBER == "${serialNumber}" AND "${startedAt}" <= TIMESTAMP AND "${endedAt}" >= TIMESTAMP;`

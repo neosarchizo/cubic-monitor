@@ -42,6 +42,9 @@ const api: API = {
   getRange: (model, serialNumber) => {
     sendEvent({type: 'GET_RANGE', data: {model, serialNumber}})
   },
+  getCountByRange: (model, serialNumber, startedAt, endedAt) => {
+    sendEvent({type: 'GET_COUNT_BY_RANGE', data: {model, serialNumber, startedAt, endedAt}})
+  },
 }
 
 const expose: () => void = () => {

@@ -25,10 +25,16 @@ const Main: FC<Props> = (props) => {
 
   useEffect(() => {
     if (serialNumberOption === 'NONE') {
+      setLblRange(t('noData'))
+      onRange({
+        model: modelOption,
+        serialNumber: 'NONE',
+        data: [],
+      })
       return
     }
     deviceManager.getRange(modelOption, serialNumberOption)
-  }, [modelOption, serialNumberOption, deviceManager])
+  }, [modelOption, serialNumberOption, deviceManager, onRange, t])
 
   const handleOnGetRange = useCallback<EventListener>(
     (event) => {
@@ -40,9 +46,9 @@ const Main: FC<Props> = (props) => {
 
       const param = payload as ResGetRange
 
-      const {model: m, data} = param
+      const {model: m, serialNumber: sn, data} = param
 
-      if (m !== modelOption) {
+      if (m !== modelOption || sn !== serialNumberOption) {
         return
       }
 
@@ -56,7 +62,7 @@ const Main: FC<Props> = (props) => {
 
       onRange(param)
     },
-    [modelOption, onRange, t],
+    [modelOption, serialNumberOption, onRange, t],
   )
 
   useEffect(() => {

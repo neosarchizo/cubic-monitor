@@ -52,6 +52,7 @@ export type EventType =
   | 'GET_SERIAL_NUMBERS'
   | 'GET_DATA'
   | 'GET_RANGE'
+  | 'GET_COUNT_BY_RANGE'
 export interface Event {
   type: EventType
   data?
@@ -64,6 +65,7 @@ export type AppEventType =
   | 'GET_SERIAL_NUMBERS'
   | 'GET_DATA'
   | 'GET_RANGE'
+  | 'GET_COUNT_BY_RANGE'
 
 export interface AppEvent {
   type: AppEventType

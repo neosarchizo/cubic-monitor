@@ -16,4 +16,10 @@ export interface API {
   getSerialNumbers: (model: DeviceModel) => void
   getData: (model: DeviceModel, serialNumber: string) => void
   getRange: (model: DeviceModel, serialNumber: string) => void
+  getCountByRange: (
+    model: DeviceModel,
+    serialNumber: string,
+    startedAt: string,
+    endedAt: string,
+  ) => void
 }
