@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {Grid} from '@material-ui/core'
+import {Grid, Typography} from '@material-ui/core'
 import {KeyboardDateTimePicker} from '@material-ui/pickers'
 import {FORMAT_DATETIME} from '../constants'
 
@@ -24,3 +24,7 @@ export const DateTimePicker = styled(KeyboardDateTimePicker).attrs({
   format: FORMAT_DATETIME,
   fullWidth: true,
 })``
+
+export const TextContainer = styled(Grid).attrs({item: true, xs: 12})``
+
+export const Text = styled(Typography).attrs({variant: 'body1'})``
