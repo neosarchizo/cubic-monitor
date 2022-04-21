@@ -52,6 +52,7 @@ const DeviceContext = createContext<[DeviceState, DeviceManager]>([
     getSerialNumbers: () => {},
     getData: () => {},
     getRange: () => {},
+    getCountByRange: () => {},
   },
 ])
 
@@ -119,6 +120,10 @@ export const DeviceProvider: FC<Props> = (props) => {
         }
         case 'GET_RANGE': {
           subject.current.next({type: 'GET_RANGE', payload: data})
+          break
+        }
+        case 'GET_COUNT_BY_RANGE': {
+          subject.current.next({type: 'GET_COUNT_BY_RANGE', payload: data})
           break
         }
         default:
@@ -189,6 +194,9 @@ export const DeviceProvider: FC<Props> = (props) => {
       },
       getRange: (model, serialNumber) => {
         deviceManager.getRange(model, serialNumber)
+      },
+      getCountByRange: (model, serialNumber, startedAt, endedAt) => {
+        deviceManager.getCountByRange(model, serialNumber, startedAt, endedAt)
       },
     }
   }, [state])

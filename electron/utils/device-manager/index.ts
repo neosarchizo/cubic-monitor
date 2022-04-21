@@ -744,7 +744,7 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
             const {count} = d
 
-            result.push([count])
+            result.push([startedAt, endedAt, count])
           },
           (err) => {
             if (err !== undefined && err !== null) {

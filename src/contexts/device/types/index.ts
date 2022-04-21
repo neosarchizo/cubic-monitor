@@ -22,6 +22,12 @@ export interface API {
   getSerialNumbers: (model: DeviceModel) => void
   getData: (model: DeviceModel, serialNumber: string) => void
   getRange: (model: DeviceModel, serialNumber: string) => void
+  getCountByRange: (
+    model: DeviceModel,
+    serialNumber: string,
+    startedAt: string,
+    endedAt: string,
+  ) => void
 }
 
 export interface Port {
@@ -41,6 +47,7 @@ export type DeviceEventType =
   | 'GET_SERIAL_NUMBERS'
   | 'GET_DATA'
   | 'GET_RANGE'
+  | 'GET_COUNT_BY_RANGE'
 
 export interface DeviceEvent {
   type: DeviceEventType
@@ -64,7 +71,13 @@ export interface DeviceState {
   dbPath: string
 }
 
-export type EventType = 'LIST' | 'APP_PATH' | 'GET_SERIAL_NUMBERS' | 'GET_DATA' | 'GET_RANGE'
+export type EventType =
+  | 'LIST'
+  | 'APP_PATH'
+  | 'GET_SERIAL_NUMBERS'
+  | 'GET_DATA'
+  | 'GET_RANGE'
+  | 'GET_COUNT_BY_RANGE'
 
 export interface Event {
   type: EventType
@@ -85,6 +98,12 @@ export interface DeviceManager {
   getSerialNumbers: (model: DeviceModel) => void
   getData: (model: DeviceModel, serialNumber: string) => void
   getRange: (model: DeviceModel, serialNumber: string) => void
+  getCountByRange: (
+    model: DeviceModel,
+    serialNumber: string,
+    startedAt: string,
+    endedAt: string,
+  ) => void
 }
 
 export interface Props {
