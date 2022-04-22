@@ -51,6 +51,7 @@ const Main: VFC = () => {
       const m = date as moment.Moment
 
       if (!m.isValid()) {
+        setCount('')
         return
       }
 
@@ -95,14 +96,19 @@ const Main: VFC = () => {
 
       const param = payload as ResGetCountByRange
 
-      const {model: m, serialNumber: sn} = param
+      const {model: m, serialNumber: sn, data} = param
 
       if (m !== modelOption || sn !== serialNumberOption) {
         return
       }
 
-      // TODO get count
-      console.log(param)
+      if (data.length === 0) {
+        setCount('')
+        return
+      }
+
+      const [, , c] = data[0]
+      setCount(`${c}건`)
     },
     [modelOption, serialNumberOption],
   )
