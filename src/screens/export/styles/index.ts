@@ -11,7 +11,6 @@ export const Container = styled.div`
 `
 
 export const Body = styled(Grid).attrs({container: true, spacing: 3})`
-  flex: 1;
   width: 100%;
   padding: 5px;
 `
