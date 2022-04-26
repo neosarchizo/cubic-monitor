@@ -45,6 +45,9 @@ const api: API = {
   getCountByRange: (model, serialNumber, startedAt, endedAt) => {
     sendEvent({type: 'GET_COUNT_BY_RANGE', data: {model, serialNumber, startedAt, endedAt}})
   },
+  exportXlsx: (model, serialNumber, startedAt, endedAt) => {
+    sendEvent({type: 'EXPORT_XLSX', data: {model, serialNumber, startedAt, endedAt}})
+  },
 }
 
 const expose: () => void = () => {

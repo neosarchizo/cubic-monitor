@@ -14,7 +14,7 @@ import * as CM1107 from './models/cm1107'
 import * as AM1008WK from './models/am1008w-k'
 import {AM1008WKEvent} from './models/am1008w-k/types'
 import * as DB from '../db-manager'
-import {QUERY_GET_RANGE, QUERY_GET_COUNT_BY_RANGE} from './queries'
+import {QUERY_GET_RANGE, QUERY_GET_COUNT_BY_RANGE, QUERY_GET_DATA_FROM_TABLE} from './queries'
 
 let devices: Array<Device> = []
 
@@ -752,6 +752,48 @@ export const main: (window: BrowserWindow) => void = (window) => {
             }
 
             sendEvent('GET_COUNT_BY_RANGE', {model, serialNumber, data: result})
+          },
+        )
+
+        db.close()
+
+        break
+      }
+      case 'EXPORT_XLSX': {
+        if (data === undefined || data === null) {
+          break
+        }
+
+        const param = data as {
+          model: DeviceModel
+          serialNumber: string
+          startedAt: string
+          endedAt: string
+        }
+
+        const {model, serialNumber, startedAt, endedAt} = param
+
+        const db = DB.getDb()
+
+        const result: any[] = []
+
+        db.each(
+          QUERY_GET_DATA_FROM_TABLE(model, serialNumber, startedAt, endedAt),
+          (err, row) => {
+            if (err !== undefined && err !== null) {
+              return
+            }
+
+            result.push(row)
+          },
+          (err) => {
+            if (err !== undefined && err !== null) {
+              console.log('getCountByRange failed', err)
+            }
+
+            // sendEvent('EXPORT_XLSX', {model, serialNumber, data: result})
+
+            console.log('EXPORT_XLSX', result)
           },
         )
 

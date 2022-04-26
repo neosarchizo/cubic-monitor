@@ -22,4 +22,5 @@ export interface API {
     startedAt: string,
     endedAt: string,
   ) => void
+  exportXlsx: (model: DeviceModel, serialNumber: string, startedAt: string, endedAt: string) => void
 }
