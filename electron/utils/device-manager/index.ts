@@ -1,5 +1,6 @@
 import {BrowserWindow, ipcMain, WebContents, app} from 'electron'
 import {utils, writeFile} from 'xlsx'
+// import moment from 'moment'
 
 import SerialPort = require('serialport')
 
@@ -792,6 +793,12 @@ export const main: (window: BrowserWindow) => void = (window) => {
               console.log('getCountByRange failed', err)
             }
 
+            if (result.length === 0) {
+              return
+            }
+
+            const keys = Object.keys(result[0])
+
             // sendEvent('EXPORT_XLSX', {model, serialNumber, data: result})
 
             const wb = utils.book_new()
@@ -799,25 +806,24 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
             ws['!cols'] = []
 
-            ws[utils.encode_cell({c: 0, r: 0})] = {v: 'A', t: 's'}
-            ws[utils.encode_cell({c: 1, r: 0})] = {v: 'B', t: 's'}
-            ws[utils.encode_cell({c: 2, r: 0})] = {v: 'C', t: 's'}
+            keys.forEach((k, idx) => {
+              ws[utils.encode_cell({c: idx, r: 0})] = {v: k, t: 's'}
+              ws['!cols'].push({width: 50})
+            })
 
-            ws['!cols'].push({width: 50})
-            ws['!cols'].push({width: 70})
-            ws['!cols'].push({width: 90})
+            utils.book_append_sheet(wb, ws, model)
 
-            utils.book_append_sheet(wb, ws, 'TEST')
-
-            ws['!ref'] = utils.encode_range({s: {r: 0, c: 0}, e: {r: 0, c: 2}})
+            ws['!ref'] = utils.encode_range({s: {r: 0, c: 0}, e: {r: 0, c: keys.length - 1}})
 
             try {
-              writeFile(wb, 'test.xlsx', {bookType: 'xlsx'})
+              writeFile(wb, 'test.xlsx', {
+                bookType: 'xlsx',
+              })
             } catch (e) {
               console.log('failed!!', e)
             }
 
-            console.log('EXPORT_XLSX', result)
+            console.log('EXPORT_XLSX', result[0])
           },
         )
 
