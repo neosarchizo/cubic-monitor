@@ -1,11 +1,11 @@
 import {BrowserWindow, ipcMain, WebContents, app} from 'electron'
 import {utils, writeFile} from 'xlsx'
-// import moment from 'moment'
 
 import SerialPort = require('serialport')
+import moment = require('moment')
 
 import {Device, Event, AppEventType, AppDevice, DeviceModel, Range} from './types'
-import {API_NAME, BAUD_RATE} from './constants'
+import {API_NAME, BAUD_RATE, COL_WIDTH, FORMAT_NOW} from './constants'
 import * as ModelManager from './models'
 import {PM2008Event} from './models/pm2008/types'
 import {CM1106Event} from './models/cm1106/types'
@@ -799,31 +799,37 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
             const keys = Object.keys(result[0])
 
-            // sendEvent('EXPORT_XLSX', {model, serialNumber, data: result})
-
             const wb = utils.book_new()
             const ws = {}
 
             ws['!cols'] = []
 
-            keys.forEach((k, idx) => {
-              ws[utils.encode_cell({c: idx, r: 0})] = {v: k, t: 's'}
-              ws['!cols'].push({width: 50})
+            keys.forEach((k, idxCol) => {
+              ws[utils.encode_cell({c: idxCol, r: 0})] = {v: k, t: 's'}
+              ws['!cols'].push({width: COL_WIDTH})
+
+              result.forEach((row, idxRow) => {
+                ws[utils.encode_cell({c: idxCol, r: idxRow + 1})] = {
+                  v: row[k],
+                  t: typeof row[k] === 'number' ? 'n' : 's',
+                }
+              })
             })
 
             utils.book_append_sheet(wb, ws, model)
 
-            ws['!ref'] = utils.encode_range({s: {r: 0, c: 0}, e: {r: 0, c: keys.length - 1}})
+            ws['!ref'] = utils.encode_range({
+              s: {r: 0, c: 0},
+              e: {r: result.length, c: keys.length - 1},
+            })
 
             try {
-              writeFile(wb, 'test.xlsx', {
+              writeFile(wb, `${model}-${serialNumber}-${moment().format(FORMAT_NOW)}.xlsx`, {
                 bookType: 'xlsx',
               })
             } catch (e) {
               console.log('failed!!', e)
             }
-
-            console.log('EXPORT_XLSX', result[0])
           },
         )
 
