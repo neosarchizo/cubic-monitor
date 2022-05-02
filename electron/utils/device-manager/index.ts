@@ -824,9 +824,15 @@ export const main: (window: BrowserWindow) => void = (window) => {
             })
 
             try {
-              writeFile(wb, `${model}-${serialNumber}-${moment().format(FORMAT_NOW)}.xlsx`, {
-                bookType: 'xlsx',
-              })
+              writeFile(
+                wb,
+                `${app.getPath('downloads')}/${model}-${serialNumber}-${moment().format(
+                  FORMAT_NOW,
+                )}.xlsx`,
+                {
+                  bookType: 'xlsx',
+                },
+              )
             } catch (e) {
               console.log('failed!!', e)
             }
