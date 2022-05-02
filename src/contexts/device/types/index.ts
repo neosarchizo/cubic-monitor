@@ -48,6 +48,7 @@ export type DeviceEventType =
   | 'GET_DATA'
   | 'GET_RANGE'
   | 'GET_COUNT_BY_RANGE'
+  | 'EXPORT_XLSX'
 
 export interface DeviceEvent {
   type: DeviceEventType
@@ -78,6 +79,7 @@ export type EventType =
   | 'GET_DATA'
   | 'GET_RANGE'
   | 'GET_COUNT_BY_RANGE'
+  | 'EXPORT_XLSX'
 
 export interface Event {
   type: EventType
@@ -131,4 +133,10 @@ export interface ResGetCountByRange {
   model: DeviceModel
   serialNumber: string
   data: [string, string, number][]
+}
+
+export interface ResExportXlsx {
+  model: DeviceModel
+  serialNumber: string
+  type: 'STARTED' | 'FINISHED' | 'FAILED'
 }

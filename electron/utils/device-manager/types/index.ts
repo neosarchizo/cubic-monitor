@@ -79,3 +79,9 @@ export interface Range {
   min: string | null
   count: number
 }
+
+export interface ExportXlsxEvent {
+  model: string
+  serialNumber: string
+  type: 'STARTED' | 'FINISHED' | 'FAILED'
+}

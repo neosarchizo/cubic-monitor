@@ -4,7 +4,7 @@ import {utils, writeFile} from 'xlsx'
 import SerialPort = require('serialport')
 import moment = require('moment')
 
-import {Device, Event, AppEventType, AppDevice, DeviceModel, Range} from './types'
+import {Device, Event, AppEventType, AppDevice, DeviceModel, Range, ExportXlsxEvent} from './types'
 import {API_NAME, BAUD_RATE, COL_WIDTH, FORMAT_NOW} from './constants'
 import * as ModelManager from './models'
 import {PM2008Event} from './models/pm2008/types'
@@ -775,6 +775,14 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
         const {model, serialNumber, startedAt, endedAt} = param
 
+        const evtStarted: ExportXlsxEvent = {
+          model,
+          serialNumber,
+          type: 'STARTED',
+        }
+
+        sendEvent('EXPORT_XLSX', evtStarted)
+
         const db = DB.getDb()
 
         const result: any[] = []
@@ -791,9 +799,24 @@ export const main: (window: BrowserWindow) => void = (window) => {
           (err) => {
             if (err !== undefined && err !== null) {
               console.log('getCountByRange failed', err)
+              const evtFailed: ExportXlsxEvent = {
+                model,
+                serialNumber,
+                type: 'FAILED',
+              }
+
+              sendEvent('EXPORT_XLSX', evtFailed)
+              return
             }
 
             if (result.length === 0) {
+              const evtEmpty: ExportXlsxEvent = {
+                model,
+                serialNumber,
+                type: 'FAILED',
+              }
+
+              sendEvent('EXPORT_XLSX', evtEmpty)
               return
             }
 
@@ -833,8 +856,23 @@ export const main: (window: BrowserWindow) => void = (window) => {
                   bookType: 'xlsx',
                 },
               )
+
+              const evtFinished: ExportXlsxEvent = {
+                model,
+                serialNumber,
+                type: 'FINISHED',
+              }
+
+              sendEvent('EXPORT_XLSX', evtFinished)
             } catch (e) {
               console.log('failed!!', e)
+              const evtSomeError: ExportXlsxEvent = {
+                model,
+                serialNumber,
+                type: 'FAILED',
+              }
+
+              sendEvent('EXPORT_XLSX', evtSomeError)
             }
           },
         )

@@ -126,6 +126,10 @@ export const DeviceProvider: FC<Props> = (props) => {
           subject.current.next({type: 'GET_COUNT_BY_RANGE', payload: data})
           break
         }
+        case 'EXPORT_XLSX': {
+          console.log('EXPORT_XLSX', data)
+          break
+        }
         default:
           break
       }
