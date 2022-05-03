@@ -139,4 +139,5 @@ export interface ResExportXlsx {
   model: DeviceModel
   serialNumber: string
   type: 'STARTED' | 'FINISHED' | 'FAILED'
+  fileName?: string
 }

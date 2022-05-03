@@ -847,20 +847,19 @@ export const main: (window: BrowserWindow) => void = (window) => {
             })
 
             try {
-              writeFile(
-                wb,
-                `${app.getPath('downloads')}/${model}-${serialNumber}-${moment().format(
-                  FORMAT_NOW,
-                )}.xlsx`,
-                {
-                  bookType: 'xlsx',
-                },
-              )
+              const fileName = `${app.getPath(
+                'downloads',
+              )}/${model}-${serialNumber}-${moment().format(FORMAT_NOW)}.xlsx`
+
+              writeFile(wb, fileName, {
+                bookType: 'xlsx',
+              })
 
               const evtFinished: ExportXlsxEvent = {
                 model,
                 serialNumber,
                 type: 'FINISHED',
+                fileName,
               }
 
               sendEvent('EXPORT_XLSX', evtFinished)

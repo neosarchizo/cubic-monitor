@@ -27,3 +27,10 @@ export const DateTimePicker = styled(KeyboardDateTimePicker).attrs({
 export const TextContainer = styled(Grid).attrs({item: true, xs: 12})``
 
 export const Text = styled(Typography).attrs({variant: 'body1'})``
+
+export const Layer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: white;
+`

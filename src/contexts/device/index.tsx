@@ -127,7 +127,7 @@ export const DeviceProvider: FC<Props> = (props) => {
           break
         }
         case 'EXPORT_XLSX': {
-          console.log('EXPORT_XLSX', data)
+          subject.current.next({type: 'EXPORT_XLSX', payload: data})
           break
         }
         default:

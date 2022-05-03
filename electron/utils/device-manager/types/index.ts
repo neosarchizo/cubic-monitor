@@ -84,4 +84,5 @@ export interface ExportXlsxEvent {
   model: string
   serialNumber: string
   type: 'STARTED' | 'FINISHED' | 'FAILED'
+  fileName?: string
 }

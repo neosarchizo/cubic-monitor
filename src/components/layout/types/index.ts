@@ -4,4 +4,5 @@ export interface Props {
   children: ReactNode
   title: string
   hideDrawer?: boolean
+  hideAppBar?: boolean
 }

@@ -7,7 +7,7 @@ import {Container, MyAppBar, MyToolbar, Content, MyIconButton, Title} from './st
 import {Props} from './types'
 
 const Main: FC<Props> = (props) => {
-  const {children, title, hideDrawer} = props
+  const {children, title, hideDrawer, hideAppBar} = props
 
   const [open, setOpen] = useState<boolean>(false)
 
@@ -17,16 +17,18 @@ const Main: FC<Props> = (props) => {
 
   return (
     <Container>
-      <MyAppBar>
-        <MyToolbar>
-          {hideDrawer === true ? null : (
-            <MyIconButton onClick={handleOnDrawerToggle(true)} aria-label="menu">
-              <Menu />
-            </MyIconButton>
-          )}
-          <Title>{title}</Title>
-        </MyToolbar>
-      </MyAppBar>
+      {hideAppBar ? null : (
+        <MyAppBar>
+          <MyToolbar>
+            {hideDrawer ? null : (
+              <MyIconButton onClick={handleOnDrawerToggle(true)} aria-label="menu">
+                <Menu />
+              </MyIconButton>
+            )}
+            <Title>{title}</Title>
+          </MyToolbar>
+        </MyAppBar>
+      )}
       <Content>{children}</Content>
       <Drawer open={open} onClose={handleOnDrawerToggle(false)}>
         <DrawerContent onToggle={handleOnDrawerToggle} />
