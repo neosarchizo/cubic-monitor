@@ -28,6 +28,7 @@ export interface API {
     startedAt: string,
     endedAt: string,
   ) => void
+  exportXlsx: (model: DeviceModel, serialNumber: string, startedAt: string, endedAt: string) => void
 }
 
 export interface Port {
@@ -106,6 +107,7 @@ export interface DeviceManager {
     startedAt: string,
     endedAt: string,
   ) => void
+  exportXlsx: (model: DeviceModel, serialNumber: string, startedAt: string, endedAt: string) => void
 }
 
 export interface Props {

@@ -1,8 +1,19 @@
-import {useCallback, VFC, useState, useEffect} from 'react'
+import {useCallback, VFC, useState, useEffect, useMemo} from 'react'
 import moment from 'moment'
+import {CircularProgress} from '@mui/material'
 
 import {Layout, RangeLoader} from '../../components'
-import {Container, Body, Item, DateTimePicker, Text, TextContainer, Layer} from './styles'
+import {
+  Container,
+  Body,
+  Item,
+  DateTimePicker,
+  Text,
+  TextContainer,
+  Layer,
+  TxtExporting,
+  BtnExport,
+} from './styles'
 import {useI18n} from '../../utils/i18n'
 import {
   ResGetRange,
@@ -23,8 +34,16 @@ const Main: VFC = () => {
   const [startedAt, setStartedAt] = useState<moment.Moment>(moment())
   const [endedAt, setEndedAt] = useState<moment.Moment>(moment())
   const [range, setRange] = useState<Range | null>(null)
-  const [count, setCount] = useState<string>('')
+  const [count, setCount] = useState<number | null>(null)
   const [showLayer, setShowLayer] = useState<boolean>(false)
+
+  const lblCount = useMemo<string>(() => {
+    if (count === null) {
+      return ''
+    }
+
+    return `${count}건`
+  }, [count])
 
   const [, deviceManager] = useDevice()
 
@@ -53,7 +72,7 @@ const Main: VFC = () => {
       const m = date as moment.Moment
 
       if (!m.isValid()) {
-        setCount('')
+        setCount(null)
         return
       }
 
@@ -76,7 +95,7 @@ const Main: VFC = () => {
 
   useEffect(() => {
     if (serialNumberOption === 'NONE') {
-      setCount('')
+      setCount(null)
       return
     }
 
@@ -103,12 +122,12 @@ const Main: VFC = () => {
           }
 
           if (data.length === 0) {
-            setCount('')
+            setCount(null)
             return
           }
 
           const [, , c] = data[0]
-          setCount(`${c}건`)
+          setCount(c)
           break
         }
         case 'EXPORT_XLSX': {
@@ -131,6 +150,7 @@ const Main: VFC = () => {
             }
             case 'FINISHED': {
               setShowLayer(false)
+              // TODO popup!!
               console.log('path', fileName)
               break
             }
@@ -155,6 +175,19 @@ const Main: VFC = () => {
     }
   }, [deviceManager, handleOnDeviceEvent])
 
+  const handleOnExportClick = useCallback<() => void>(() => {
+    if (count === null || count === 0) {
+      return
+    }
+
+    deviceManager.exportXlsx(
+      modelOption,
+      serialNumberOption,
+      startedAt.format(FORMAT_DATETIME),
+      endedAt.format(FORMAT_DATETIME),
+    )
+  }, [count, modelOption, serialNumberOption, startedAt, endedAt, deviceManager])
+
   return (
     <>
       <Layout title={t('export')} hideAppBar={showLayer}>
@@ -176,14 +209,24 @@ const Main: VFC = () => {
                   <DateTimePicker value={endedAt} onChange={handleOnDateChange('ENDED_AT')} />
                 </Item>
                 <TextContainer>
-                  <Text>{count}</Text>
+                  <Text>{lblCount}</Text>
                 </TextContainer>
+                {count === null || count === 0 ? null : (
+                  <Item>
+                    <BtnExport onClick={handleOnExportClick}>{t('export')}</BtnExport>
+                  </Item>
+                )}
               </>
             ) : null}
           </Body>
         </Container>
       </Layout>
-      {showLayer ? <Layer /> : null}
+      {showLayer ? (
+        <Layer>
+          <CircularProgress />
+          <TxtExporting>{t('exporting')}</TxtExporting>
+        </Layer>
+      ) : null}
     </>
   )
 }

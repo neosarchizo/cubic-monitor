@@ -53,6 +53,7 @@ const DeviceContext = createContext<[DeviceState, DeviceManager]>([
     getData: () => {},
     getRange: () => {},
     getCountByRange: () => {},
+    exportXlsx: () => {},
   },
 ])
 
@@ -201,6 +202,9 @@ export const DeviceProvider: FC<Props> = (props) => {
       },
       getCountByRange: (model, serialNumber, startedAt, endedAt) => {
         deviceManager.getCountByRange(model, serialNumber, startedAt, endedAt)
+      },
+      exportXlsx: (model, serialNumber, startedAt, endedAt) => {
+        deviceManager.exportXlsx(model, serialNumber, startedAt, endedAt)
       },
     }
   }, [state])

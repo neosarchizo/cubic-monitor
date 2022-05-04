@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {Grid, Typography} from '@material-ui/core'
+import {Grid, Typography, Button} from '@material-ui/core'
 import {KeyboardDateTimePicker} from '@material-ui/pickers'
 import {FORMAT_DATETIME} from '../constants'
 
@@ -33,4 +33,15 @@ export const Layer = styled.div`
   height: 100%;
   position: absolute;
   background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
+
+export const TxtExporting = styled(Typography).attrs({variant: 'body1'})`
+  margin-top: 20px;
+`
+
+export const BtnExport = styled(Button).attrs({variant: 'contained', color: 'primary'})``

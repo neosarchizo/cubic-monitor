@@ -48,6 +48,7 @@ const Main: Translation = {
     minute: '분',
     export: '내보내기',
     noData: '데이터 없음',
+    exporting: '내보내는 중...',
   },
 }
 
