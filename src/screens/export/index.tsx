@@ -25,6 +25,7 @@ import {
 import {RangeType, Range} from './types'
 import {FORMAT_DATETIME} from './constants'
 import {useDevice} from '../../contexts/device'
+import DlgResult from './dialogs/result'
 
 const Main: VFC = () => {
   const {t} = useI18n()
@@ -36,6 +37,7 @@ const Main: VFC = () => {
   const [range, setRange] = useState<Range | null>(null)
   const [count, setCount] = useState<number | null>(null)
   const [showLayer, setShowLayer] = useState<boolean>(false)
+  const [openDlgResult, setOpenDlgResult] = useState<boolean>(false)
 
   const lblCount = useMemo<string>(() => {
     if (count === null) {
@@ -152,6 +154,8 @@ const Main: VFC = () => {
               setShowLayer(false)
               // TODO popup!!
               console.log('path', fileName)
+
+              setOpenDlgResult(true)
               break
             }
             default:
@@ -187,6 +191,10 @@ const Main: VFC = () => {
       endedAt.format(FORMAT_DATETIME),
     )
   }, [count, modelOption, serialNumberOption, startedAt, endedAt, deviceManager])
+
+  const handleOnDlgResultClose = useCallback<() => void>(() => {
+    setOpenDlgResult(false)
+  }, [])
 
   return (
     <>
@@ -227,6 +235,7 @@ const Main: VFC = () => {
           <TxtExporting>{t('exporting')}</TxtExporting>
         </Layer>
       ) : null}
+      <DlgResult open={openDlgResult} onClose={handleOnDlgResultClose} />
     </>
   )
 }

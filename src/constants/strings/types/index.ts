@@ -46,6 +46,7 @@ export type Language = {
   export: string
   noData: string
   exporting: string
+  exportingResult: string
 }
 
 export type Translation = {
