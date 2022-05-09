@@ -50,6 +50,7 @@ const Main: Translation = {
     noData: '데이터 없음',
     exporting: '내보내는 중...',
     exportingResult: '내보내기 결과',
+    filePath: '파일 경로',
   },
 }
 

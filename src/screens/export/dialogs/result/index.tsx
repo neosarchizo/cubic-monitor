@@ -8,7 +8,7 @@ import {useI18n} from '../../../../utils/i18n'
 const Main: FC<Props> = (props) => {
   const {t} = useI18n()
 
-  const {open, onClose} = props
+  const {open, onClose, filePath} = props
 
   const handleOnOkClick = useCallback<() => void>(() => {
     onClose()
@@ -18,7 +18,7 @@ const Main: FC<Props> = (props) => {
     <Container open={open} onClose={onClose}>
       <Title>{t('exportingResult')}</Title>
       <DialogContent>
-        <Description>{t('exportingResult')}</Description>
+        <Description>{`${t('filePath')} : ${filePath}`}</Description>
       </DialogContent>
       <DialogActions>
         <BtnOk onClick={handleOnOkClick}>{t('ok')}</BtnOk>

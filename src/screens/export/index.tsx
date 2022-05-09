@@ -38,6 +38,7 @@ const Main: VFC = () => {
   const [count, setCount] = useState<number | null>(null)
   const [showLayer, setShowLayer] = useState<boolean>(false)
   const [openDlgResult, setOpenDlgResult] = useState<boolean>(false)
+  const [filePath, setFilePath] = useState<string>('')
 
   const lblCount = useMemo<string>(() => {
     if (count === null) {
@@ -152,9 +153,7 @@ const Main: VFC = () => {
             }
             case 'FINISHED': {
               setShowLayer(false)
-              // TODO popup!!
-              console.log('path', fileName)
-
+              setFilePath(fileName || '')
               setOpenDlgResult(true)
               break
             }
@@ -235,7 +234,7 @@ const Main: VFC = () => {
           <TxtExporting>{t('exporting')}</TxtExporting>
         </Layer>
       ) : null}
-      <DlgResult open={openDlgResult} onClose={handleOnDlgResultClose} />
+      <DlgResult filePath={filePath} open={openDlgResult} onClose={handleOnDlgResultClose} />
     </>
   )
 }

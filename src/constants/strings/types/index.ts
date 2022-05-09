@@ -47,6 +47,7 @@ export type Language = {
   noData: string
   exporting: string
   exportingResult: string
+  filePath: string
 }
 
 export type Translation = {
