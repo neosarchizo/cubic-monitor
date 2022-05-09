@@ -90,7 +90,7 @@
   },
   "build": {
     "appId": "io.neosarchizo.cubic-monitor",
-    "productName": "CUBIc monitor",
+    "productName": "CUBIC monitor",
     "copyright": "Copyright © 2021 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
