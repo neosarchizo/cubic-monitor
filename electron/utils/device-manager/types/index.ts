@@ -32,7 +32,7 @@ export type DPFC = (
   onEvent: (payload) => void,
 ) => void
 
-export type DeviceModel = 'PM2008' | 'CM1106' | 'AM1008W-K' | 'CM1107'
+export type DeviceModel = 'PM2008' | 'CM1106' | 'AM1008W-K' | 'CM1107' | 'CB-HCHO-V4'
 
 export interface AppDevice {
   id: string

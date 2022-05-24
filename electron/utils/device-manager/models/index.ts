@@ -3,6 +3,7 @@ import * as PM2008 from './pm2008'
 import * as CM1106 from './cm1106'
 import * as CM1107 from './cm1107'
 import * as AM1008WK from './am1008w-k'
+import * as CBHCHOV4 from './cb-hcho-v4'
 
 export const open: (device: Device) => void = (device) => {
   const {model, port} = device
@@ -22,6 +23,10 @@ export const open: (device: Device) => void = (device) => {
     }
     case 'AM1008W-K': {
       AM1008WK.readSerialNumber(port)
+      break
+    }
+    case 'CB-HCHO-V4': {
+      // TODO
       break
     }
 
@@ -55,6 +60,10 @@ export const parse: (
       AM1008WK.parse(device, buffer, onClearBuffer, onEvent)
       break
     }
+    case 'CB-HCHO-V4': {
+      CBHCHOV4.parse(device, buffer, onClearBuffer, onEvent)
+      break
+    }
 
     default:
       break
@@ -79,6 +88,10 @@ export const measure: (device: Device) => void = (device) => {
     }
     case 'AM1008W-K': {
       AM1008WK.readMeasuredResult(port)
+      break
+    }
+    case 'CB-HCHO-V4': {
+      CBHCHOV4.read(port)
       break
     }
 
@@ -107,6 +120,10 @@ export const record: (device: Device) => void = (device) => {
       AM1008WK.record(device)
       break
     }
+    case 'CB-HCHO-V4': {
+      CBHCHOV4.record(device)
+      break
+    }
 
     default:
       break
@@ -132,6 +149,10 @@ export const getSerialNumbers: (
     }
     case 'AM1008W-K': {
       AM1008WK.getSerialNumbers(callback)
+      break
+    }
+    case 'CB-HCHO-V4': {
+      // TODO
       break
     }
 
@@ -162,7 +183,10 @@ export const getData: (
       AM1008WK.getData(serialNumber, callback)
       break
     }
-
+    case 'CB-HCHO-V4': {
+      // TODO
+      break
+    }
     default:
       break
   }
