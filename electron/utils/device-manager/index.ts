@@ -397,6 +397,9 @@ const handleOnModelEvent = (path: string) => (payload) => {
 
       break
     }
+    case 'CB-HCHO-V4': {
+      break
+    }
     default:
       break
   }

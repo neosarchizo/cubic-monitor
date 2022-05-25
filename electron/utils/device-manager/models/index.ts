@@ -26,7 +26,7 @@ export const open: (device: Device) => void = (device) => {
       break
     }
     case 'CB-HCHO-V4': {
-      // TODO
+      CBHCHOV4.readSerialNumber(port)
       break
     }
 

@@ -39,6 +39,18 @@ export const autoCalibration: DFC = (port) => {
   })
 }
 
+export const readSerialNumber: DFC = (port) => {
+  console.log('CB-HCHO-V4::readSerialNumber')
+  const packet = new Packet()
+  packet.generate(CMD_READ)
+
+  port.write(packet.getBuffer(), (e) => {
+    if (e) {
+      console.log('write err', e)
+    }
+  })
+}
+
 export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
   if (buffer[0] !== FRAME_SEND_STX && buffer[0] !== FRAME_RESP_STX) {
     onClearBuffer()
@@ -63,13 +75,13 @@ export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
       case CMD_READ: {
         console.log('CMD_READ!!!')
 
-        const {am1008wk} = device
+        const {cbhchov4} = device
 
-        if (am1008wk === undefined) {
+        if (cbhchov4 === undefined) {
           break
         }
 
-        const {serialNumber} = am1008wk
+        const {serialNumber} = cbhchov4
 
         if (serialNumber === null) {
           break
@@ -119,7 +131,7 @@ export const updateProp: (
   if (result === undefined) {
     result = {
       serialNumber: null,
-      swVer: null,
+      swVer: 'NONE',
       hcho: null,
       voc: null,
       temperature: null,
@@ -135,13 +147,6 @@ export const updateProp: (
       result = {
         ...result,
         serialNumber: data as string,
-      }
-      break
-    }
-    case 'SW_VER': {
-      result = {
-        ...result,
-        swVer: data as string,
       }
       break
     }
