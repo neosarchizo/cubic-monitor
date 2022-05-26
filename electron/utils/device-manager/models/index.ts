@@ -152,7 +152,7 @@ export const getSerialNumbers: (
       break
     }
     case 'CB-HCHO-V4': {
-      // TODO
+      CBHCHOV4.getSerialNumbers(callback)
       break
     }
 
@@ -184,7 +184,7 @@ export const getData: (
       break
     }
     case 'CB-HCHO-V4': {
-      // TODO
+      CBHCHOV4.getData(serialNumber, callback)
       break
     }
     default:

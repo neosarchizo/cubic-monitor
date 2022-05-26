@@ -19,7 +19,7 @@ const timeTable: {[sn: string]: string} = {}
 
 export const read: DFC = (port) => {
   const packet = new Packet()
-  packet.generate(CMD_READ, [0x01])
+  packet.generate(CMD_READ)
 
   port.write(packet.getBuffer(), (e) => {
     if (e) {
@@ -84,6 +84,14 @@ export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
         const {serialNumber} = cbhchov4
 
         if (serialNumber === null) {
+          const {path} = device
+
+          const event: CBHCHOV4Event = {
+            type: 'SERIAL_NUMBER',
+            data: path,
+          }
+
+          onEvent(event)
           break
         }
 
@@ -109,7 +117,6 @@ export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
         }
 
         onEvent(event)
-
         break
       }
       case CMD_AUTO_CALIBRATION: {

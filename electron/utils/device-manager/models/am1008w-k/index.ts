@@ -232,8 +232,6 @@ export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
         const vocNowRValue = packet.getUInt16Value(18) * 10
         const pmSensorState = packet.getUInt16Value(20)
 
-        // TODO add rest values
-
         const event: AM1008WKEvent = {
           type: 'MEASURE',
           data: {
