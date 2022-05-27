@@ -6,6 +6,7 @@ import {PM2008} from '../models/pm2008/types'
 import {CM1106} from '../models/cm1106/types'
 import {CM1107} from '../models/cm1107/types'
 import {AM1008WK} from '../models/am1008w-k/types'
+import {CBHCHOV4} from '../models/cb-hcho-v4/types'
 
 export type DeviceEventListener = (event: IpcRendererEvent, ...args: any[]) => void
 
@@ -56,7 +57,7 @@ export interface DeviceEvent {
   data?
 }
 
-export type DeviceModel = 'PM2008' | 'CM1106' | 'AM1008W-K' | 'CM1107'
+export type DeviceModel = 'PM2008' | 'CM1106' | 'AM1008W-K' | 'CM1107' | 'CB-HCHO-V4'
 
 export interface Device {
   id: string
@@ -65,6 +66,7 @@ export interface Device {
   cm1106?: CM1106
   cm1107?: CM1107
   am1008wk?: AM1008WK
+  cbhchov4?: CBHCHOV4
   recording: boolean
 }
 

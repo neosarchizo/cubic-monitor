@@ -41,6 +41,7 @@ export interface AppDevice {
   cm1106?: CM1106
   cm1107?: CM1107
   am1008wk?: AM1008WK
+  cbhchov4?: CBHCHOV4
   recording: boolean
 }
 
