@@ -70,6 +70,7 @@ const Main: VFC = () => {
             <MenuItem value="CM1106">CM1106</MenuItem>
             <MenuItem value="AM1008W-K">AM1008W-K</MenuItem>
             <MenuItem value="CM1107">CM1107</MenuItem>
+            <MenuItem value="CB-HCHO-V4">CB-HCHO-V4</MenuItem>
           </Select>
         </FormControl>
       )
@@ -186,7 +187,7 @@ const Main: VFC = () => {
         return result
       }
 
-      const {model, pm2008, cm1106, cm1107, am1008wk} = device
+      const {model, pm2008, cm1106, cm1107, am1008wk, cbhchov4} = device
 
       switch (model) {
         case 'PM2008': {
@@ -245,6 +246,20 @@ const Main: VFC = () => {
           result = serialNumber
           break
         }
+        case 'CB-HCHO-V4': {
+          if (cbhchov4 === undefined) {
+            break
+          }
+
+          const {serialNumber} = cbhchov4
+
+          if (serialNumber === null) {
+            break
+          }
+
+          result = serialNumber
+          break
+        }
 
         default:
           break
@@ -270,7 +285,7 @@ const Main: VFC = () => {
         return result
       }
 
-      const {model, pm2008, cm1106, cm1107, am1008wk} = device
+      const {model, pm2008, cm1106, cm1107, am1008wk, cbhchov4} = device
 
       switch (model) {
         case 'PM2008': {
@@ -321,6 +336,20 @@ const Main: VFC = () => {
           }
 
           const {swVer} = am1008wk
+
+          if (swVer === null) {
+            break
+          }
+
+          result = swVer
+          break
+        }
+        case 'CB-HCHO-V4': {
+          if (cbhchov4 === undefined) {
+            break
+          }
+
+          const {swVer} = cbhchov4
 
           if (swVer === null) {
             break
