@@ -73,17 +73,9 @@ export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
   if (packet.isCorrect()) {
     switch (packet.getCommand()) {
       case CMD_READ: {
-        console.log('CMD_READ!!!')
-
         const {cbhchov4} = device
 
         if (cbhchov4 === undefined) {
-          break
-        }
-
-        const {serialNumber} = cbhchov4
-
-        if (serialNumber === null) {
           const {path} = device
 
           const event: CBHCHOV4Event = {
@@ -92,6 +84,12 @@ export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
           }
 
           onEvent(event)
+          break
+        }
+
+        const {serialNumber} = cbhchov4
+
+        if (serialNumber === null) {
           break
         }
 
