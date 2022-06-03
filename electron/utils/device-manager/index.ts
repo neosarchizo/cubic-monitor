@@ -17,6 +17,8 @@ import * as AM1008WK from './models/am1008w-k'
 import {AM1008WKEvent} from './models/am1008w-k/types'
 import * as DB from '../db-manager'
 import {QUERY_GET_RANGE, QUERY_GET_COUNT_BY_RANGE, QUERY_GET_DATA_FROM_TABLE} from './queries'
+import * as CBHCHOV4 from './models/cb-hcho-v4'
+import {CBHCHOV4Event} from './models/cb-hcho-v4/types'
 
 let devices: Array<Device> = []
 
@@ -39,7 +41,7 @@ const getDevice: (path: string) => Device | undefined = (path) => {
 
 const getAppDevices: () => AppDevice[] = () => {
   return devices.map((d) => {
-    const {path, model, pm2008, cm1106, cm1107, am1008wk, recording} = d
+    const {path, model, pm2008, cm1106, cm1107, am1008wk, cbhchov4, recording} = d
 
     return {
       id: path,
@@ -48,6 +50,7 @@ const getAppDevices: () => AppDevice[] = () => {
       cm1106,
       cm1107,
       am1008wk,
+      cbhchov4,
       recording,
     }
   })
@@ -398,6 +401,51 @@ const handleOnModelEvent = (path: string) => (payload) => {
       break
     }
     case 'CB-HCHO-V4': {
+      const {type, data} = payload as CBHCHOV4Event
+
+      switch (type) {
+        case 'SERIAL_NUMBER': {
+          devices = devices.map((d) => {
+            const {path: p} = d
+            if (p !== path) {
+              return d
+            }
+
+            const {cbhchov4} = d
+
+            return {
+              ...d,
+              cbhchov4: CBHCHOV4.updateProp('SERIAL_NUMBER', cbhchov4, data),
+            }
+          })
+
+          sendDevices()
+          break
+        }
+        case 'MEASURE': {
+          devices = devices.map((d) => {
+            const {path: p} = d
+            if (p !== path) {
+              return d
+            }
+
+            const {cbhchov4} = d
+
+            return {
+              ...d,
+              cbhchov4: CBHCHOV4.updateProp('MEASURE', cbhchov4, data),
+            }
+          })
+          break
+        }
+        case 'SW_VER': {
+          break
+        }
+
+        default:
+          break
+      }
+
       break
     }
     default:
