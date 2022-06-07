@@ -51,6 +51,7 @@ const Main: Translation = {
     exporting: '내보내는 중...',
     exportingResult: '내보내기 결과',
     filePath: '파일 경로',
+    cbhchov4: 'CB-HCHO-V4',
   },
 }
 

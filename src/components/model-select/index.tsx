@@ -17,6 +17,7 @@ const Main: FC<Props> = (props) => {
       {id: 'CM1106', name: t('cm1106')},
       {id: 'CM1107', name: t('cm1107')},
       {id: 'AM1008W-K', name: t('am1008wk')},
+      {id: 'CB-HCHO-V4', name: t('cbhchov4')},
     ]
   }, [t])
 

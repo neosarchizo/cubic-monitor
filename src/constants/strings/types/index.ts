@@ -48,6 +48,7 @@ export type Language = {
   exporting: string
   exportingResult: string
   filePath: string
+  cbhchov4: string
 }
 
 export type Translation = {
