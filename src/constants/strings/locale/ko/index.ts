@@ -52,6 +52,11 @@ const Main: Translation = {
     exportingResult: '내보내기 결과',
     filePath: '파일 경로',
     cbhchov4: 'CB-HCHO-V4',
+    hcho: 'HCHO',
+    humidity: '습도',
+    tvoc: 'TVOC',
+    sensorStatus: '센서 상태',
+    autoCalibrationSwitch: '자동 보정 스위치',
   },
 }
 

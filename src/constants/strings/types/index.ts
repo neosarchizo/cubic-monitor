@@ -49,6 +49,11 @@ export type Language = {
   exportingResult: string
   filePath: string
   cbhchov4: string
+  hcho: string
+  humidity: string
+  tvoc: string
+  sensorStatus: string
+  autoCalibrationSwitch: string
 }
 
 export type Translation = {
