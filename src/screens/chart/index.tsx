@@ -10,6 +10,7 @@ import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {AM1008WKData} from '../../contexts/device/models/am1008w-k/types'
+import {CBHCHOV4Data} from '../../contexts/device/models/cb-hcho-v4/types'
 import {getTrace} from './helpers'
 import {FORMAT_DATA_REVISION} from './constants'
 
@@ -257,6 +258,62 @@ const Main: VFC = () => {
 
         setLayout({
           title: t('am1008wk'),
+          datarevision: moment().format(FORMAT_DATA_REVISION),
+        })
+        break
+      }
+      case 'CB-HCHO-V4': {
+        const cbhchov4Data = data as CBHCHOV4Data[]
+
+        if (cbhchov4Data.length === 0) {
+          setLayout({
+            title: t('cbhchov4'),
+            datarevision: moment().format(FORMAT_DATA_REVISION),
+          })
+        }
+
+        const arrCreatedAt: string[] = []
+        const arrHcho: number[] = []
+        const arrVoc: number[] = []
+        const arrTemperature: number[] = []
+        const arrHumidity: number[] = []
+        const arrTvoc: number[] = []
+        const arrSensorStatus: number[] = []
+        const arrAutoCalibrationSwitch: number[] = []
+
+        cbhchov4Data.forEach((d) => {
+          const [
+            ,
+            createdAt,
+            hcho,
+            voc,
+            temperature,
+            humidity,
+            tvoc,
+            sensorStatus,
+            autoCalibrationSwitch,
+          ] = d
+
+          arrCreatedAt.push(createdAt)
+          arrHcho.push(hcho)
+          arrVoc.push(voc)
+          arrTemperature.push(temperature)
+          arrHumidity.push(humidity)
+          arrTvoc.push(tvoc)
+          arrSensorStatus.push(sensorStatus)
+          arrAutoCalibrationSwitch.push(autoCalibrationSwitch)
+        })
+
+        newTraces.push(getTrace(arrCreatedAt, arrHcho, t('hcho')))
+        newTraces.push(getTrace(arrCreatedAt, arrVoc, t('voc')))
+        newTraces.push(getTrace(arrCreatedAt, arrTemperature, t('temperature')))
+        newTraces.push(getTrace(arrCreatedAt, arrHumidity, t('humidity')))
+        newTraces.push(getTrace(arrCreatedAt, arrTvoc, t('tvoc')))
+        newTraces.push(getTrace(arrCreatedAt, arrSensorStatus, t('sensorStatus')))
+        newTraces.push(getTrace(arrCreatedAt, arrAutoCalibrationSwitch, t('autoCalibrationSwitch')))
+
+        setLayout({
+          title: t('cbhchov4'),
           datarevision: moment().format(FORMAT_DATA_REVISION),
         })
         break
