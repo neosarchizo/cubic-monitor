@@ -191,3 +191,26 @@ export const getData: (
       break
   }
 }
+
+export const getTableName: (model: DeviceModel) => string = (model) => {
+  switch (model) {
+    case 'PM2008': {
+      return 'PM2008'
+    }
+    case 'CM1106': {
+      return 'CM1106'
+    }
+    case 'CM1107': {
+      return 'CM1107'
+    }
+    case 'AM1008W-K': {
+      return 'AM1008WK'
+    }
+    case 'CB-HCHO-V4': {
+      return 'CBHCHOV4'
+    }
+    default:
+      break
+  }
+  return ''
+}

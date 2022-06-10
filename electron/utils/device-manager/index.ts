@@ -738,12 +738,14 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
         const {model, serialNumber} = param
 
+        const tableName = ModelManager.getTableName(model)
+
         const db = DB.getDb()
 
         const result: any[] = []
 
         db.each(
-          QUERY_GET_RANGE(model, serialNumber),
+          QUERY_GET_RANGE(tableName, serialNumber),
           (err, row) => {
             if (err !== undefined && err !== null) {
               return
@@ -782,12 +784,14 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
         const {model, serialNumber, startedAt, endedAt} = param
 
+        const tableName = ModelManager.getTableName(model)
+
         const db = DB.getDb()
 
         const result: any[] = []
 
         db.each(
-          QUERY_GET_COUNT_BY_RANGE(model, serialNumber, startedAt, endedAt),
+          QUERY_GET_COUNT_BY_RANGE(tableName, serialNumber, startedAt, endedAt),
           (err, row) => {
             if (err !== undefined && err !== null) {
               return
@@ -826,6 +830,8 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
         const {model, serialNumber, startedAt, endedAt} = param
 
+        const tableName = ModelManager.getTableName(model)
+
         const evtStarted: ExportXlsxEvent = {
           model,
           serialNumber,
@@ -839,7 +845,7 @@ export const main: (window: BrowserWindow) => void = (window) => {
         const result: any[] = []
 
         db.each(
-          QUERY_GET_DATA_FROM_TABLE(model, serialNumber, startedAt, endedAt),
+          QUERY_GET_DATA_FROM_TABLE(tableName, serialNumber, startedAt, endedAt),
           (err, row) => {
             if (err !== undefined && err !== null) {
               return
@@ -897,10 +903,12 @@ export const main: (window: BrowserWindow) => void = (window) => {
               e: {r: result.length, c: keys.length - 1},
             })
 
+            const modifiedSerialNumber = serialNumber.replace(/\//g, '-').replace(/\./g, '-')
+
             try {
               const fileName = `${app.getPath(
                 'downloads',
-              )}/${model}-${serialNumber}-${moment().format(FORMAT_NOW)}.xlsx`
+              )}/${model}-${modifiedSerialNumber}-${moment().format(FORMAT_NOW)}.xlsx`
 
               writeFile(wb, fileName, {
                 bookType: 'xlsx',
