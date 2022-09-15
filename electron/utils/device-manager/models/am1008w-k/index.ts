@@ -147,6 +147,8 @@ export const readSerialNumber: DFC = (port) => {
   const packet = new Packet()
   packet.generate(CMD_READ_SERIAL_NUMBER)
 
+  console.log('here!!', packet.getBuffer())
+
   port.write(packet.getBuffer(), (e) => {
     if (e) {
       console.log('write err', e)
@@ -155,6 +157,8 @@ export const readSerialNumber: DFC = (port) => {
 }
 
 export const parse: DPFC = (device, buffer, onClearBuffer, onEvent) => {
+  console.log('AM1008W-K::parse', buffer)
+
   if (buffer[0] !== FRAME_SEND_STX && buffer[0] !== FRAME_RESP_STX) {
     onClearBuffer()
     return

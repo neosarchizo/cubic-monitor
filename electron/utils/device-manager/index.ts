@@ -5,7 +5,14 @@ import SerialPort = require('serialport')
 import moment = require('moment')
 
 import {Device, Event, AppEventType, AppDevice, DeviceModel, Range, ExportXlsxEvent} from './types'
-import {API_NAME, BAUD_RATE, COL_WIDTH, FORMAT_NOW} from './constants'
+import {
+  API_NAME,
+  BAUD_RATE,
+  COL_WIDTH,
+  FORMAT_NOW,
+  MEASURE_DELAY_MS,
+  RECORD_DELAY_MS,
+} from './constants'
 import * as ModelManager from './models'
 import {PM2008Event} from './models/pm2008/types'
 import {CM1106Event} from './models/cm1106/types'
@@ -453,7 +460,9 @@ const handleOnModelEvent = (path: string) => (payload) => {
   }
 }
 
-const handleOnData = (path: string) => (data) => {
+const handleOnData = (path: string) => (data: Buffer) => {
+  console.log('handleOnData', path, data)
+
   const device = getDevice(path)
 
   if (device === undefined || device === null) {
@@ -463,7 +472,9 @@ const handleOnData = (path: string) => (data) => {
 
   const {buffer} = device
 
-  buffer.push(data[0])
+  data.forEach((d) => {
+    buffer.push(d)
+  })
 
   ModelManager.parse(device, buffer, handleOnClearBuffer(path), handleOnModelEvent(path))
 }
@@ -651,8 +662,8 @@ export const main: (window: BrowserWindow) => void = (window) => {
 
           return {
             ...d,
-            tIdRecord: setInterval(record(path), 333),
-            tIdMeasure: setInterval(measure(path), 333),
+            tIdRecord: setInterval(record(path), RECORD_DELAY_MS),
+            tIdMeasure: setInterval(measure(path), MEASURE_DELAY_MS),
             recording: true,
           }
         })
