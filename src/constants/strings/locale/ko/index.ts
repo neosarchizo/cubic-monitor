@@ -44,6 +44,7 @@ const Main: Translation = {
     particleNumber5p0UmAbove: '5 um 갯수',
     particleNumber10pUmAbove: '10 um 갯수',
     refreshInterval: '새로고침 주기',
+    second: '초',
     seconds: '초',
     minute: '분',
     export: '내보내기',

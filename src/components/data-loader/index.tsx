@@ -16,22 +16,18 @@ const Main: FC<Props> = (props) => {
 
   const [, deviceManager] = useDevice()
 
-  const [refreshIntervalOption, setRefreshIntervalOption] = useState<RefreshIntervalType>('5_SECS')
+  const [refreshIntervalOption, setRefreshIntervalOption] = useState<RefreshIntervalType>('1_SEC')
 
   const refreshInterval = useMemo<number | null>(() => {
     let result: number | null = null
 
     switch (refreshIntervalOption) {
-      case '5_SECS': {
-        result = 5000
+      case '1_SEC': {
+        result = 1000
         break
       }
-      case '10_SECS': {
-        result = 10000
-        break
-      }
-      case '30_SECS': {
-        result = 30000
+      case '6_SECS': {
+        result = 6000
         break
       }
       case '1_MIN': {

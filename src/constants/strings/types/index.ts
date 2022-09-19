@@ -41,6 +41,7 @@ export type Language = {
   particleNumber5p0UmAbove: string
   particleNumber10pUmAbove: string
   refreshInterval: string
+  second: string
   seconds: string
   minute: string
   export: string

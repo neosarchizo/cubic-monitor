@@ -1,3 +1,3 @@
-export type RefreshIntervalType = '5_SECS' | '10_SECS' | '30_SECS' | '1_MIN'
+export type RefreshIntervalType = '1_SEC' | '6_SECS' | '1_MIN'
 
 export const Dummy = ''

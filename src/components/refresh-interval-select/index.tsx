@@ -13,9 +13,8 @@ const Main: FC<Props> = (props) => {
 
   const options = useMemo<RefreshIntervalOption[]>(() => {
     return [
-      {id: '5_SECS', name: `5${t('seconds')}`},
-      {id: '10_SECS', name: `10${t('seconds')}`},
-      {id: '30_SECS', name: `30${t('seconds')}`},
+      {id: '1_SEC', name: `1${t('second')}`},
+      {id: '6_SECS', name: `6${t('seconds')}`},
       {id: '1_MIN', name: `1${t('minute')}`},
     ]
   }, [t])
