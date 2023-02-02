@@ -26,6 +26,8 @@ import * as DB from '../db-manager'
 import {QUERY_GET_RANGE, QUERY_GET_COUNT_BY_RANGE, QUERY_GET_DATA_FROM_TABLE} from './queries'
 import * as CBHCHOV4 from './models/cb-hcho-v4'
 import {CBHCHOV4Event} from './models/cb-hcho-v4/types'
+import * as AM1002 from './models/am1002'
+import {AM1002Event} from './models/am1002/types'
 
 let devices: Array<Device> = []
 
@@ -453,6 +455,70 @@ const handleOnModelEvent = (path: string) => (payload) => {
           break
       }
 
+      break
+    }
+    case 'AM1002': {
+      const {type, data} = payload as AM1002Event
+
+      switch (type) {
+        case 'SERIAL_NUMBER': {
+          devices = devices.map((d) => {
+            const {path: p} = d
+            if (p !== path) {
+              return d
+            }
+
+            const {am1002} = d
+
+            return {
+              ...d,
+              am1002: AM1002.updateProp('SERIAL_NUMBER', am1002, data),
+            }
+          })
+
+          AM1002.readSoftwareVersionNumber(port)
+
+          sendDevices()
+          break
+        }
+        case 'SW_VER': {
+          devices = devices.map((d) => {
+            const {path: p} = d
+            if (p !== path) {
+              return d
+            }
+
+            const {am1002} = d
+
+            return {
+              ...d,
+              am1002: AM1002.updateProp('SW_VER', am1002, data),
+            }
+          })
+
+          sendDevices()
+          break
+        }
+        case 'MEASURE': {
+          devices = devices.map((d) => {
+            const {path: p} = d
+            if (p !== path) {
+              return d
+            }
+
+            const {am1002} = d
+
+            return {
+              ...d,
+              am1002: AM1002.updateProp('MEASURE', am1002, data),
+            }
+          })
+          break
+        }
+
+        default:
+          break
+      }
       break
     }
     default:

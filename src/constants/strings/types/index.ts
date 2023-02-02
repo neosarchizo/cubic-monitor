@@ -55,6 +55,7 @@ export type Language = {
   tvoc: string
   sensorStatus: string
   autoCalibrationSwitch: string
+  am1002: string
 }
 
 export type Translation = {

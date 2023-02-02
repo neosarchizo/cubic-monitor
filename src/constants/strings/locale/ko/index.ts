@@ -58,6 +58,7 @@ const Main: Translation = {
     tvoc: 'TVOC',
     sensorStatus: '센서 상태',
     autoCalibrationSwitch: '자동 보정 스위치',
+    am1002: 'AM1002',
   },
 }
 

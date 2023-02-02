@@ -57,7 +57,7 @@ export interface DeviceEvent {
   data?
 }
 
-export type DeviceModel = 'PM2008' | 'CM1106' | 'AM1008W-K' | 'CM1107' | 'CB-HCHO-V4'
+export type DeviceModel = 'PM2008' | 'CM1106' | 'AM1008W-K' | 'CM1107' | 'CB-HCHO-V4' | 'AM1002'
 
 export interface Device {
   id: string
