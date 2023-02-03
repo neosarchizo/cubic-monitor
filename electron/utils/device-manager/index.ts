@@ -50,7 +50,7 @@ const getDevice: (path: string) => Device | undefined = (path) => {
 
 const getAppDevices: () => AppDevice[] = () => {
   return devices.map((d) => {
-    const {path, model, pm2008, cm1106, cm1107, am1008wk, cbhchov4, recording} = d
+    const {path, model, pm2008, cm1106, cm1107, am1008wk, cbhchov4, am1002, recording} = d
 
     return {
       id: path,
@@ -60,6 +60,7 @@ const getAppDevices: () => AppDevice[] = () => {
       cm1107,
       am1008wk,
       cbhchov4,
+      am1002,
       recording,
     }
   })
