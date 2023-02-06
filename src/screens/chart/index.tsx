@@ -11,6 +11,7 @@ import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {AM1008WKData} from '../../contexts/device/models/am1008w-k/types'
 import {CBHCHOV4Data} from '../../contexts/device/models/cb-hcho-v4/types'
+import {AM1002Data} from '../../contexts/device/models/am1002/types'
 import {getTrace} from './helpers'
 import {FORMAT_DATA_REVISION} from './constants'
 
@@ -314,6 +315,51 @@ const Main: VFC = () => {
 
         setLayout({
           title: t('cbhchov4'),
+          datarevision: moment().format(FORMAT_DATA_REVISION),
+        })
+        break
+      }
+      case 'AM1002': {
+        const am1002Data = data as AM1002Data[]
+
+        if (am1002Data.length === 0) {
+          setLayout({
+            title: t('am1002'),
+            datarevision: moment().format(FORMAT_DATA_REVISION),
+          })
+          break
+        }
+
+        const arrCreatedAt: string[] = []
+
+        const arrTvoc: number[] = []
+        const arrPm1p0Grimm: number[] = []
+        const arrPm2p5Grimm: number[] = []
+        const arrPm10pGrimm: number[] = []
+        const arrTemperature: number[] = []
+        const arrHumidity: number[] = []
+
+        am1002Data.forEach((d) => {
+          const [, createdAt, tvoc, pm1p0Grimm, pm2p5Grimm, pm10pGrimm, temperature, humidity] = d
+
+          arrCreatedAt.push(createdAt)
+          arrTvoc.push(tvoc)
+          arrPm1p0Grimm.push(pm1p0Grimm)
+          arrPm2p5Grimm.push(pm2p5Grimm)
+          arrPm10pGrimm.push(pm10pGrimm)
+          arrTemperature.push(temperature)
+          arrHumidity.push(humidity)
+        })
+
+        newTraces.push(getTrace(arrCreatedAt, arrTvoc, t('tvoc')))
+        newTraces.push(getTrace(arrCreatedAt, arrPm1p0Grimm, t('pm1P0Grimm')))
+        newTraces.push(getTrace(arrCreatedAt, arrPm2p5Grimm, t('pm2P5Grimm')))
+        newTraces.push(getTrace(arrCreatedAt, arrPm10pGrimm, t('pm10PGrimm')))
+        newTraces.push(getTrace(arrCreatedAt, arrTemperature, t('temperature')))
+        newTraces.push(getTrace(arrCreatedAt, arrHumidity, t('humidity')))
+
+        setLayout({
+          title: t('am1002'),
           datarevision: moment().format(FORMAT_DATA_REVISION),
         })
         break
