@@ -10,6 +10,7 @@ import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {CBHCHOV4Data} from '../../contexts/device/models/cb-hcho-v4/types'
+import {AM1002Data} from '../../contexts/device/models/am1002/types'
 
 const Main: VFC = () => {
   const {t} = useI18n()
@@ -96,6 +97,17 @@ const Main: VFC = () => {
           {field: 'tvoc', headerName: t('tvoc'), width: 150},
           {field: 'sensorStatus', headerName: t('sensorStatus'), width: 150},
           {field: 'autoCalibrationSwitch', headerName: t('autoCalibrationSwitch'), width: 150},
+        ]
+      }
+      case 'AM1002': {
+        return [
+          {field: 'createdAt', headerName: t('createdAt'), width: 200},
+          {field: 'tvoc', headerName: t('tvoc'), width: 150},
+          {field: 'pm1p0Grimm', headerName: t('pm1P0Grimm'), width: 150},
+          {field: 'pm2p5Grimm', headerName: t('pm2P5Grimm'), width: 150},
+          {field: 'pm10pGrimm', headerName: t('pm10PGrimm'), width: 150},
+          {field: 'temperature', headerName: t('temperature'), width: 150},
+          {field: 'humidity', headerName: t('humidity'), width: 150},
         ]
       }
       default:
@@ -193,6 +205,22 @@ const Main: VFC = () => {
             tvoc: d[6],
             sensorStatus: d[7],
             autoCalibrationSwitch: d[8],
+          }
+        })
+      }
+      case 'AM1002': {
+        const am1002Data = data as AM1002Data[]
+
+        return am1002Data.map((d) => {
+          return {
+            id: d[0].toString(),
+            createdAt: d[1],
+            tvoc: d[2],
+            pm1p0Grimm: d[2],
+            pm2p5Grimm: d[3],
+            pm10pGrimm: d[4],
+            temperature: d[5],
+            humidity: d[6],
           }
         })
       }
