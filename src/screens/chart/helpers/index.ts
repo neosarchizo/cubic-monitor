@@ -1,12 +1,17 @@
 import {Trace} from '../types'
 
-export const getTrace: (x: string[], y: number[], name: string) => Trace = (x, y, name) => {
+export const getTrace: (x: string[], y: number[], name: string, hidden?: boolean) => Trace = (
+  x,
+  y,
+  name,
+  hidden,
+) => {
   return {
     x,
     y,
     type: 'scatter',
     name,
-    visible: 'True',
+    visible: hidden ? 'legendonly' : 'True',
   }
 }
 
