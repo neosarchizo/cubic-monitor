@@ -4,7 +4,7 @@ import moment from 'moment'
 import {Layout, DataLoader} from '../../components'
 import {useI18n} from '../../utils/i18n'
 import {Container, Body, MyPlot} from './styles'
-import {ResGetData, DeviceModel} from '../../contexts/device/types'
+import {ResGetData} from '../../contexts/device/types'
 import {Trace, Layout as LayoutType} from './types'
 import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
@@ -14,12 +14,13 @@ import {CBHCHOV4Data} from '../../contexts/device/models/cb-hcho-v4/types'
 import {AM1002Data} from '../../contexts/device/models/am1002/types'
 import {getTrace} from './helpers'
 import {FORMAT_DATA_REVISION} from './constants'
+import {useDevice} from '../../contexts/device'
 
 const Main: VFC = () => {
   const {t} = useI18n()
 
-  const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
-  const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
+  const [{modelChart, snChart}, deviceManager] = useDevice()
+
   const [data, setData] = useState<any[]>([])
   const [layout, setLayout] = useState<LayoutType>({
     title: '',
@@ -29,14 +30,14 @@ const Main: VFC = () => {
   const traces = useMemo<Trace[]>(() => {
     const newTraces: Trace[] = []
 
-    if (serialNumberOption === 'NONE') {
+    if (snChart === 'NONE') {
       setLayout({
         title: '',
         datarevision: moment().format(FORMAT_DATA_REVISION),
       })
     }
 
-    switch (modelOption) {
+    switch (modelChart) {
       case 'PM2008': {
         // id, createdAt
         const pm2008Data = data as PM2008Data[]
@@ -369,7 +370,7 @@ const Main: VFC = () => {
     }
 
     return newTraces
-  }, [serialNumberOption, modelOption, t, data])
+  }, [snChart, modelChart, t, data])
 
   const handleOnData = useCallback<(resGetData: ResGetData) => void>((resGetData) => {
     const {data: d} = resGetData
@@ -382,10 +383,10 @@ const Main: VFC = () => {
       <Container>
         <DataLoader
           onData={handleOnData}
-          modelOption={modelOption}
-          serialNumberOption={serialNumberOption}
-          onModelOptionChange={setModelOption}
-          onSerialNumberOptionChange={setSerialNumberOption}
+          modelOption={modelChart}
+          serialNumberOption={snChart}
+          onModelOptionChange={deviceManager.setModelChart}
+          onSerialNumberOptionChange={deviceManager.setSnChart}
         />
         <Body>
           <MyPlot data={traces} layout={layout} />

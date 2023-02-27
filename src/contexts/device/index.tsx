@@ -34,6 +34,10 @@ const {deviceManager} = window
 const defaultState: DeviceState = {
   devices: [],
   dbPath: '',
+  modelTable: 'PM2008',
+  snTable: 'NONE',
+  modelChart: 'PM2008',
+  snChart: 'NONE',
 }
 
 const DeviceContext = createContext<[DeviceState, DeviceManager]>([
@@ -54,6 +58,10 @@ const DeviceContext = createContext<[DeviceState, DeviceManager]>([
     getRange: () => {},
     getCountByRange: () => {},
     exportXlsx: () => {},
+    setModelTable: () => {},
+    setModelChart: () => {},
+    setSnTable: () => {},
+    setSnChart: () => {},
   },
 ])
 
@@ -205,6 +213,38 @@ export const DeviceProvider: FC<Props> = (props) => {
       },
       exportXlsx: (model, serialNumber, startedAt, endedAt) => {
         deviceManager.exportXlsx(model, serialNumber, startedAt, endedAt)
+      },
+      setModelTable: (model) => {
+        setState((v) => {
+          return {
+            ...v,
+            modelTable: model,
+          }
+        })
+      },
+      setModelChart: (model) => {
+        setState((v) => {
+          return {
+            ...v,
+            modelChart: model,
+          }
+        })
+      },
+      setSnTable: (sn) => {
+        setState((v) => {
+          return {
+            ...v,
+            snTable: sn,
+          }
+        })
+      },
+      setSnChart: (sn) => {
+        setState((v) => {
+          return {
+            ...v,
+            snChart: sn,
+          }
+        })
       },
     }
   }, [state])

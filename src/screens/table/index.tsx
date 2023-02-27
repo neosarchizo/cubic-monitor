@@ -4,24 +4,24 @@ import {GridColumns} from '@mui/x-data-grid'
 import {Layout, DataLoader} from '../../components'
 import {useI18n} from '../../utils/i18n'
 import {Container, Body, MyDataGrid} from './styles'
-import {DeviceModel, ResGetData} from '../../contexts/device/types'
+import {ResGetData} from '../../contexts/device/types'
 import {AM1008WKData} from '../../contexts/device/models/am1008w-k/types'
 import {CM1106Data} from '../../contexts/device/models/cm1106/types'
 import {CM1107Data} from '../../contexts/device/models/cm1107/types'
 import {PM2008Data} from '../../contexts/device/models/pm2008/types'
 import {CBHCHOV4Data} from '../../contexts/device/models/cb-hcho-v4/types'
 import {AM1002Data} from '../../contexts/device/models/am1002/types'
+import {useDevice} from '../../contexts/device'
 
 const Main: VFC = () => {
   const {t} = useI18n()
 
-  const [modelOption, setModelOption] = useState<DeviceModel>('PM2008')
-  const [serialNumberOption, setSerialNumberOption] = useState<string>('NONE')
+  const [{modelTable, snTable}, deviceManager] = useDevice()
 
   const [data, setData] = useState<any[]>([])
 
   const columns = useMemo<GridColumns>(() => {
-    switch (modelOption) {
+    switch (modelTable) {
       case 'PM2008': {
         return [
           {field: 'createdAt', headerName: t('createdAt'), width: 200},
@@ -118,14 +118,14 @@ const Main: VFC = () => {
       {field: 'id', headerName: t('path'), width: 300},
       {field: 'model', headerName: t('model'), width: 150},
     ]
-  }, [t, modelOption])
+  }, [t, modelTable])
 
   const records = useMemo<any[]>(() => {
-    if (serialNumberOption === 'NONE') {
+    if (snTable === 'NONE') {
       return []
     }
 
-    switch (modelOption) {
+    switch (modelTable) {
       case 'PM2008': {
         const pm2008Data = data as PM2008Data[]
 
@@ -229,7 +229,7 @@ const Main: VFC = () => {
     }
 
     return []
-  }, [modelOption, serialNumberOption, data])
+  }, [modelTable, snTable, data])
 
   const handleOnData = useCallback<(resGetData: ResGetData) => void>((resGetData) => {
     const {data: d} = resGetData
@@ -242,10 +242,10 @@ const Main: VFC = () => {
       <Container>
         <DataLoader
           onData={handleOnData}
-          modelOption={modelOption}
-          serialNumberOption={serialNumberOption}
-          onModelOptionChange={setModelOption}
-          onSerialNumberOptionChange={setSerialNumberOption}
+          modelOption={modelTable}
+          serialNumberOption={snTable}
+          onModelOptionChange={deviceManager.setModelTable}
+          onSerialNumberOptionChange={deviceManager.setSnTable}
         />
         <Body>
           <MyDataGrid rows={records} columns={columns} />

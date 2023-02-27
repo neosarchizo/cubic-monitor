@@ -75,6 +75,10 @@ export interface Device {
 export interface DeviceState {
   devices: Device[]
   dbPath: string
+  modelTable: DeviceModel
+  snTable: string
+  modelChart: DeviceModel
+  snChart: string
 }
 
 export type EventType =
@@ -112,6 +116,10 @@ export interface DeviceManager {
     endedAt: string,
   ) => void
   exportXlsx: (model: DeviceModel, serialNumber: string, startedAt: string, endedAt: string) => void
+  setModelTable: (model: DeviceModel) => void
+  setModelChart: (model: DeviceModel) => void
+  setSnTable: (sn: string) => void
+  setSnChart: (sn: string) => void
 }
 
 export interface Props {
