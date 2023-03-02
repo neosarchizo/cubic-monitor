@@ -17,6 +17,7 @@ export const Body = styled.div`
 
 export const MyPlot = styled(Plot).attrs({
   layout: {
+    showlegend: false,
     autosize: true,
     yaxis: {fixedrange: true},
   },
