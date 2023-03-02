@@ -1,6 +1,6 @@
 import {FC, useState, useEffect, useMemo, useCallback} from 'react'
 
-import {Container, Item} from './styles'
+import {Container, Item} from '../../styled-components'
 import {useDevice} from '../../contexts/device'
 import {EventListener, ResGetData} from '../../contexts/device/types'
 import {RefreshIntervalType} from '../../types'

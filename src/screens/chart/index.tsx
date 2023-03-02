@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import {Layout, DataLoader} from '../../components'
 import {useI18n} from '../../utils/i18n'
-import {Container, Body, MyPlot} from './styles'
+import {Container, Body, MyPlot, LegendPanel} from './styles'
 import {ResGetData} from '../../contexts/device/types'
 import {Trace, Layout as LayoutType} from './types'
 import {CM1106Data} from '../../contexts/device/models/cm1106/types'
@@ -388,6 +388,7 @@ const Main: VFC = () => {
           onModelOptionChange={deviceManager.setModelChart}
           onSerialNumberOptionChange={deviceManager.setSnChart}
         />
+        <LegendPanel />
         <Body>
           <MyPlot data={traces} layout={layout} />
         </Body>
