@@ -1,10 +1,10 @@
 import {VFC, useState, useCallback, useMemo} from 'react'
 import moment from 'moment'
 
-import {Layout, DataLoader} from '../../components'
+import {Layout, DataLoader, CheckboxInput} from '../../components'
 import {useI18n} from '../../utils/i18n'
 import {Container, Body, MyPlot, LegendPanel} from './styles'
-import {ResGetData} from '../../contexts/device/types'
+import {ResGetData, DeviceModel} from '../../contexts/device/types'
 import {
   Trace,
   Layout as LayoutType,
@@ -24,6 +24,7 @@ import {AM1002Data} from '../../contexts/device/models/am1002/types'
 import {getTrace} from './helpers'
 import {FORMAT_DATA_REVISION} from './constants'
 import {useDevice} from '../../contexts/device'
+import {Item} from '../../styled-components'
 
 const Main: VFC = () => {
   const {t} = useI18n()
@@ -35,7 +36,7 @@ const Main: VFC = () => {
     title: '',
     datarevision: '',
   })
-  const [legendsState] = useState<{
+  const [legendsState, setLegendsState] = useState<{
     pm2008: PM2008LegendState
     cm1106: CM1106LegendState
     cm1107: CM1107LegendState
@@ -523,6 +524,82 @@ const Main: VFC = () => {
     setData(d)
   }, [])
 
+  const handleOnGetLegendVisible = useCallback<(model: DeviceModel, attr: string) => boolean>(
+    (model, attr) => {
+      const {pm2008} = legendsState
+
+      switch (model) {
+        case 'PM2008': {
+          const {pm10PGrimm, pm2P5Grimm} = pm2008
+
+          switch (attr) {
+            case 'pm10PGrimm': {
+              return !pm10PGrimm
+            }
+            case 'pm2P5Grimm': {
+              return !pm2P5Grimm
+            }
+            default:
+              break
+          }
+          break
+        }
+        default:
+          break
+      }
+
+      return false
+    },
+    [legendsState],
+  )
+
+  const handleOnSetLegendVisible = useCallback<
+    (model: DeviceModel, attr: string) => (value: boolean) => void
+  >(
+    (model, attr) => (value) => {
+      switch (model) {
+        case 'PM2008': {
+          switch (attr) {
+            case 'pm10PGrimm': {
+              setLegendsState((v) => {
+                const {pm2008} = v
+
+                return {
+                  ...v,
+                  pm2008: {
+                    ...pm2008,
+                    pm10PGrimm: !value,
+                  },
+                }
+              })
+              break
+            }
+            case 'pm2P5Grimm': {
+              setLegendsState((v) => {
+                const {pm2008} = v
+
+                return {
+                  ...v,
+                  pm2008: {
+                    ...pm2008,
+                    pm2P5Grimm: !value,
+                  },
+                }
+              })
+              break
+            }
+            default:
+              break
+          }
+          break
+        }
+        default:
+          break
+      }
+    },
+    [],
+  )
+
   return (
     <Layout title={t('chart')}>
       <Container>
@@ -533,7 +610,28 @@ const Main: VFC = () => {
           onModelOptionChange={deviceManager.setModelChart}
           onSerialNumberOptionChange={deviceManager.setSnChart}
         />
-        <LegendPanel />
+        <LegendPanel>
+          {modelChart === 'PM2008' ? (
+            <>
+              <Item>
+                <CheckboxInput
+                  label={t('pm10PGrimm')}
+                  name="pm10PGrimm"
+                  value={handleOnGetLegendVisible('PM2008', 'pm10PGrimm')}
+                  onChange={handleOnSetLegendVisible('PM2008', 'pm10PGrimm')}
+                />
+              </Item>
+              <Item>
+                <CheckboxInput
+                  label={t('pm2P5Grimm')}
+                  name="pm2P5Grimm"
+                  value={handleOnGetLegendVisible('PM2008', 'pm2P5Grimm')}
+                  onChange={handleOnSetLegendVisible('PM2008', 'pm2P5Grimm')}
+                />
+              </Item>
+            </>
+          ) : null}
+        </LegendPanel>
         <Body>
           <MyPlot data={traces} layout={layout} />
         </Body>
