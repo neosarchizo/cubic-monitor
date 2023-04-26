@@ -1,2 +1,4 @@
-src/report-web-vitals.ts
-src/setupTests.ts
+node_modules
+dist
+out
+.gitignore
