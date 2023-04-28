@@ -27,8 +27,7 @@ function App(): JSX.Element {
           <a
             target="_blank"
             href="https://github.com/alex8088/electron-vite"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             Getting Help
           </a>
         </div>
@@ -37,8 +36,7 @@ function App(): JSX.Element {
           <a
             target="_blank"
             href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             create-electron
           </a>
         </div>
@@ -65,8 +63,7 @@ function App(): JSX.Element {
               <a
                 target="_blank"
                 href="https://evite.netlify.app/guide/hmr-in-renderer.html"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 docs
               </a>
               .
@@ -85,8 +82,7 @@ function App(): JSX.Element {
               <a
                 target="_blank"
                 href="https://evite.netlify.app/guide/hot-reloading.html"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 docs
               </a>
               .
@@ -101,8 +97,7 @@ function App(): JSX.Element {
               <a
                 target="_blank"
                 href="https://evite.netlify.app/guide/debugging.html"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 docs
               </a>
               .
@@ -117,8 +112,7 @@ function App(): JSX.Element {
               <a
                 target="_blank"
                 href="https://evite.netlify.app/guide/source-code-protection.html"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 docs
               </a>
               .

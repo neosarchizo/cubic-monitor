@@ -1,4 +1,4 @@
-const { notarize } = require('@electron/notarize')
+const {notarize} = require('@electron/notarize')
 
 module.exports = async (context) => {
   if (process.platform !== 'darwin') return
@@ -17,7 +17,7 @@ module.exports = async (context) => {
 
   const appId = 'com.electron.app'
 
-  const { appOutDir } = context
+  const {appOutDir} = context
 
   const appName = context.packager.appInfo.productFilename
 
@@ -26,7 +26,7 @@ module.exports = async (context) => {
       appBundleId: appId,
       appPath: `${appOutDir}/${appName}.app`,
       appleId: process.env.APPLE_ID,
-      appleIdPassword: process.env.APPLEIDPASS
+      appleIdPassword: process.env.APPLEIDPASS,
     })
   } catch (error) {
     console.error(error)
