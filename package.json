@@ -7,7 +7,7 @@
   "homepage": "https://www.electronjs.org",
   "scripts": {
     "pretty": "prettier --write \"src/**/*.{js,ts,tsx}\"",
-    "lint": "eslint src --ext .js,.ts,.tsx",
+    "lint": "eslint src --ext .js,.ts,.tsx --quiet",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "pnpm run typecheck:node && pnpm run typecheck:web",
