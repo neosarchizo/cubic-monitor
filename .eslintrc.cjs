@@ -14,11 +14,9 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 2021,
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:prettier/recommended',
@@ -53,6 +51,34 @@ module.exports = {
   overrides: [
     {
       files: ['src/renderer/src/**/*.ts', 'src/renderer/src/**/*.tsx'],
+      plugins: [
+        // default
+        '@typescript-eslint',
+        'prettier',
+        // custom
+        'react',
+        'jsx-a11y',
+        'import',
+        'react-hooks',
+        'styled-components-a11y',
+      ],
+      extends: [
+        // default
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:prettier/recommended',
+        // custom
+        'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+        'plugin:react-hooks/recommended',
+        'plugin:styled-components-a11y/recommended',
+        'airbnb',
+        'airbnb/hooks',
+        'plugin:jsx-a11y/recommended',
+        'plugin:import/errors',
+        'plugin:import/warnings',
+      ],
       rules: {
         // default
         '@typescript-eslint/ban-ts-comment': ['error', {'ts-ignore': 'allow-with-description'}],
@@ -79,6 +105,52 @@ module.exports = {
         semi: ['error', 'never'],
         'no-unused-vars': 'off',
         'no-empty-function': 'off',
+        'react/jsx-filename-extension': [1, {extensions: ['.ts', '.tsx']}],
+        'react/prop-types': 'off', // In favor of strong typing - no need to dedupe
+        'react/jsx-uses-react': 'off',
+        'react/react-in-jsx-scope': 'off',
+        'react/prefer-stateless-function': [
+          2,
+          {
+            ignorePureComponents: true,
+          },
+        ],
+        'react/forbid-prop-types': [
+          0,
+          {
+            forbid: [],
+          },
+        ],
+        'react/function-component-definition': [
+          2,
+          {
+            namedComponents: 'arrow-function',
+            unnamedComponents: 'arrow-function',
+          },
+        ],
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
+        'react/jsx-closing-bracket-location': 'off',
+        'import/extensions': [
+          'error',
+          'ignorePackages',
+          {
+            js: 'never',
+            jsx: 'never',
+            ts: 'never',
+            tsx: 'never',
+          },
+        ],
+        'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
+        'import/prefer-default-export': 'off',
+        'import/no-unresolved': [2, {ignore: ['astro:content']}],
+      },
+      settings: {
+        'import/resolver': {
+          node: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          },
+        },
       },
     },
     {
