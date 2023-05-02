@@ -1,6 +1,6 @@
 import {FC} from 'react'
 
-import Versions from './components/versions-comp'
+import Versions from './components/versions'
 import icons from './assets/icons.svg'
 
 const Main: FC = () => (
