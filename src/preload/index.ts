@@ -3,13 +3,6 @@ import {electronAPI} from '@electron-toolkit/preload'
 
 import DeviceManager from './api/device-manager'
 
-// Custom APIs for renderer
-const api = {
-  list: () => {
-    console.log('list!!!')
-  },
-}
-
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
