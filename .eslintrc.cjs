@@ -1,3 +1,57 @@
+const COMMON_PLUGINS = ['@typescript-eslint', 'prettier', 'import']
+const COMMON_EXTENDS = [
+  'eslint:recommended',
+  'plugin:@typescript-eslint/recommended',
+  'plugin:@typescript-eslint/eslint-recommended',
+  'plugin:prettier/recommended',
+  'airbnb',
+  'plugin:import/errors',
+  'plugin:import/warnings',
+]
+const COMMON_RULES = {
+  '@typescript-eslint/ban-ts-comment': ['error', {'ts-ignore': 'allow-with-description'}],
+  '@typescript-eslint/camelcase': 'off',
+  '@typescript-eslint/explicit-function-return-type': 'off',
+  '@typescript-eslint/explicit-module-boundary-types': 'off',
+  '@typescript-eslint/no-empty-function': ['error', {allow: ['arrowFunctions']}],
+  '@typescript-eslint/no-explicit-any': 'error',
+  '@typescript-eslint/no-non-null-assertion': 'off',
+  '@typescript-eslint/no-unused-vars': 'error',
+  '@typescript-eslint/no-use-before-define': 'off',
+  '@typescript-eslint/no-var-requires': 'off',
+  '@typescript-eslint/no-this-alias': 'off',
+  '@typescript-eslint/triple-slash-reference': 'off',
+  '@typescript-eslint/no-empty-interface': 'off',
+  'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
+  'import/prefer-default-export': 'off',
+  'import/no-unresolved': [2, {ignore: ['.png*']}],
+  'import/extensions': [
+    'error',
+    'ignorePackages',
+    {
+      js: 'never',
+      ts: 'never',
+    },
+  ],
+  'no-console': 'warn',
+  'prefer-const': 'off',
+  'no-shadow': 'off',
+  '@typescript-eslint/no-shadow': ['error'],
+  'no-use-before-define': 'off',
+  'object-curly-spacing': 'off',
+  quotes: ['error', 'single', {avoidEscape: true}],
+  semi: ['error', 'never'],
+  'no-unused-vars': 'off',
+  'no-empty-function': 'off',
+}
+const COMMON_SETTINGS = {
+  'import/resolver': {
+    node: {
+      extensions: ['.js', '.ts'],
+    },
+  },
+}
+
 module.exports = {
   root: true,
   env: {
@@ -14,68 +68,15 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 2021,
   },
-  plugins: ['@typescript-eslint', 'prettier', 'import'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:prettier/recommended',
-    'airbnb',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-  ],
-  rules: {
-    // default
-    '@typescript-eslint/ban-ts-comment': ['error', {'ts-ignore': 'allow-with-description'}],
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-empty-function': ['error', {allow: ['arrowFunctions']}],
-    '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-use-before-define': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/no-this-alias': 'off',
-    '@typescript-eslint/triple-slash-reference': 'off',
-    '@typescript-eslint/no-empty-interface': 'off',
-    'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
-    'import/prefer-default-export': 'off',
-    'import/no-unresolved': [2, {ignore: ['.png*']}],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        ts: 'never',
-      },
-    ],
-    'no-console': 'warn',
-    'prefer-const': 'off',
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
-    'no-use-before-define': 'off',
-    'object-curly-spacing': 'off',
-    quotes: ['error', 'single', {avoidEscape: true}],
-    semi: ['error', 'never'],
-    'no-unused-vars': 'off',
-    'no-empty-function': 'off',
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.ts'],
-      },
-    },
-  },
+  plugins: COMMON_PLUGINS,
+  extends: COMMON_EXTENDS,
+  rules: COMMON_RULES,
+  settings: COMMON_SETTINGS,
   overrides: [
     {
       files: ['src/renderer/src/**/*.ts', 'src/renderer/src/**/*.tsx'],
       plugins: [
-        // default
-        '@typescript-eslint',
-        'prettier',
-        'import',
+        ...COMMON_PLUGINS,
         // custom
         'react',
         'jsx-a11y',
@@ -83,14 +84,7 @@ module.exports = {
         'styled-components-a11y',
       ],
       extends: [
-        // default
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:prettier/recommended',
-        'airbnb',
-        'plugin:import/errors',
-        'plugin:import/warnings',
+        ...COMMON_EXTENDS,
         // custom
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
@@ -100,33 +94,7 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
       ],
       rules: {
-        // default
-        '@typescript-eslint/ban-ts-comment': ['error', {'ts-ignore': 'allow-with-description'}],
-        '@typescript-eslint/camelcase': 'off',
-        '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
-        '@typescript-eslint/no-empty-function': ['error', {allow: ['arrowFunctions']}],
-        '@typescript-eslint/no-explicit-any': 'error',
-        '@typescript-eslint/no-non-null-assertion': 'off',
-        '@typescript-eslint/no-unused-vars': 'error',
-        '@typescript-eslint/no-use-before-define': 'off',
-        '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/no-this-alias': 'off',
-        '@typescript-eslint/triple-slash-reference': 'off',
-        '@typescript-eslint/no-empty-interface': 'off',
-        'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
-        'import/prefer-default-export': 'off',
-        'import/no-unresolved': [2, {ignore: ['.png*']}],
-        'no-console': 'warn',
-        'prefer-const': 'off',
-        'no-shadow': 'off',
-        '@typescript-eslint/no-shadow': ['error'],
-        'no-use-before-define': 'off',
-        'object-curly-spacing': 'off',
-        quotes: ['error', 'single', {avoidEscape: true}],
-        semi: ['error', 'never'],
-        'no-unused-vars': 'off',
-        'no-empty-function': 'off',
+        ...COMMON_RULES,
         // custom
         'import/extensions': [
           'error',
@@ -166,6 +134,7 @@ module.exports = {
         'react/jsx-closing-bracket-location': 'off',
       },
       settings: {
+        ...COMMON_SETTINGS,
         'import/resolver': {
           node: {
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
