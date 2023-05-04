@@ -1,6 +1,6 @@
 import {ElectronAPI} from '@electron-toolkit/preload'
 
-import {API} from './types'
+import {API} from './api/device-manager/types'
 
 declare global {
   interface Window {

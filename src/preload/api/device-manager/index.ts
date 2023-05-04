@@ -1,10 +1,21 @@
-import {DeviceManagerAPI} from './types'
+import {ipcRenderer} from 'electron'
+
+import {DeviceManagerAPI, Event} from './types'
+import {API_NAME} from './constants'
+
+const sendEvent: (event: Event) => void = (event) => {
+  ipcRenderer.send(API_NAME, event)
+}
 
 const Main: DeviceManagerAPI = {
-  subscribe: () => {},
-  removeAllListeners: () => {},
+  subscribe: (func) => {
+    ipcRenderer.on(API_NAME, func)
+  },
+  removeAllListeners: () => {
+    ipcRenderer.removeAllListeners(API_NAME)
+  },
   list: () => {
-    console.log('list!!!!')
+    sendEvent({type: 'LIST'})
   },
 }
 

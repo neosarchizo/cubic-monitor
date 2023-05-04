@@ -14,12 +14,15 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 2021,
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:prettier/recommended',
+    'airbnb',
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
   rules: {
     // default
@@ -30,23 +33,40 @@ module.exports = {
     '@typescript-eslint/no-empty-function': ['error', {allow: ['arrowFunctions']}],
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-this-alias': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
+    'import/prefer-default-export': 'off',
+    'import/no-unresolved': [2, {ignore: ['.png*']}],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+      },
+    ],
     'no-console': 'warn',
     'prefer-const': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     'no-use-before-define': 'off',
     'object-curly-spacing': 'off',
-    // custom
     quotes: ['error', 'single', {avoidEscape: true}],
     semi: ['error', 'never'],
     'no-unused-vars': 'off',
     'no-empty-function': 'off',
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+    },
   },
   overrides: [
     {
@@ -55,10 +75,10 @@ module.exports = {
         // default
         '@typescript-eslint',
         'prettier',
+        'import',
         // custom
         'react',
         'jsx-a11y',
-        'import',
         'react-hooks',
         'styled-components-a11y',
       ],
@@ -68,16 +88,16 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:prettier/recommended',
+        'airbnb',
+        'plugin:import/errors',
+        'plugin:import/warnings',
         // custom
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
         'plugin:styled-components-a11y/recommended',
-        'airbnb',
         'airbnb/hooks',
         'plugin:jsx-a11y/recommended',
-        'plugin:import/errors',
-        'plugin:import/warnings',
       ],
       rules: {
         // default
@@ -88,23 +108,36 @@ module.exports = {
         '@typescript-eslint/no-empty-function': ['error', {allow: ['arrowFunctions']}],
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/no-non-null-assertion': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'error',
         '@typescript-eslint/no-use-before-define': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-this-alias': 'off',
         '@typescript-eslint/triple-slash-reference': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
+        'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
+        'import/prefer-default-export': 'off',
+        'import/no-unresolved': [2, {ignore: ['.png*']}],
         'no-console': 'warn',
         'prefer-const': 'off',
         'no-shadow': 'off',
         '@typescript-eslint/no-shadow': ['error'],
         'no-use-before-define': 'off',
         'object-curly-spacing': 'off',
-        // custom
         quotes: ['error', 'single', {avoidEscape: true}],
         semi: ['error', 'never'],
         'no-unused-vars': 'off',
         'no-empty-function': 'off',
+        // custom
+        'import/extensions': [
+          'error',
+          'ignorePackages',
+          {
+            js: 'never',
+            jsx: 'never',
+            ts: 'never',
+            tsx: 'never',
+          },
+        ],
         'react/jsx-filename-extension': [1, {extensions: ['.ts', '.tsx']}],
         'react/prop-types': 'off', // In favor of strong typing - no need to dedupe
         'react/jsx-uses-react': 'off',
@@ -131,19 +164,6 @@ module.exports = {
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'warn',
         'react/jsx-closing-bracket-location': 'off',
-        'import/extensions': [
-          'error',
-          'ignorePackages',
-          {
-            js: 'never',
-            jsx: 'never',
-            ts: 'never',
-            tsx: 'never',
-          },
-        ],
-        'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
-        'import/prefer-default-export': 'off',
-        'import/no-unresolved': [2, {ignore: ['astro:content']}],
       },
       settings: {
         'import/resolver': {
