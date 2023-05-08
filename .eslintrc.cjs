@@ -4,7 +4,6 @@ const COMMON_EXTENDS = [
   'plugin:@typescript-eslint/recommended',
   'plugin:@typescript-eslint/eslint-recommended',
   'plugin:prettier/recommended',
-  'airbnb',
   'plugin:import/errors',
   'plugin:import/warnings',
 ]
@@ -69,7 +68,7 @@ module.exports = {
     ecmaVersion: 2021,
   },
   plugins: COMMON_PLUGINS,
-  extends: COMMON_EXTENDS,
+  extends: [...COMMON_EXTENDS, 'airbnb-base'],
   rules: COMMON_RULES,
   settings: COMMON_SETTINGS,
   overrides: [
@@ -90,6 +89,7 @@ module.exports = {
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
         'plugin:styled-components-a11y/recommended',
+        'airbnb',
         'airbnb/hooks',
         'plugin:jsx-a11y/recommended',
       ],
