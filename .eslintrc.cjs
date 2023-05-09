@@ -42,6 +42,7 @@ const COMMON_RULES = {
   semi: ['error', 'never'],
   'no-unused-vars': 'off',
   'no-empty-function': 'off',
+  'implicit-arrow-linebreak': 'off',
 }
 const COMMON_SETTINGS = {
   'import/resolver': {
