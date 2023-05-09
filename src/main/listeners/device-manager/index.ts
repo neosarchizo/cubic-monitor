@@ -1,4 +1,5 @@
 import {BrowserWindow, WebContents, ipcMain} from 'electron'
+import {SerialPort} from 'serialport'
 
 import {API_NAME} from './constants'
 import {Event, AppEventType} from './types'
@@ -36,7 +37,9 @@ const Main: (window: BrowserWindow) => void = (window) => {
     switch (type) {
       case 'LIST': {
         console.log('I got LIST event!!')
-        sendEvent('LIST')
+        SerialPort.list().then((result) => {
+          sendEvent('LIST', result)
+        })
         break
       }
       default:
