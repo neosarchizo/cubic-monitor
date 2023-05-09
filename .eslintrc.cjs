@@ -135,10 +135,9 @@ module.exports = {
         'react/jsx-closing-bracket-location': 'off',
       },
       settings: {
-        ...COMMON_SETTINGS,
         'import/resolver': {
           node: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            extensions: ['.js', '.ts', '.tsx'],
           },
         },
       },
