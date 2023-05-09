@@ -78,8 +78,8 @@ module.exports = {
       plugins: [
         ...COMMON_PLUGINS,
         // custom
-        'react',
         'jsx-a11y',
+        'react',
         'react-hooks',
         'styled-components-a11y',
       ],
@@ -97,17 +97,19 @@ module.exports = {
       rules: {
         ...COMMON_RULES,
         // custom
+
+        // import
         'import/extensions': [
           'error',
           'ignorePackages',
           {
             js: 'never',
-            jsx: 'never',
             ts: 'never',
             tsx: 'never',
           },
         ],
-        'react/jsx-filename-extension': [1, {extensions: ['.ts', '.tsx']}],
+        // react
+        'react/jsx-filename-extension': [1, {extensions: ['.tsx']}],
         'react/prop-types': 'off', // In favor of strong typing - no need to dedupe
         'react/jsx-uses-react': 'off',
         'react/react-in-jsx-scope': 'off',
@@ -130,9 +132,10 @@ module.exports = {
             unnamedComponents: 'arrow-function',
           },
         ],
+        'react/jsx-closing-bracket-location': 'off',
+        // react-hooks
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'warn',
-        'react/jsx-closing-bracket-location': 'off',
       },
       settings: {
         'import/resolver': {
