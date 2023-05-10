@@ -13,7 +13,7 @@ const COMMON_RULES = {
   '@typescript-eslint/explicit-function-return-type': 'off',
   '@typescript-eslint/explicit-module-boundary-types': 'off',
   '@typescript-eslint/no-empty-function': ['error', {allow: ['arrowFunctions']}],
-  '@typescript-eslint/no-explicit-any': 'error',
+  '@typescript-eslint/no-explicit-any': 'off',
   '@typescript-eslint/no-non-null-assertion': 'off',
   '@typescript-eslint/no-unused-vars': 'error',
   '@typescript-eslint/no-use-before-define': 'off',
@@ -43,6 +43,8 @@ const COMMON_RULES = {
   'no-unused-vars': 'off',
   'no-empty-function': 'off',
   'implicit-arrow-linebreak': 'off',
+  'object-curly-newline': 'off',
+  'operator-linebreak': 'off',
 }
 const COMMON_SETTINGS = {
   'import/resolver': {

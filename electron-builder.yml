@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: cubic-monitor
+productName: CUBIC monitor
 directories:
   buildResources: build
 files:

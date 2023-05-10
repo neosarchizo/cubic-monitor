@@ -1,5 +1,5 @@
 {
-  "name": "CUBIC monitor",
+  "name": "cubic-monitor",
   "version": "1.0.4",
   "description": "CUBIC monitor",
   "main": "./out/main/index.js",
@@ -28,6 +28,8 @@
     "@electron-toolkit/preload": "^1.0.3",
     "@electron-toolkit/utils": "^1.0.2",
     "electron-updater": "^5.3.0",
+    "moment": "^2.29.4",
+    "numeral": "^2.0.6",
     "serialport": "^11.0.0",
     "sqlite3": "^5.1.6"
   },
