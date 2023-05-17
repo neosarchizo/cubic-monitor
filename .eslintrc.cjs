@@ -45,6 +45,7 @@ const COMMON_RULES = {
   'implicit-arrow-linebreak': 'off',
   'object-curly-newline': 'off',
   'operator-linebreak': 'off',
+  'no-bitwise': 'off',
 }
 const COMMON_SETTINGS = {
   'import/resolver': {

@@ -1,7 +1,6 @@
-/* eslint-disable no-bitwise */
-import SerialPort = require('serialport')
-import numeral = require('numeral')
-import moment = require('moment')
+import {SerialPort} from 'serialport'
+import numeral from 'numeral'
+import moment from 'moment'
 
 import {DFC, DPFC, Device} from '../../types'
 import Packet from '../../../../utils/packet'
@@ -416,7 +415,8 @@ export const getSerialNumbers: (callback: (result: string[]) => void) => void = 
         return
       }
 
-      const {SERIAL_NUMBER} = row
+      const data = row as Data
+      const {SERIAL_NUMBER} = data
 
       result.push(SERIAL_NUMBER)
     },

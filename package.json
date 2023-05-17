@@ -31,7 +31,8 @@
     "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "serialport": "^11.0.0",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
